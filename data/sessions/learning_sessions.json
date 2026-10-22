@@ -1,0 +1,21 @@
+[
+  {
+    "id": "605edefc-53b0-48dd-bd9d-9f3afe411487",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "character"
+    ],
+    "total_questions": 5,
+    "completed_questions": 5,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "completed",
+    "started_at": "2026-10-22T02:37:33Z",
+    "finished_at": "2026-10-22T02:37:36Z",
+    "created_at": "2026-10-22T02:37:33Z",
+    "updated_at": "2026-10-22T02:37:36Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  }
+]

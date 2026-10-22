@@ -1,0 +1,42 @@
+from __future__ import annotations
+
+import json
+import threading
+from pathlib import Path
+from typing import Any
+
+
+class JsonStore:
+    def __init__(self, data_dir: Path) -> None:
+        self.data_dir = data_dir
+        self.data_dir.mkdir(parents=True, exist_ok=True)
+        self._locks: dict[str, threading.Lock] = {}
+
+    def _lock(self, path: Path) -> threading.Lock:
+        key = str(path.resolve())
+        if key not in self._locks:
+            self._locks[key] = threading.Lock()
+        return self._locks[key]
+
+    def _full_path(self, rel: str) -> Path:
+        path = self.data_dir / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if not path.exists():
+            path.write_text("[]", encoding="utf-8")
+        return path
+
+    def read_list(self, rel: str) -> list[dict[str, Any]]:
+        path = self._full_path(rel)
+        with self._lock(path):
+            content = path.read_text(encoding="utf-8").strip() or "[]"
+            data = json.loads(content)
+            if not isinstance(data, list):
+                raise ValueError(f"data file is not a list: {rel}")
+            return data
+
+    def write_list(self, rel: str, data: list[dict[str, Any]]) -> None:
+        path = self._full_path(rel)
+        with self._lock(path):
+            tmp = path.with_suffix(path.suffix + ".tmp")
+            tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+            tmp.replace(path)

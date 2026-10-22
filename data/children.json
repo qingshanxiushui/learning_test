@@ -1,0 +1,16 @@
+[
+  {
+    "id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "parent_user_id": "parent_admin",
+    "name": "宸",
+    "nickname": "宸",
+    "age": 5,
+    "grade_level": null,
+    "avatar_url": null,
+    "status": "active",
+    "created_at": "2026-10-22T02:07:25Z",
+    "updated_at": "2026-10-22T02:07:25Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  }
+]

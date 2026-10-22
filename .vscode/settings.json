@@ -1,0 +1,11 @@
+{
+  "python-envs.defaultEnvManager": "ms-python.python:venv",
+  "python.defaultInterpreterPath": "C:\\Users\\Administrator\\me12\\Scripts\\python.exe",
+  "python.terminal.activateEnvironment": true,
+  "python.analysis.extraPaths": ["${workspaceFolder}/backend"],
+  "pylint.cwd": "${workspaceFolder}/backend",
+  "ruff.configuration": {
+    "src": ["backend"]
+  },
+  "git.openRepositoryInParentFolders": "never"
+}
