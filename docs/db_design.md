@@ -325,7 +325,7 @@ erDiagram
 - 国学：`source_title`、`sentence_text`、`sentence_meaning`、`next_sentence`、`previous_sentence`
 - 古诗：`poem_title`、`author`、`dynasty`、`poem_lines`、`poem_meaning`
 - 成语：`idiom_text`、`pinyin`、`story`、`usage_example`
-- 英语单词：`word`、`phonetic`、`chinese_meaning`、`part_of_speech`、`example_sentence`
+- 英语：`word`、`phonetic`、`chinese_meaning`、`part_of_speech`、`example_sentence`
 
 ## 5.6 learning_session
 

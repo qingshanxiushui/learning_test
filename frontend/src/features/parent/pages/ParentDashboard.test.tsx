@@ -1,7 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
-import { batchUpsertCharacters, listContents } from "@/api/contents";
+import {
+  batchUpsertCharacters,
+  batchUpsertEnglishWords,
+  listContents,
+} from "@/api/contents";
 import ParentDashboard from "@/features/parent/pages/ParentDashboard";
 
 const { contentsState } = vi.hoisted(() => ({
@@ -59,6 +63,12 @@ vi.mock("@/api/contents", () => ({
     created_count: 9,
     updated_count: 0,
     total_count: 9,
+  })),
+  batchUpsertEnglishWords: vi.fn(async () => ({
+    list: [],
+    created_count: 4,
+    updated_count: 0,
+    total_count: 4,
   })),
   updateContent: vi.fn(),
   deleteContent: vi.fn(),
@@ -123,6 +133,35 @@ describe("ParentDashboard", () => {
       "child-1",
       expect.objectContaining({
         content_text: "- 根、茂、但、闻、响\n- 苔、初、本、习",
+        difficulty: 1,
+        status: "enabled",
+      }),
+    );
+  });
+
+  it("uses the batch endpoint when creating English content and hides the title input", async () => {
+    const user = userEvent.setup();
+    render(<ParentDashboard />);
+
+    await screen.findByText("家长端总览");
+    await user.click(screen.getByRole("tab", { name: "学习内容管理" }));
+    await user.click(screen.getByRole("button", { name: "新建内容" }));
+    await user.click(screen.getByLabelText("类型"));
+    await user.click(await screen.findByText("英语"));
+
+    // Title input should be hidden for batch types
+    expect(screen.queryByLabelText("标题")).not.toBeInTheDocument();
+    await user.type(
+      screen.getByLabelText("英语正文"),
+      "apple, banana\norange pear",
+    );
+    await user.click(screen.getByRole("button", { name: "OK" }));
+
+    expect(batchUpsertEnglishWords).toHaveBeenCalledWith(
+      "mock-token",
+      "child-1",
+      expect.objectContaining({
+        content_text: "apple, banana\norange pear",
         difficulty: 1,
         status: "enabled",
       }),

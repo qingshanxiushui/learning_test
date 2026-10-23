@@ -30,6 +30,7 @@ import {
 import { getOverviewStats } from "@/api/stats";
 import {
   batchUpsertCharacters,
+  batchUpsertEnglishWords,
   createContent,
   deleteContent,
   listContents,
@@ -54,7 +55,7 @@ const CONTENT_TYPE_OPTIONS: { label: string; value: ContentType }[] = [
   { label: "国学", value: "classic" },
   { label: "古诗", value: "poem" },
   { label: "成语", value: "idiom" },
-  { label: "英语单词", value: "englishWord" },
+  { label: "英语", value: "englishWord" },
 ];
 
 const CONTENT_PAGE_SIZE_OPTIONS = [10, 20, 50];
@@ -101,6 +102,9 @@ export default function ParentDashboard() {
   const [ruleForm] = Form.useForm();
   const [loginForm] = Form.useForm();
   const selectedContentType = Form.useWatch("content_type", contentForm);
+  const isBatchCreate =
+    !contentEditing &&
+    (selectedContentType === "character" || selectedContentType === "englishWord");
 
   const selectedChild = useMemo(
     () => children.find((item) => item.id === selectedChildId) ?? null,
@@ -327,6 +331,20 @@ export default function ParentDashboard() {
       });
       messageApi.success(
         `已新增 ${result.created_count} 个汉字，更新 ${result.updated_count} 个汉字`,
+      );
+    } else if (values.content_type === "englishWord") {
+      const result = await batchUpsertEnglishWords(token, selectedChildId, {
+        content_text: payload.content_text,
+        pronunciation: payload.pronunciation,
+        meaning: payload.meaning,
+        example: payload.example,
+        difficulty: payload.difficulty,
+        status: payload.status,
+        sort_order: payload.sort_order,
+        detail: payload.detail,
+      });
+      messageApi.success(
+        `已新增 ${result.created_count} 个单词，更新 ${result.updated_count} 个单词`,
       );
     } else {
       await createContent(token, selectedChildId, payload);
@@ -827,9 +845,7 @@ export default function ParentDashboard() {
         <Form form={contentForm} layout="vertical">
           <Row gutter={16}>
             <Col
-              span={
-                contentEditing || selectedContentType !== "character" ? 12 : 24
-              }
+              span={contentEditing || !isBatchCreate ? 12 : 24}
             >
               <Form.Item
                 label="类型"
@@ -841,7 +857,7 @@ export default function ParentDashboard() {
                 />
               </Form.Item>
             </Col>
-            {(contentEditing || selectedContentType !== "character") && (
+            {(contentEditing || !isBatchCreate) && (
               <Col span={12}>
                 <Form.Item
                   label="标题"
@@ -855,24 +871,30 @@ export default function ParentDashboard() {
           </Row>
           <Form.Item
             label={
-              selectedContentType === "character" && !contentEditing
+              isBatchCreate && selectedContentType === "character"
                 ? "汉字正文"
-                : "正文"
+                : isBatchCreate && selectedContentType === "englishWord"
+                  ? "英语正文"
+                  : "正文"
             }
             name="content_text"
             rules={[{ required: true, message: "请输入正文" }]}
             extra={
-              selectedContentType === "character" && !contentEditing
+              isBatchCreate && selectedContentType === "character"
                 ? "支持多行、项目符号和标点；保存后将按单字去重导入。"
-                : undefined
+                : isBatchCreate && selectedContentType === "englishWord"
+                  ? "支持多行、标点、连字符和撇号；空格不分割，保存后将按词组去重导入。"
+                  : undefined
             }
           >
             <Input.TextArea
               rows={3}
               placeholder={
-                selectedContentType === "character" && !contentEditing
+                isBatchCreate && selectedContentType === "character"
                   ? "- 根、茂、但、闻、响\n- 苔、初、本、习"
-                  : undefined
+                  : isBatchCreate && selectedContentType === "englishWord"
+                    ? "apple, banana\norange pear"
+                    : undefined
               }
             />
           </Form.Item>

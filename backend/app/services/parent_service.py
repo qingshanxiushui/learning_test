@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from collections import Counter, defaultdict
 from typing import Any
 import unicodedata
@@ -14,6 +15,7 @@ from app.models import (
     ContentCreate,
     ContentStatusUpdate,
     ContentUpdate,
+    EnglishBatchCreate,
     Parent,
     ParentCreate,
     Rule,
@@ -244,6 +246,68 @@ class ParentService:
 
         self.store.write_list(rel, rows)
         return items, created_count, updated_count
+
+    def batch_upsert_english_words(
+        self, parent_id: str, child_id: str, payload: EnglishBatchCreate
+    ) -> tuple[list[Content], int, int]:
+        self.assert_child_owned(parent_id, child_id)
+        words = self._extract_english_words(payload.content_text)
+        if not words:
+            raise ValueError("content text must contain at least one English word")
+
+        rel = self._content_file("englishWord")
+        rows = self.store.read_list(rel)
+        existing: dict[str, dict[str, Any]] = {}
+        for row in rows:
+            if (
+                row.get("child_id") == child_id
+                and row.get("content_type") == "englishWord"
+                and row.get("is_deleted", 0) == 0
+            ):
+                existing.setdefault(str(row.get("title", "")).lower(), row)
+
+        now = now_iso()
+        items: list[Content] = []
+        created_count = 0
+        updated_count = 0
+        common = payload.model_dump(exclude={"content_text"})
+        for word in words:
+            row = existing.get(word.lower())
+            if row is None:
+                row = Content(
+                    id=new_id(),
+                    child_id=child_id,
+                    content_type="englishWord",
+                    title=word,
+                    content_text=word,
+                    created_at=now,
+                    updated_at=now,
+                    **common,
+                ).model_dump()
+                rows.append(row)
+                existing[word.lower()] = row
+                created_count += 1
+            else:
+                row.update(common)
+                row.update({"title": word, "content_text": word, "updated_at": now})
+                updated_count += 1
+            items.append(Content(**row))
+
+        self.store.write_list(rel, rows)
+        return items, created_count, updated_count
+
+    @staticmethod
+    def _extract_english_words(content_text: str) -> list[str]:
+        # 按换行与标点切分，但空格不分割（空格分隔的词组作为整体保留），
+        # 同时保留单词内部的连字符/撇号，如 well-known、don't、good morning
+        words: list[str] = []
+        seen: set[str] = set()
+        for token in re.findall(r"[A-Za-z0-9 '’-]+", content_text):
+            word = token.strip()
+            if word and not word.isdigit() and word.lower() not in seen:
+                seen.add(word.lower())
+                words.append(word)
+        return words
 
     @staticmethod
     def _extract_characters(content_text: str) -> list[str]:

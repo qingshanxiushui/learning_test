@@ -122,6 +122,17 @@ class CharacterBatchCreate(BaseModel):
     detail: dict[str, Any] = Field(default_factory=dict)
 
 
+class EnglishBatchCreate(BaseModel):
+    content_text: str = Field(min_length=1)
+    pronunciation: str | None = Field(default=None, max_length=100)
+    meaning: str | None = Field(default=None, max_length=255)
+    example: str | None = Field(default=None, max_length=255)
+    difficulty: int = Field(default=1, ge=1, le=3)
+    status: ContentStatus = "enabled"
+    sort_order: int = 0
+    detail: dict[str, Any] = Field(default_factory=dict)
+
+
 class ContentUpdate(ContentCreate):
     pass
 

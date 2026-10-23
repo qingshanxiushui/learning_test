@@ -3,7 +3,14 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, HTTPException, Query
 
 from app.api.deps import get_current_parent
-from app.models import ApiResponse, CharacterBatchCreate, ContentCreate, ContentStatusUpdate, ContentUpdate
+from app.models import (
+    ApiResponse,
+    CharacterBatchCreate,
+    ContentCreate,
+    ContentStatusUpdate,
+    ContentUpdate,
+    EnglishBatchCreate,
+)
 from app.services.parent_service import service
 
 router = APIRouter(prefix="/children/{child_id}/contents", tags=["contents"])
@@ -41,6 +48,28 @@ def batch_upsert_characters(
 ) -> ApiResponse:
     try:
         items, created_count, updated_count = service.batch_upsert_characters(
+            current["user_id"], child_id, payload
+        )
+    except LookupError:
+        raise HTTPException(status_code=404, detail={"code": 40402, "message": "child not found"})
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail={"code": 42206, "message": str(exc)}) from exc
+    return ApiResponse(
+        data={
+            "list": [item.model_dump(exclude={"is_deleted", "deleted_at"}) for item in items],
+            "created_count": created_count,
+            "updated_count": updated_count,
+            "total_count": len(items),
+        }
+    )
+
+
+@router.post("/english/batch", response_model=ApiResponse, status_code=201)
+def batch_upsert_english_words(
+    child_id: str, payload: EnglishBatchCreate, current=Depends(get_current_parent)
+) -> ApiResponse:
+    try:
+        items, created_count, updated_count = service.batch_upsert_english_words(
             current["user_id"], child_id, payload
         )
     except LookupError:

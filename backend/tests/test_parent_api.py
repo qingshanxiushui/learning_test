@@ -72,6 +72,71 @@ def test_batch_upsert_characters() -> None:
     assert all(item["meaning"] == "覆盖释义" for item in updated_data["list"])
 
 
+def test_batch_upsert_english_words() -> None:
+    client = TestClient(app)
+    client.post(
+        "/api/v1/parents",
+        json={"account_name": "english-parent", "display_name": "Parent", "password": "123456"},
+    )
+    login = client.post(
+        "/api/v1/auth/login",
+        json={"account_name": "english-parent", "password": "123456"},
+    )
+    token = login.json()["data"]["access_token"]
+    headers = _auth_header(token)
+    child = client.post(
+        "/api/v1/children",
+        headers=headers,
+        json={"name": "Kid", "nickname": None, "age": 6, "grade_level": None, "avatar_url": None},
+    )
+    child_id = child.json()["data"]["id"]
+
+    payload = {
+        "content_text": "apple, banana\ngood morning\nwell-known, don't",
+        "pronunciation": "共同发音",
+        "meaning": "共同释义",
+        "example": "共同示例",
+        "difficulty": 2,
+        "status": "enabled",
+        "sort_order": 10,
+        "detail": {"source": "textbook"},
+    }
+    created = client.post(
+        f"/api/v1/children/{child_id}/contents/english/batch",
+        headers=headers,
+        json=payload,
+    )
+
+    assert created.status_code == 201
+    created_data = created.json()["data"]
+    assert created_data["created_count"] == 5
+    assert created_data["updated_count"] == 0
+    assert [item["title"] for item in created_data["list"]] == [
+        "apple",
+        "banana",
+        "good morning",
+        "well-known",
+        "don't",
+    ]
+    assert all(item["title"] == item["content_text"] for item in created_data["list"])
+    assert all(item["meaning"] == "共同释义" for item in created_data["list"])
+    ids = {item["title"]: item["id"] for item in created_data["list"]}
+
+    payload["meaning"] = "覆盖释义"
+    updated = client.post(
+        f"/api/v1/children/{child_id}/contents/english/batch",
+        headers=headers,
+        json=payload,
+    )
+
+    assert updated.status_code == 201
+    updated_data = updated.json()["data"]
+    assert updated_data["created_count"] == 0
+    assert updated_data["updated_count"] == 5
+    assert {item["title"]: item["id"] for item in updated_data["list"]} == ids
+    assert all(item["meaning"] == "覆盖释义" for item in updated_data["list"])
+
+
 def test_parent_full_flow() -> None:
     client = TestClient(app)
 

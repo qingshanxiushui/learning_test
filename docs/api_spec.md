@@ -562,6 +562,29 @@ Authorization: Bearer <token>
 
 成功响应的 `data` 包含 `list`、`created_count`、`updated_count` 和 `total_count`。正文未包含汉字时返回 `42206`。
 
+## 9.2.2 批量导入英语单词
+
+- 接口：`POST /api/v1/children/{child_id}/contents/english/batch`
+- 鉴权：是
+- 说明：从多行正文切分英语内容：以换行与标点为分隔，**空格不分割**（空格分隔的词组作为整体保留，如 `good morning`）；同时保留单词内部的连字符/撇号（如 `well-known`、`don't`）；忽略纯数字片段，按首次出现顺序去重（不区分大小写），并为每个词组创建独立内容记录。
+
+请求体不包含 `content_type` 和 `title`，其余字段作为共同属性复制到每个单词。每条记录的 `title`、`content_text` 均为该单词。若孩子已有同标题（忽略大小写）的活动单词记录，则保留 ID 并覆盖共同属性。
+
+```json
+{
+  "content_text": "apple, banana\norange pear apple",
+  "pronunciation": null,
+  "meaning": null,
+  "example": null,
+  "difficulty": 1,
+  "status": "enabled",
+  "sort_order": 0,
+  "detail": {}
+}
+```
+
+成功响应的 `data` 包含 `list`、`created_count`、`updated_count` 和 `total_count`。正文未包含英语单词时返回 `42206`。
+
 ## 9.3 获取学习内容详情
 
 - 接口：`GET /api/v1/children/{child_id}/contents/{content_id}`
@@ -1100,7 +1123,7 @@ Authorization: Bearer <token>
 | classic     | 国学     |
 | poem        | 古诗     |
 | idiom       | 成语     |
-| englishWord | 英语单词 |
+| englishWord | 英语 |
 
 ### 13.2 session_status 枚举
 
