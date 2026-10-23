@@ -41,12 +41,23 @@ import { login } from "@/api/auth";
 import type {
   Child,
   ContentPayload,
+  ContentType,
   LearningContent,
   OverviewStats,
   RulePayload,
 } from "@/types/api";
 
 const DEMO_TOKEN_KEY = "parent_demo_token";
+
+const CONTENT_TYPE_OPTIONS: { label: string; value: ContentType }[] = [
+  { label: "汉字", value: "character" },
+  { label: "国学", value: "classic" },
+  { label: "古诗", value: "poem" },
+  { label: "成语", value: "idiom" },
+  { label: "英语单词", value: "englishWord" },
+];
+
+const CONTENT_PAGE_SIZE_OPTIONS = [10, 20, 50];
 
 function buildEmptyStats(): OverviewStats {
   return {
@@ -71,6 +82,12 @@ export default function ParentDashboard() {
   const [selectedChildId, setSelectedChildId] = useState<string | null>(null);
   const [stats, setStats] = useState<OverviewStats>(buildEmptyStats());
   const [contents, setContents] = useState<LearningContent[]>([]);
+  const [contentTypeFilter, setContentTypeFilter] = useState<
+    ContentType | undefined
+  >(undefined);
+  const [contentPage, setContentPage] = useState(1);
+  const [contentPageSize, setContentPageSize] = useState(10);
+  const [contentTotal, setContentTotal] = useState(0);
 
   const [childModalOpen, setChildModalOpen] = useState(false);
   const [childEditing, setChildEditing] = useState<Child | null>(null);
@@ -111,15 +128,24 @@ export default function ParentDashboard() {
       setSelectedChildId(null);
       setStats(buildEmptyStats());
       setContents([]);
+      setContentTotal(0);
     }
   }
 
-  async function loadContents(activeToken: string, childId: string) {
+  async function loadContents(
+    activeToken: string,
+    childId: string,
+    page: number,
+    pageSize: number,
+    contentType?: ContentType,
+  ) {
     const contentResp = await listContents(activeToken, childId, {
-      page: 1,
-      page_size: 50,
+      page,
+      page_size: pageSize,
+      content_type: contentType,
     });
     setContents(contentResp.list);
+    setContentTotal(contentResp.pagination.total);
   }
 
   async function loadRule(activeToken: string, childId: string) {
@@ -154,7 +180,13 @@ export default function ParentDashboard() {
         await loadChildrenAndStats(token);
         if (selectedChildId) {
           await Promise.all([
-            loadContents(token, selectedChildId),
+            loadContents(
+              token,
+              selectedChildId,
+              contentPage,
+              contentPageSize,
+              contentTypeFilter,
+            ),
             loadRule(token, selectedChildId),
           ]);
         }
@@ -301,7 +333,13 @@ export default function ParentDashboard() {
       messageApi.success("学习内容已创建");
     }
     setContentModalOpen(false);
-    await loadContents(token, selectedChildId);
+    await loadContents(
+      token,
+      selectedChildId,
+      contentPage,
+      contentPageSize,
+      contentTypeFilter,
+    );
   }
 
   async function handleDeleteContent(item: LearningContent) {
@@ -310,7 +348,13 @@ export default function ParentDashboard() {
     }
     await deleteContent(token, selectedChildId, item.id);
     messageApi.success("学习内容已删除");
-    await loadContents(token, selectedChildId);
+    await loadContents(
+      token,
+      selectedChildId,
+      contentPage,
+      contentPageSize,
+      contentTypeFilter,
+    );
   }
 
   async function handleToggleContentStatus(
@@ -326,7 +370,35 @@ export default function ParentDashboard() {
       item.id,
       checked ? "enabled" : "disabled",
     );
-    await loadContents(token, selectedChildId);
+    await loadContents(
+      token,
+      selectedChildId,
+      contentPage,
+      contentPageSize,
+      contentTypeFilter,
+    );
+  }
+
+  async function onContentTypeFilterChange(value: ContentType | undefined) {
+    setContentTypeFilter(value);
+    setContentPage(1);
+    if (token && selectedChildId) {
+      await loadContents(token, selectedChildId, 1, contentPageSize, value);
+    }
+  }
+
+  async function onContentPaginationChange(page: number, pageSize: number) {
+    setContentPage(page);
+    setContentPageSize(pageSize);
+    if (token && selectedChildId) {
+      await loadContents(
+        token,
+        selectedChildId,
+        page,
+        pageSize,
+        contentTypeFilter,
+      );
+    }
   }
 
   async function submitRuleForm() {
@@ -353,8 +425,11 @@ export default function ParentDashboard() {
       return;
     }
     setSelectedChildId(nextChildId);
+    setContentTypeFilter(undefined);
+    setContentPage(1);
+    setContentPageSize(10);
     await Promise.all([
-      loadContents(token, nextChildId),
+      loadContents(token, nextChildId, 1, 10),
       loadRule(token, nextChildId),
       loadChildrenAndStats(token, nextChildId),
     ]);
@@ -549,6 +624,15 @@ export default function ParentDashboard() {
                       }))}
                       onChange={onChildSwitch}
                     />
+                    <Select
+                      aria-label="按学习类型过滤"
+                      style={{ width: 140 }}
+                      placeholder="全部类型"
+                      value={contentTypeFilter}
+                      allowClear
+                      options={CONTENT_TYPE_OPTIONS}
+                      onChange={onContentTypeFilterChange}
+                    />
                     <Button
                       type="primary"
                       disabled={!selectedChildId}
@@ -565,7 +649,16 @@ export default function ParentDashboard() {
                   <Table
                     rowKey="id"
                     dataSource={contents}
-                    pagination={false}
+                    pagination={{
+                      current: contentPage,
+                      pageSize: contentPageSize,
+                      total: contentTotal,
+                      showSizeChanger: true,
+                      pageSizeOptions: CONTENT_PAGE_SIZE_OPTIONS,
+                      showTotal: (total, range) =>
+                        `第 ${range[0]}-${range[1]} 条 / 共 ${total} 条`,
+                      onChange: onContentPaginationChange,
+                    }}
                     columns={[
                       { title: "标题", dataIndex: "title" },
                       { title: "类型", dataIndex: "content_type", width: 120 },
@@ -664,13 +757,7 @@ export default function ParentDashboard() {
                     >
                       <Select
                         mode="multiple"
-                        options={[
-                          { label: "汉字", value: "character" },
-                          { label: "国学", value: "classic" },
-                          { label: "古诗", value: "poem" },
-                          { label: "成语", value: "idiom" },
-                          { label: "英语单词", value: "englishWord" },
-                        ]}
+                        options={CONTENT_TYPE_OPTIONS}
                       />
                     </Form.Item>
 
@@ -750,13 +837,7 @@ export default function ParentDashboard() {
                 rules={[{ required: true }]}
               >
                 <Select
-                  options={[
-                    { label: "汉字", value: "character" },
-                    { label: "国学", value: "classic" },
-                    { label: "古诗", value: "poem" },
-                    { label: "成语", value: "idiom" },
-                    { label: "英语单词", value: "englishWord" },
-                  ]}
+                  options={CONTENT_TYPE_OPTIONS}
                 />
               </Form.Item>
             </Col>

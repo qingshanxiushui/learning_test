@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "id": "969f744d-89b1-410f-aa95-056f44e4b0bf",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "englishWord",
+    "title": "E1",
+    "content_text": "l want some coke.Here you are.\nIwant some milk.Me too.\n",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {},
+    "created_at": "2026-10-23T01:09:37Z",
+    "updated_at": "2026-10-23T01:09:37Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  }
+]

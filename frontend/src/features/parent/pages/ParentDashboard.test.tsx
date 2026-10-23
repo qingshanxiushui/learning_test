@@ -1,8 +1,15 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
-import { batchUpsertCharacters } from "@/api/contents";
+import { batchUpsertCharacters, listContents } from "@/api/contents";
 import ParentDashboard from "@/features/parent/pages/ParentDashboard";
+
+const { contentsState } = vi.hoisted(() => ({
+  contentsState: {
+    list: [] as Array<Record<string, unknown>>,
+    total: 0,
+  },
+}));
 
 vi.mock("@/api/children", () => ({
   listChildren: vi.fn(async () => ({
@@ -39,11 +46,11 @@ vi.mock("@/api/stats", () => ({
 
 vi.mock("@/api/contents", () => ({
   listContents: vi.fn(async () => ({
-    list: [],
+    list: contentsState.list,
     pagination: {
       page: 1,
-      page_size: 50,
-      total: 0,
+      page_size: 10,
+      total: contentsState.total,
     },
   })),
   createContent: vi.fn(),
@@ -120,5 +127,70 @@ describe("ParentDashboard", () => {
         status: "enabled",
       }),
     );
+  });
+
+  it("filters contents by learning type and resets to page 1", async () => {
+    const user = userEvent.setup();
+    contentsState.list = [
+      { id: "c1", title: "汉字甲", content_type: "character", difficulty: 1 },
+      { id: "c2", title: "古诗乙", content_type: "poem", difficulty: 2 },
+    ];
+    contentsState.total = 20;
+    render(<ParentDashboard />);
+
+    await screen.findByText("家长端总览");
+    await user.click(screen.getByRole("tab", { name: "学习内容管理" }));
+    await screen.findByText("汉字甲");
+
+    // default load passes no content_type (all types)
+    expect(listContents).toHaveBeenCalledWith("mock-token", "child-1", {
+      page: 1,
+      page_size: 10,
+      content_type: undefined,
+    });
+
+    // open the type filter and pick 古诗
+    await user.click(
+      screen.getByRole("combobox", { name: "按学习类型过滤" }),
+    );
+    await user.click(await screen.findByTitle("古诗"));
+    await screen.findByText("古诗乙");
+
+    expect(listContents).toHaveBeenLastCalledWith("mock-token", "child-1", {
+      page: 1,
+      page_size: 10,
+      content_type: "poem",
+    });
+  });
+
+  it("paginates contents and changes page size", async () => {
+    const user = userEvent.setup();
+    contentsState.list = [
+      { id: "c1", title: "第一页", content_type: "character", difficulty: 1 },
+      { id: "c2", title: "第二页", content_type: "character", difficulty: 1 },
+    ];
+    contentsState.total = 50;
+    render(<ParentDashboard />);
+
+    await screen.findByText("家长端总览");
+    await user.click(screen.getByRole("tab", { name: "学习内容管理" }));
+    await screen.findByText("第一页");
+
+    // go to page 2
+    await user.click(screen.getByTitle("2"));
+    expect(listContents).toHaveBeenLastCalledWith("mock-token", "child-1", {
+      page: 2,
+      page_size: 10,
+      content_type: undefined,
+    });
+
+    // change page size to 20 (current page stays at 2 since still in range)
+    await user.click(screen.getByRole("combobox", { name: "Page Size" }));
+    await user.click(await screen.findByTitle("20 / page"));
+    expect(listContents).toHaveBeenLastCalledWith("mock-token", "child-1", {
+      page: 2,
+      page_size: 20,
+      content_type: undefined,
+    });
   });
 });
