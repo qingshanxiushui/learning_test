@@ -243,7 +243,7 @@ input,
   font-size: clamp(88px, 16vw, 148px);
   line-height: 1;
 }
-.question-panel.is-poem-card h2.ant-typography {
+.question-panel.is-multiline-card h2.ant-typography {
   margin: 20px 0;
   text-align: left;
   font-size: clamp(22px, 4vw, 34px);

@@ -110,6 +110,21 @@ export function batchUpsertIdioms(
   );
 }
 
+export function batchUpsertClassics(
+  token: string,
+  childId: string,
+  payload: CharacterBatchPayload,
+): Promise<CharacterBatchResult> {
+  return request<CharacterBatchResult>(
+    `/children/${childId}/contents/classics/batch`,
+    {
+      method: "POST",
+      token,
+      body: payload,
+    },
+  );
+}
+
 export function updateContent(
   token: string,
   childId: string,

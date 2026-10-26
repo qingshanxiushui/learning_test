@@ -30,6 +30,7 @@ import {
 import { getOverviewStats } from "@/api/stats";
 import {
   batchUpsertCharacters,
+  batchUpsertClassics,
   batchUpsertEnglishWords,
   batchUpsertIdioms,
   batchUpsertPoems,
@@ -109,9 +110,11 @@ export default function ParentDashboard() {
     (selectedContentType === "character" ||
       selectedContentType === "englishWord" ||
       selectedContentType === "poem" ||
-      selectedContentType === "idiom");
+      selectedContentType === "idiom" ||
+      selectedContentType === "classic");
   const isPoemBatch = isBatchCreate && selectedContentType === "poem";
   const isIdiomBatch = isBatchCreate && selectedContentType === "idiom";
+  const isClassicBatch = isBatchCreate && selectedContentType === "classic";
 
   const selectedChild = useMemo(
     () => children.find((item) => item.id === selectedChildId) ?? null,
@@ -380,6 +383,20 @@ export default function ParentDashboard() {
       });
       messageApi.success(
         `已新增 ${result.created_count} 个成语，更新 ${result.updated_count} 个成语`,
+      );
+    } else if (values.content_type === "classic") {
+      const result = await batchUpsertClassics(token, selectedChildId, {
+        content_text: payload.content_text,
+        pronunciation: payload.pronunciation,
+        meaning: payload.meaning,
+        example: payload.example,
+        difficulty: payload.difficulty,
+        status: payload.status,
+        sort_order: payload.sort_order,
+        detail: payload.detail,
+      });
+      messageApi.success(
+        `已新增 ${result.created_count} 组国学，更新 ${result.updated_count} 组国学`,
       );
     } else {
       await createContent(token, selectedChildId, payload);
@@ -907,7 +924,9 @@ export default function ParentDashboard() {
                     ? "古诗正文"
                     : isBatchCreate && selectedContentType === "idiom"
                       ? "成语正文"
-                      : "正文"
+                      : isBatchCreate && selectedContentType === "classic"
+                        ? "国学正文"
+                        : "正文"
             }
             name="content_text"
             rules={[{ required: true, message: "请输入正文" }]}
@@ -920,11 +939,13 @@ export default function ParentDashboard() {
                     ? "每首古诗以“《诗名》朝代·诗人”开头，正文分行/分句；保存后自动提取诗名、朝代、诗人和诗句。"
                     : isBatchCreate && selectedContentType === "idiom"
                       ? "每个《》内的成语作为一条记录，保存后按成语去重导入。"
-                      : undefined
+                      : isBatchCreate && selectedContentType === "classic"
+                        ? "按行分割，每两行为一组（上一行 + 下一行）；最后剩余单行将单独保存（无下一行）。"
+                        : undefined
             }
           >
             <Input.TextArea
-              rows={isPoemBatch ? 8 : 3}
+              rows={isPoemBatch || isClassicBatch ? 8 : 3}
               placeholder={
                 isBatchCreate && selectedContentType === "character"
                   ? "- 根、茂、但、闻、响\n- 苔、初、本、习"
@@ -934,11 +955,13 @@ export default function ParentDashboard() {
                       ? "《静夜思》唐·李白\n床前明月光，疑是地上霜。举头望明月，低头思故乡。\n\n《春晓》唐·孟浩然\n春眠不觉晓，处处闻啼鸟。夜来风雨声，花落知多少。"
                       : isBatchCreate && selectedContentType === "idiom"
                         ? "《 地大物博》《博大精深》《深入人心》\n《照章办事》《事出有因》《因小失大》"
-                        : undefined
+                        : isBatchCreate && selectedContentType === "classic"
+                          ? "人之初，性本善。性相近，习相远。\n苟不教，性乃迁。教之道，贵以专。"
+                          : undefined
               }
             />
           </Form.Item>
-          {!isPoemBatch && !isIdiomBatch && (
+          {!isPoemBatch && !isIdiomBatch && !isClassicBatch && (
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item label="发音" name="pronunciation">
@@ -986,12 +1009,12 @@ export default function ParentDashboard() {
               </Form.Item>
             </Col>
           </Row>
-          {!isPoemBatch && !isIdiomBatch && (
+          {!isPoemBatch && !isIdiomBatch && !isClassicBatch && (
             <Form.Item label="示例" name="example">
               <Input />
             </Form.Item>
           )}
-          {!isPoemBatch && !isIdiomBatch && (
+          {!isPoemBatch && !isIdiomBatch && !isClassicBatch && (
             <Form.Item
               label="扩展字段 detail_json"
               name="detail_json"

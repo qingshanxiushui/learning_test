@@ -12,6 +12,7 @@ from app.models import (
     Child,
     ChildCreate,
     ChildUpdate,
+    ClassicBatchCreate,
     Content,
     ContentCreate,
     ContentStatusUpdate,
@@ -410,6 +411,68 @@ class ParentService:
         self.store.write_list(rel, rows)
         return items, created_count, updated_count
 
+    def batch_upsert_classics(
+        self, parent_id: str, child_id: str, payload: ClassicBatchCreate
+    ) -> tuple[list[Content], int, int]:
+        self.assert_child_owned(parent_id, child_id)
+        groups = self._extract_classic_groups(payload.content_text)
+        if not groups:
+            raise ValueError("content text must contain at least one sentence pair")
+
+        rel = self._content_file("classic")
+        rows = self.store.read_list(rel)
+        existing: dict[str, dict[str, Any]] = {}
+        for row in rows:
+            if (
+                row.get("child_id") == child_id
+                and row.get("content_type") == "classic"
+                and row.get("is_deleted", 0) == 0
+            ):
+                existing.setdefault(str(row.get("title", "")), row)
+
+        now = now_iso()
+        items: list[Content] = []
+        created_count = 0
+        updated_count = 0
+        common = payload.model_dump(exclude={"content_text", "detail"})
+        for group in groups:
+            title = group["sentence"]
+            detail = {
+                "sentence_text": group["sentence"],
+                "next_sentence": group["next_sentence"],
+            }
+            content_text = group["sentence"] + group["next_sentence"]
+            row = existing.get(title)
+            if row is None:
+                row = Content(
+                    id=new_id(),
+                    child_id=child_id,
+                    content_type="classic",
+                    title=title,
+                    content_text=content_text,
+                    created_at=now,
+                    updated_at=now,
+                    detail=detail,
+                    **common,
+                ).model_dump()
+                rows.append(row)
+                created_count += 1
+            else:
+                row.update(common)
+                row.update(
+                    {
+                        "title": title,
+                        "content_text": content_text,
+                        "detail": detail,
+                        "updated_at": now,
+                    }
+                )
+                updated_count += 1
+            items.append(Content(**row))
+
+        self.store.write_list(rel, rows)
+        return items, created_count, updated_count
+
     @staticmethod
     def _extract_poems(content_text: str) -> list[dict[str, Any]]:
         poems: list[dict[str, Any]] = []
@@ -471,6 +534,19 @@ class ParentService:
                 seen.add(idiom)
                 idioms.append(idiom)
         return idioms
+
+    @staticmethod
+    def _extract_classic_groups(content_text: str) -> list[dict[str, str]]:
+        lines = [line.strip() for line in content_text.splitlines() if line.strip()]
+        groups: list[dict[str, str]] = []
+        for i in range(0, len(lines), 2):
+            groups.append(
+                {
+                    "sentence": lines[i],
+                    "next_sentence": lines[i + 1] if i + 1 < len(lines) else "",
+                }
+            )
+        return groups
 
     @staticmethod
     def _extract_english_words(content_text: str) -> list[str]:

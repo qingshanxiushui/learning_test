@@ -1,1 +1,443 @@
-[]
+[
+  {
+    "id": "ad1e404f-f9a5-4723-b675-d15751f9f273",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "人之初，性本善。",
+    "content_text": "人之初，性本善。性相近，习相远。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "人之初，性本善。",
+      "next_sentence": "性相近，习相远。"
+    },
+    "created_at": "2026-10-26T05:59:45Z",
+    "updated_at": "2026-10-26T06:08:15Z",
+    "deleted_at": "2026-10-26T06:08:15Z",
+    "is_deleted": 1
+  },
+  {
+    "id": "04f5cfe9-2836-4713-9829-c5189efcf595",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "苟不教，性乃迁。",
+    "content_text": "苟不教，性乃迁。教之道，贵以专。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "苟不教，性乃迁。",
+      "next_sentence": "教之道，贵以专。"
+    },
+    "created_at": "2026-10-26T05:59:45Z",
+    "updated_at": "2026-10-26T06:08:16Z",
+    "deleted_at": "2026-10-26T06:08:16Z",
+    "is_deleted": 1
+  },
+  {
+    "id": "bde5515a-d63e-4d8e-ba68-264c81cac641",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "昔孟母，择邻处。",
+    "content_text": "昔孟母，择邻处。子不学，断机杼。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "昔孟母，择邻处。",
+      "next_sentence": "子不学，断机杼。"
+    },
+    "created_at": "2026-10-26T05:59:45Z",
+    "updated_at": "2026-10-26T06:08:13Z",
+    "deleted_at": "2026-10-26T06:08:13Z",
+    "is_deleted": 1
+  },
+  {
+    "id": "855dc6b8-4230-4df7-b23e-56c31b420061",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "窦燕山，有义方。",
+    "content_text": "窦燕山，有义方。教五子，名俱扬。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "窦燕山，有义方。",
+      "next_sentence": "教五子，名俱扬。"
+    },
+    "created_at": "2026-10-26T05:59:45Z",
+    "updated_at": "2026-10-26T06:08:09Z",
+    "deleted_at": "2026-10-26T06:08:09Z",
+    "is_deleted": 1
+  },
+  {
+    "id": "8ec8e154-2418-427f-94c6-eafd8994c3ea",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "人之初，性本善。性相近，习相远。",
+    "content_text": "人之初，性本善。性相近，习相远。苟不教，性乃迁。教之道，贵以专。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "人之初，性本善。性相近，习相远。",
+      "next_sentence": "苟不教，性乃迁。教之道，贵以专。"
+    },
+    "created_at": "2026-10-26T06:08:02Z",
+    "updated_at": "2026-10-26T06:15:28Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "dfd9242b-7a4e-476b-b89b-e3280f989f06",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "昔孟母，择邻处。子不学，断机杼。",
+    "content_text": "昔孟母，择邻处。子不学，断机杼。窦燕山，有义方。教五子，名俱扬。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "昔孟母，择邻处。子不学，断机杼。",
+      "next_sentence": "窦燕山，有义方。教五子，名俱扬。"
+    },
+    "created_at": "2026-10-26T06:08:02Z",
+    "updated_at": "2026-10-26T06:15:28Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "dd398ae3-16be-4286-a3d5-bbfdd1ecc393",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "养不教，父之过。教不严，师之惰。",
+    "content_text": "养不教，父之过。教不严，师之惰。子不学，非所宜。幼不学，老何为。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "养不教，父之过。教不严，师之惰。",
+      "next_sentence": "子不学，非所宜。幼不学，老何为。"
+    },
+    "created_at": "2026-10-26T06:08:35Z",
+    "updated_at": "2026-10-26T06:15:28Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "fb612cfb-5b58-4280-8ec7-ec653f751e8e",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "玉不琢，不成器。人不学，不知义。",
+    "content_text": "玉不琢，不成器。人不学，不知义。为人子，方少时。亲师友，习礼仪。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "玉不琢，不成器。人不学，不知义。",
+      "next_sentence": "为人子，方少时。亲师友，习礼仪。"
+    },
+    "created_at": "2026-10-26T06:08:35Z",
+    "updated_at": "2026-10-26T06:15:28Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "d4e9b63f-a1ff-4b56-8df3-d6c37d4fd0b8",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "香九龄，能温席。孝于亲，所当执。",
+    "content_text": "香九龄，能温席。孝于亲，所当执。融四岁，能让梨。弟于长，宜先知。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "香九龄，能温席。孝于亲，所当执。",
+      "next_sentence": "融四岁，能让梨。弟于长，宜先知。"
+    },
+    "created_at": "2026-10-26T06:08:35Z",
+    "updated_at": "2026-10-26T06:15:28Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "ba706d64-f190-4023-a213-047335c9efd9",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "首先悌，次见闻。知某数，识某文。",
+    "content_text": "首先悌，次见闻。知某数，识某文。一而十，十而百。百而干，千而万。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "首先悌，次见闻。知某数，识某文。",
+      "next_sentence": "一而十，十而百。百而干，千而万。"
+    },
+    "created_at": "2026-10-26T06:08:35Z",
+    "updated_at": "2026-10-26T06:15:28Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "735a2f27-1c57-4e32-9475-d674352c36e4",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "三才者，天地人。三光者，日月星。",
+    "content_text": "三才者，天地人。三光者，日月星。三纲者，君臣义。父子亲，夫妇顺。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "三才者，天地人。三光者，日月星。",
+      "next_sentence": "三纲者，君臣义。父子亲，夫妇顺。"
+    },
+    "created_at": "2026-10-26T06:08:35Z",
+    "updated_at": "2026-10-26T06:15:28Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "5a070e3c-8c1e-4b51-8719-9c885b6c8c08",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "曰春夏，曰秋冬。此四时， 运不穷。",
+    "content_text": "曰春夏，曰秋冬。此四时， 运不穷。日南北，曰西东。此四方， 应乎中。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "曰春夏，曰秋冬。此四时， 运不穷。",
+      "next_sentence": "日南北，曰西东。此四方， 应乎中。"
+    },
+    "created_at": "2026-10-26T06:08:35Z",
+    "updated_at": "2026-10-26T06:15:28Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "718a3e18-cb33-4cbc-9384-5479847a7f25",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "曰水火，木金土。此五行，本乎数。",
+    "content_text": "曰水火，木金土。此五行，本乎数。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "曰水火，木金土。此五行，本乎数。",
+      "next_sentence": ""
+    },
+    "created_at": "2026-10-26T06:15:28Z",
+    "updated_at": "2026-10-26T06:15:28Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "1520da46-a856-4b66-a664-cc5b9995420b",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "弟子规，圣人训。首孝悌，次谨信。",
+    "content_text": "弟子规，圣人训。首孝悌，次谨信。泛爱众，而亲仁。有余力，则学文。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "弟子规，圣人训。首孝悌，次谨信。",
+      "next_sentence": "泛爱众，而亲仁。有余力，则学文。"
+    },
+    "created_at": "2026-10-26T06:15:40Z",
+    "updated_at": "2026-10-26T06:15:40Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "3069a644-c5c6-4b8d-ab97-728f1560ed0b",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "父母呼，应勿缓。父母命，行勿懒。",
+    "content_text": "父母呼，应勿缓。父母命，行勿懒。父母教，须敬听。父母责，须顺承。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "父母呼，应勿缓。父母命，行勿懒。",
+      "next_sentence": "父母教，须敬听。父母责，须顺承。"
+    },
+    "created_at": "2026-10-26T06:15:55Z",
+    "updated_at": "2026-10-26T06:15:55Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "1ccd5fac-e2ed-48a7-8d48-3099067e8d2f",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "冬则温，夏则凊。晨则省，昏则定。",
+    "content_text": "冬则温，夏则凊。晨则省，昏则定。出必告，反必面。居有常，业无变。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "冬则温，夏则凊。晨则省，昏则定。",
+      "next_sentence": "出必告，反必面。居有常，业无变。"
+    },
+    "created_at": "2026-10-26T06:15:55Z",
+    "updated_at": "2026-10-26T06:15:55Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "5c6e57c1-cdd9-4ae0-8563-79df561c0ee5",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "事虽小，勿擅为。苟擅为，子道亏。",
+    "content_text": "事虽小，勿擅为。苟擅为，子道亏。物虽小，勿私藏。苟私藏，亲心伤。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "事虽小，勿擅为。苟擅为，子道亏。",
+      "next_sentence": "物虽小，勿私藏。苟私藏，亲心伤。"
+    },
+    "created_at": "2026-10-26T06:15:55Z",
+    "updated_at": "2026-10-26T06:15:55Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "38fa06b6-6d88-4e39-b632-3a753c04136d",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "亲所好，力为具。亲所恶，谨为去。",
+    "content_text": "亲所好，力为具。亲所恶，谨为去。身有伤，贻亲忧。德有伤，贻亲羞。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "亲所好，力为具。亲所恶，谨为去。",
+      "next_sentence": "身有伤，贻亲忧。德有伤，贻亲羞。"
+    },
+    "created_at": "2026-10-26T06:15:55Z",
+    "updated_at": "2026-10-26T06:15:55Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "054f2f80-ca66-4522-848b-18ac36209cfc",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "亲爱我，孝何难。亲憎我，孝方贤。",
+    "content_text": "亲爱我，孝何难。亲憎我，孝方贤。亲有过，谏使更。怡吾色，柔吾声。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "亲爱我，孝何难。亲憎我，孝方贤。",
+      "next_sentence": "亲有过，谏使更。怡吾色，柔吾声。"
+    },
+    "created_at": "2026-10-26T06:15:55Z",
+    "updated_at": "2026-10-26T06:15:55Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "26179ac5-3ceb-4bfa-b97b-24e9600f4b80",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "谏不入，悦复谏。号泣随，挞无怨。",
+    "content_text": "谏不入，悦复谏。号泣随，挞无怨。亲有疾，药先尝。昼夜侍，不离床。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "谏不入，悦复谏。号泣随，挞无怨。",
+      "next_sentence": "亲有疾，药先尝。昼夜侍，不离床。"
+    },
+    "created_at": "2026-10-26T06:15:55Z",
+    "updated_at": "2026-10-26T06:15:55Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "733a70b7-f515-4147-b194-66bf960f8e53",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "classic",
+    "title": "丧三年，常悲咽。居处变，酒肉绝。",
+    "content_text": "丧三年，常悲咽。居处变，酒肉绝。丧尽礼，祭尽诚。事死者，如事生。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "sentence_text": "丧三年，常悲咽。居处变，酒肉绝。",
+      "next_sentence": "丧尽礼，祭尽诚。事死者，如事生。"
+    },
+    "created_at": "2026-10-26T06:15:55Z",
+    "updated_at": "2026-10-26T06:15:55Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  }
+]

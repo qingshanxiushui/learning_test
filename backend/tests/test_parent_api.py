@@ -277,6 +277,115 @@ def test_batch_upsert_idioms() -> None:
     assert all(item["meaning"] == "覆盖释义" for item in updated_data["list"])
 
 
+def test_batch_upsert_classics() -> None:
+    client = TestClient(app)
+    client.post(
+        "/api/v1/parents",
+        json={"account_name": "classic-parent", "display_name": "Parent", "password": "123456"},
+    )
+    login = client.post(
+        "/api/v1/auth/login",
+        json={"account_name": "classic-parent", "password": "123456"},
+    )
+    token = login.json()["data"]["access_token"]
+    headers = _auth_header(token)
+    child = client.post(
+        "/api/v1/children",
+        headers=headers,
+        json={"name": "Kid", "nickname": None, "age": 6, "grade_level": None, "avatar_url": None},
+    )
+    child_id = child.json()["data"]["id"]
+
+    payload = {
+        "content_text": (
+            "人之初，性本善。性相近，习相远。\n"
+            "苟不教，性乃迁。教之道，贵以专。\n"
+            "昔孟母，择邻处。子不学，断机杼。\n"
+            "窦燕山，有义方。教五子，名俱扬。"
+        ),
+        "difficulty": 1,
+        "status": "enabled",
+    }
+    created = client.post(
+        f"/api/v1/children/{child_id}/contents/classics/batch",
+        headers=headers,
+        json=payload,
+    )
+
+    assert created.status_code == 201
+    created_data = created.json()["data"]
+    assert created_data["created_count"] == 2
+    assert created_data["updated_count"] == 0
+    assert [item["title"] for item in created_data["list"]] == [
+        "人之初，性本善。性相近，习相远。",
+        "昔孟母，择邻处。子不学，断机杼。",
+    ]
+    assert created_data["list"][0]["detail"]["sentence_text"] == "人之初，性本善。性相近，习相远。"
+    assert created_data["list"][0]["detail"]["next_sentence"] == "苟不教，性乃迁。教之道，贵以专。"
+    assert created_data["list"][0]["content_text"] == "人之初，性本善。性相近，习相远。苟不教，性乃迁。教之道，贵以专。"
+    ids = {item["title"]: item["id"] for item in created_data["list"]}
+
+    payload["difficulty"] = 2
+    updated = client.post(
+        f"/api/v1/children/{child_id}/contents/classics/batch",
+        headers=headers,
+        json=payload,
+    )
+
+    assert updated.status_code == 201
+    updated_data = updated.json()["data"]
+    assert updated_data["created_count"] == 0
+    assert updated_data["updated_count"] == 2
+    assert {item["title"]: item["id"] for item in updated_data["list"]} == ids
+    assert all(item["difficulty"] == 2 for item in updated_data["list"])
+
+
+def test_batch_upsert_classics_keeps_last_odd_line() -> None:
+    client = TestClient(app)
+    client.post(
+        "/api/v1/parents",
+        json={"account_name": "classic-odd-parent", "display_name": "Parent", "password": "123456"},
+    )
+    login = client.post(
+        "/api/v1/auth/login",
+        json={"account_name": "classic-odd-parent", "password": "123456"},
+    )
+    token = login.json()["data"]["access_token"]
+    headers = _auth_header(token)
+    child = client.post(
+        "/api/v1/children",
+        headers=headers,
+        json={"name": "Kid", "nickname": None, "age": 6, "grade_level": None, "avatar_url": None},
+    )
+    child_id = child.json()["data"]["id"]
+
+    payload = {
+        "content_text": (
+            "人之初，性本善。性相近，习相远。\n"
+            "苟不教，性乃迁。教之道，贵以专。\n"
+            "昔孟母，择邻处。子不学，断机杼。"
+        ),
+        "difficulty": 1,
+        "status": "enabled",
+    }
+    created = client.post(
+        f"/api/v1/children/{child_id}/contents/classics/batch",
+        headers=headers,
+        json=payload,
+    )
+
+    assert created.status_code == 201
+    created_data = created.json()["data"]
+    assert created_data["created_count"] == 2
+    assert [item["title"] for item in created_data["list"]] == [
+        "人之初，性本善。性相近，习相远。",
+        "昔孟母，择邻处。子不学，断机杼。",
+    ]
+    assert created_data["list"][0]["detail"]["next_sentence"] == "苟不教，性乃迁。教之道，贵以专。"
+    assert created_data["list"][1]["detail"]["next_sentence"] == ""
+    assert created_data["list"][1]["content_text"] == "昔孟母，择邻处。子不学，断机杼。"
+
+
 def test_parent_full_flow() -> None:
     client = TestClient(app)
 

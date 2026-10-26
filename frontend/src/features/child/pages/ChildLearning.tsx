@@ -36,7 +36,10 @@ const CARD_QUESTION_TYPES = new Set([
   "english_word_card",
   "poem_card",
   "idiom_card",
+  "classic_card",
 ]);
+
+const MULTILINE_CARD_QUESTION_TYPES = new Set(["poem_card", "classic_card"]);
 
 const CONTENT_TYPES: Array<{
   value: ContentType;
@@ -400,8 +403,8 @@ export default function ChildLearning() {
           </div>
           <div
             className={`question-panel ${
-              currentQuestion.question_type === "poem_card"
-                ? "is-poem-card"
+              MULTILINE_CARD_QUESTION_TYPES.has(currentQuestion.question_type)
+                ? "is-multiline-card"
                 : ""
             }`}
           >

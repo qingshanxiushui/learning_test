@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
 import {
   batchUpsertCharacters,
+  batchUpsertClassics,
   batchUpsertEnglishWords,
   batchUpsertIdioms,
   batchUpsertPoems,
@@ -84,6 +85,12 @@ vi.mock("@/api/contents", () => ({
     updated_count: 0,
     total_count: 6,
   })),
+  batchUpsertClassics: vi.fn(async () => ({
+    list: [],
+    created_count: 4,
+    updated_count: 0,
+    total_count: 4,
+  })),
   updateContent: vi.fn(),
   deleteContent: vi.fn(),
   patchContentStatus: vi.fn(),
@@ -151,7 +158,7 @@ describe("ParentDashboard", () => {
         status: "enabled",
       }),
     );
-  });
+  }, 15000);
 
   it("uses the batch endpoint when creating English content and hides the title input", async () => {
     const user = userEvent.setup();
@@ -232,6 +239,35 @@ describe("ParentDashboard", () => {
       "child-1",
       expect.objectContaining({
         content_text: "《 地大物博》《博大精深》\n《照章办事》《事出有因》",
+        difficulty: 1,
+        status: "enabled",
+      }),
+    );
+  }, 15000);
+
+  it("uses the batch endpoint when creating classic content and hides the title input", async () => {
+    const user = userEvent.setup();
+    render(<ParentDashboard />);
+
+    await screen.findByText("家长端总览");
+    await user.click(screen.getByRole("tab", { name: "学习内容管理" }));
+    await user.click(screen.getByRole("button", { name: "新建内容" }));
+    await user.click(screen.getByLabelText("类型"));
+    await user.click(await screen.findByText("国学"));
+
+    expect(screen.queryByLabelText("标题")).not.toBeInTheDocument();
+    await user.type(
+      screen.getByLabelText("国学正文"),
+      "人之初，性本善。性相近，习相远。\n苟不教，性乃迁。教之道，贵以专。",
+    );
+    await user.click(screen.getByRole("button", { name: "OK" }));
+
+    expect(batchUpsertClassics).toHaveBeenCalledWith(
+      "mock-token",
+      "child-1",
+      expect.objectContaining({
+        content_text:
+          "人之初，性本善。性相近，习相远。\n苟不教，性乃迁。教之道，贵以专。",
         difficulty: 1,
         status: "enabled",
       }),

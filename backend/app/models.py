@@ -13,7 +13,13 @@ SessionStatus = Literal["in_progress", "completed", "abandoned"]
 UserStatus = Literal["active", "disabled"]
 
 # 以“卡片”形式展示、无需作答的题型（点击“下一个”即视为已学习）
-CARD_QUESTION_TYPES: tuple[str, ...] = ("character_card", "english_word_card", "poem_card", "idiom_card")
+CARD_QUESTION_TYPES: tuple[str, ...] = (
+    "character_card",
+    "english_word_card",
+    "poem_card",
+    "idiom_card",
+    "classic_card",
+)
 
 
 def now_iso() -> str:
@@ -148,6 +154,17 @@ class PoemBatchCreate(BaseModel):
 
 
 class IdiomBatchCreate(BaseModel):
+    content_text: str = Field(min_length=1)
+    pronunciation: str | None = Field(default=None, max_length=100)
+    meaning: str | None = Field(default=None, max_length=255)
+    example: str | None = Field(default=None, max_length=255)
+    difficulty: int = Field(default=1, ge=1, le=3)
+    status: ContentStatus = "enabled"
+    sort_order: int = 0
+    detail: dict[str, Any] = Field(default_factory=dict)
+
+
+class ClassicBatchCreate(BaseModel):
     content_text: str = Field(min_length=1)
     pronunciation: str | None = Field(default=None, max_length=100)
     meaning: str | None = Field(default=None, max_length=255)

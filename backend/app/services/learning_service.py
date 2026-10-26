@@ -55,7 +55,7 @@ class LearningService:
             created_at=now,
             updated_at=now,
         )
-        questions = [self._build_question(session.id, item, index, contents, now) for index, item in enumerate(selected_contents, 1)]
+        questions = [self._build_question(session.id, item, index, now) for index, item in enumerate(selected_contents, 1)]
 
         sessions = self.store.read_list("sessions/learning_sessions.json")
         sessions.append(session.model_dump())
@@ -258,29 +258,21 @@ class LearningService:
         return session, rows, row
 
     def _build_question(
-        self, session_id: str, content: Content, order: int, pool: list[Content], now: str
+        self, session_id: str, content: Content, order: int, now: str
     ) -> dict[str, Any]:
-        if content.content_type in ("character", "englishWord", "poem", "idiom"):
-            question_type = {
-                "character": "character_card",
-                "englishWord": "english_word_card",
-                "poem": "poem_card",
-                "idiom": "idiom_card",
-            }[content.content_type]
-            stem = self._format_poem(content) if content.content_type == "poem" else content.title
-            answer = ""
-            explanation = ""
-            options: list[str] = []
+        question_type = {
+            "character": "character_card",
+            "englishWord": "english_word_card",
+            "poem": "poem_card",
+            "idiom": "idiom_card",
+            "classic": "classic_card",
+        }[content.content_type]
+        if content.content_type == "poem":
+            stem = self._format_poem(content)
+        elif content.content_type == "classic":
+            stem = self._format_classic(content)
         else:
-            question_type, stem, answer, explanation = self._question_text(content)
-            same_type_pool = [item for item in pool if item.content_type == content.content_type]
-            alternatives = [
-                self._question_text(item)[2]
-                for item in same_type_pool
-                if item.id != content.id and self._question_text(item)[2] != answer
-            ]
-            options = list(dict.fromkeys([answer, *alternatives]))[:3]
-            random.shuffle(options)
+            stem = content.title
         return {
             "id": new_id(),
             "session_id": session_id,
@@ -288,9 +280,9 @@ class LearningService:
             "content_type": content.content_type,
             "question_type": question_type,
             "question_stem": stem,
-            "question_options": options,
-            "correct_answer": answer,
-            "answer_explanation": explanation,
+            "question_options": [],
+            "correct_answer": "",
+            "answer_explanation": "",
             "question_order": order,
             "content_snapshot": content.model_dump(),
             "created_at": now,
@@ -298,25 +290,6 @@ class LearningService:
             "deleted_at": None,
             "is_deleted": 0,
         }
-
-    def _question_text(self, content: Content) -> tuple[str, str, str, str]:
-        detail = content.detail
-        if content.content_type == "character":
-            pronunciation = str(detail.get("pinyin") or content.pronunciation or "").strip()
-            if pronunciation:
-                return "pinyin_character_choice", f"哪个汉字读“{pronunciation}”？", content.title, content.meaning or content.content_text
-            if content.meaning:
-                return "meaning_choice", f"“{content.title}”是什么意思？", content.meaning, content.example or content.content_text
-
-        if content.content_type == "classic":
-            sentence = str(detail.get("sentence_text") or content.content_text).strip()
-            next_sentence = str(detail.get("next_sentence") or "").strip()
-            if next_sentence:
-                return "next_line_choice", f"“{sentence}”下一句是什么？", next_sentence, content.meaning or content.title
-            if content.meaning:
-                return "meaning_choice", f"“{sentence}”是什么意思？", content.meaning, content.title
-
-        return "content_choice", f"请选择《{content.title}》的学习内容", content.content_text, content.meaning or content.example or content.title
 
     @staticmethod
     def _poem_lines(content: Content) -> list[str]:
@@ -341,6 +314,15 @@ class LearningService:
         if lines:
             return f"{header}\n" + "\n".join(lines)
         return header
+
+    @staticmethod
+    def _format_classic(content: Content) -> str:
+        detail = content.detail or {}
+        sentence = str(detail.get("sentence_text") or "").strip()
+        next_sentence = str(detail.get("next_sentence") or "").strip()
+        if next_sentence:
+            return f"{sentence}\n{next_sentence}"
+        return sentence or str(content.title or "").strip()
 
 
 learning_service = LearningService(parent_service)
