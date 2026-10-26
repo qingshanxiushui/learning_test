@@ -718,6 +718,62 @@ Authorization: Bearer <token>
 - `42203` 学习题量超出允许范围
 - `42202` 内容类型非法
 
+## 10.4 算术设置
+
+## 10.4.1 获取算术设置
+
+- 接口：`GET /api/v1/children/{child_id}/math-settings`
+- 鉴权：是
+- 说明：返回该孩子的算术设置；未设置时 `data` 返回 `null`。
+
+成功响应（未设置）：
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": null
+}
+```
+
+成功响应（已设置）：
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "id": "uuid",
+    "child_id": "uuid",
+    "min_value": 1,
+    "max_value": 20,
+    "operators": ["add", "subtract", "multiply", "divide"],
+    "status": 1
+  }
+}
+```
+
+## 10.4.2 保存算术设置
+
+- 接口：`PUT /api/v1/children/{child_id}/math-settings`
+- 鉴权：是
+- 说明：upsert（存在则更新，不存在则创建）。
+
+请求体：
+
+```json
+{
+  "min_value": 1,
+  "max_value": 20,
+  "operators": ["add", "subtract", "multiply", "divide"],
+  "status": 1
+}
+```
+
+错误码：
+
+- `42207` 算术设置不合法（min ≥ max、运算符为空/非法）
+
 ## 11. 学习会话接口
 
 ## 11.1 开始学习会话
@@ -776,10 +832,13 @@ Authorization: Bearer <token>
 
 汉字内容生成 `character_card`，`question_stem` 为单个汉字且 `question_options` 为空。卡片通过查看接口推进，不调用答题接口。
 
+算术内容生成 `math_arithmetic`，`question_stem` 为形如 `3 + 5 = ?` 的算式，`question_options` 为空，孩子通过输入整数作答（见 11.3）。
+
 错误码：
 
 - `40402` 孩子不存在
 - `40404` 学习规则不存在
+- `40407` 算术设置不存在
 - `42202` 内容类型非法
 - `42204` 当前内容不足以生成学习会话
 
@@ -1117,12 +1176,12 @@ Authorization: Bearer <token>
 
 ### 13.1 content_type 枚举
 
-| 值          | 含义     |
-| ----------- | -------- |
-| character   | 汉字     |
-| classic     | 国学     |
-| poem        | 古诗     |
-| idiom       | 成语     |
+| 值          | 含义 |
+| ----------- | ---- |
+| character   | 汉字 |
+| classic     | 国学 |
+| poem        | 古诗 |
+| idiom       | 成语 |
 | englishWord | 英语 |
 
 ### 13.2 session_status 枚举

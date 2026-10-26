@@ -446,3 +446,148 @@ def test_english_words_are_viewed_as_cards() -> None:
     assert completed.status_code == 200
     assert completed.json()["data"]["session"]["answered_questions"] == 0
     assert completed.json()["data"]["session"]["completed_questions"] == 2
+
+
+def _parse_math_answer(stem: str) -> int:
+    expr = stem.rsplit(" = ?", 1)[0]
+    if " + " in expr:
+        a, b = expr.split(" + ")
+        return int(a) + int(b)
+    if " - " in expr:
+        a, b = expr.split(" - ")
+        return int(a) - int(b)
+    if " × " in expr:
+        a, b = expr.split(" × ")
+        return int(a) * int(b)
+    if " ÷ " in expr:
+        a, b = expr.split(" ÷ ")
+        return int(a) // int(b)
+    raise AssertionError(f"unrecognized stem: {stem}")
+
+
+def test_math_session_generates_questions_and_judges_answer() -> None:
+    client = TestClient(app)
+    client.post(
+        "/api/v1/parents",
+        json={"account_name": "math_learner", "display_name": "Parent", "password": "123456"},
+    )
+    login = client.post(
+        "/api/v1/auth/login",
+        json={"account_name": "math_learner", "password": "123456"},
+    )
+    headers = {"Authorization": f"Bearer {login.json()['data']['access_token']}"}
+    child_id = client.post(
+        "/api/v1/children",
+        headers=headers,
+        json={"name": "小算", "age": 6},
+    ).json()["data"]["id"]
+    client.put(
+        f"/api/v1/children/{child_id}/math-settings",
+        headers=headers,
+        json={
+            "min_value": 1,
+            "max_value": 10,
+            "operators": ["add", "subtract", "multiply", "divide"],
+            "status": 1,
+        },
+    )
+    client.post(
+        f"/api/v1/children/{child_id}/rules",
+        headers=headers,
+        json={
+            "question_count": 5,
+            "default_content_types": ["math"],
+            "allow_child_select_types": True,
+            "status": 1,
+        },
+    )
+
+    started = client.post(
+        f"/api/v1/children/{child_id}/sessions",
+        headers=headers,
+        json={"selected_content_types": ["math"]},
+    )
+    assert started.status_code == 201
+    data = started.json()["data"]
+    assert data["session"]["total_questions"] == 5
+    questions = data["questions"]
+    assert len(questions) == 5
+    assert all(q["question_type"] == "math_arithmetic" for q in questions)
+    assert all(q["content_type"] == "math" for q in questions)
+    assert all(q["question_options"] == [] for q in questions)
+
+    session_id = data["session"]["id"]
+
+    first = questions[0]
+    first_answer = _parse_math_answer(first["question_stem"])
+    assert first_answer >= 0
+
+    invalid = client.post(
+        f"/api/v1/children/{child_id}/sessions/{session_id}/answers",
+        headers=headers,
+        json={"session_question_id": first["id"], "user_answer": "abc"},
+    )
+    assert invalid.status_code == 422
+    assert invalid.json()["code"] == 42208
+
+    wrong = client.post(
+        f"/api/v1/children/{child_id}/sessions/{session_id}/answers",
+        headers=headers,
+        json={"session_question_id": first["id"], "user_answer": str(first_answer + 1)},
+    )
+    assert wrong.status_code == 200
+    assert wrong.json()["data"]["is_correct"] is False
+
+    for question in questions[1:]:
+        answer = _parse_math_answer(question["question_stem"])
+        assert answer >= 0
+        resp = client.post(
+            f"/api/v1/children/{child_id}/sessions/{session_id}/answers",
+            headers=headers,
+            json={"session_question_id": question["id"], "user_answer": str(answer)},
+        )
+        assert resp.status_code == 200
+        assert resp.json()["data"]["is_correct"] is True
+
+    completed = client.post(
+        f"/api/v1/children/{child_id}/sessions/{session_id}/complete", headers=headers
+    )
+    assert completed.status_code == 200
+    assert completed.json()["data"]["session"]["answered_questions"] == 5
+    assert completed.json()["data"]["session"]["correct_questions"] == 4
+
+
+def test_math_session_requires_settings() -> None:
+    client = TestClient(app)
+    client.post(
+        "/api/v1/parents",
+        json={"account_name": "math_nosettings", "display_name": "Parent", "password": "123456"},
+    )
+    login = client.post(
+        "/api/v1/auth/login",
+        json={"account_name": "math_nosettings", "password": "123456"},
+    )
+    headers = {"Authorization": f"Bearer {login.json()['data']['access_token']}"}
+    child_id = client.post(
+        "/api/v1/children",
+        headers=headers,
+        json={"name": "小算", "age": 6},
+    ).json()["data"]["id"]
+    client.post(
+        f"/api/v1/children/{child_id}/rules",
+        headers=headers,
+        json={
+            "question_count": 3,
+            "default_content_types": ["math"],
+            "allow_child_select_types": True,
+            "status": 1,
+        },
+    )
+
+    started = client.post(
+        f"/api/v1/children/{child_id}/sessions",
+        headers=headers,
+        json={"selected_content_types": ["math"]},
+    )
+    assert started.status_code == 404
+    assert started.json()["code"] == 40407

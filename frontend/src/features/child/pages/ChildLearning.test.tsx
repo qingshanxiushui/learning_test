@@ -447,4 +447,64 @@ describe("ChildLearning", () => {
     );
     expect(submitAnswer).not.toHaveBeenCalled();
   });
+
+  it("answers a math question by typing a number", async () => {
+    vi.mocked(startSession).mockResolvedValueOnce({
+      session: {
+        id: "math-session",
+        child_id: "child-1",
+        selected_content_types: ["math"],
+        total_questions: 1,
+        completed_questions: 0,
+        answered_questions: 0,
+        correct_questions: 0,
+        accuracy_rate: 0,
+        session_status: "in_progress",
+        started_at: "2026-08-20T10:00:00Z",
+        finished_at: null,
+      },
+      questions: [
+        {
+          id: "math-1",
+          question_order: 1,
+          content_type: "math",
+          question_type: "math_arithmetic",
+          question_stem: "3 + 5 = ?",
+          question_options: [],
+        },
+      ],
+    });
+    vi.mocked(submitAnswer).mockResolvedValueOnce({
+      session_question_id: "math-1",
+      is_correct: true,
+      correct_answer: "8",
+      answer_explanation: "",
+      progress: {
+        answered_questions: 1,
+        total_questions: 1,
+        correct_questions: 1,
+        accuracy_rate: 100,
+      },
+    });
+    const user = userEvent.setup();
+    render(<ChildLearning />);
+
+    await screen.findByText(/准备好了吗.*雨点/);
+    await user.click(screen.getByRole("button", { name: "开始学习" }));
+    expect(await screen.findByText("3 + 5 = ?")).toBeInTheDocument();
+
+    await user.type(screen.getByRole("spinbutton"), "8");
+    await user.click(screen.getByRole("button", { name: "提交答案" }));
+
+    expect(await screen.findByText("答对了")).toBeInTheDocument();
+    expect(submitAnswer).toHaveBeenCalledWith(
+      "mock-token",
+      "child-1",
+      "math-session",
+      expect.objectContaining({
+        session_question_id: "math-1",
+        user_answer: "8",
+      }),
+    );
+  });
 });

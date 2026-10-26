@@ -27,6 +27,7 @@
 - `parent_user`：家长账户
 - `child_profile`：孩子档案
 - `learning_rule`：学习规则
+- `math_settings`：算术设置（每孩子一条，含范围与运算符）
 - `learning_content`：学习内容主表
 - `learning_content_detail`：学习内容扩展明细表
 - `learning_session`：学习会话
@@ -171,16 +172,16 @@ erDiagram
 
 用途：保存家长账户信息。MVP 即使不做完整登录体系，也建议保留此实体，便于后续多孩子、多账户隔离。
 
-| 字段名 | 类型 | 可空 | 默认值 | 说明 |
-| --- | --- | --- | --- | --- |
-| id | char(36) | 否 | UUID | 主键 |
-| account_name | varchar(50) | 否 | 无 | 家长账号标识，建议唯一 |
-| display_name | varchar(100) | 否 | 无 | 家长显示名称 |
-| status | varchar(20) | 否 | active | 状态：active、disabled |
-| created_at | datetime | 否 | now | 创建时间 |
-| updated_at | datetime | 否 | now | 更新时间 |
-| deleted_at | datetime | 是 | null | 软删除时间 |
-| is_deleted | tinyint | 否 | 0 | 软删除标记 |
+| 字段名       | 类型         | 可空 | 默认值 | 说明                   |
+| ------------ | ------------ | ---- | ------ | ---------------------- |
+| id           | char(36)     | 否   | UUID   | 主键                   |
+| account_name | varchar(50)  | 否   | 无     | 家长账号标识，建议唯一 |
+| display_name | varchar(100) | 否   | 无     | 家长显示名称           |
+| status       | varchar(20)  | 否   | active | 状态：active、disabled |
+| created_at   | datetime     | 否   | now    | 创建时间               |
+| updated_at   | datetime     | 否   | now    | 更新时间               |
+| deleted_at   | datetime     | 是   | null   | 软删除时间             |
+| is_deleted   | tinyint      | 否   | 0      | 软删除标记             |
 
 索引建议：
 
@@ -198,20 +199,20 @@ erDiagram
 
 用途：保存孩子档案，是学习内容、学习规则、学习会话的业务归属主体。
 
-| 字段名 | 类型 | 可空 | 默认值 | 说明 |
-| --- | --- | --- | --- | --- |
-| id | char(36) | 否 | UUID | 主键 |
-| parent_user_id | char(36) | 否 | 无 | 关联家长账户 |
-| name | varchar(50) | 否 | 无 | 孩子姓名 |
-| nickname | varchar(50) | 是 | null | 昵称 |
-| age | tinyint | 否 | 无 | 年龄，建议范围 3-12 |
-| grade_level | varchar(20) | 是 | null | 年级或学段 |
-| avatar_url | varchar(255) | 是 | null | 头像地址 |
-| status | varchar(20) | 否 | active | 状态 |
-| created_at | datetime | 否 | now | 创建时间 |
-| updated_at | datetime | 否 | now | 更新时间 |
-| deleted_at | datetime | 是 | null | 软删除时间 |
-| is_deleted | tinyint | 否 | 0 | 软删除标记 |
+| 字段名         | 类型         | 可空 | 默认值 | 说明                |
+| -------------- | ------------ | ---- | ------ | ------------------- |
+| id             | char(36)     | 否   | UUID   | 主键                |
+| parent_user_id | char(36)     | 否   | 无     | 关联家长账户        |
+| name           | varchar(50)  | 否   | 无     | 孩子姓名            |
+| nickname       | varchar(50)  | 是   | null   | 昵称                |
+| age            | tinyint      | 否   | 无     | 年龄，建议范围 3-12 |
+| grade_level    | varchar(20)  | 是   | null   | 年级或学段          |
+| avatar_url     | varchar(255) | 是   | null   | 头像地址            |
+| status         | varchar(20)  | 否   | active | 状态                |
+| created_at     | datetime     | 否   | now    | 创建时间            |
+| updated_at     | datetime     | 否   | now    | 更新时间            |
+| deleted_at     | datetime     | 是   | null   | 软删除时间          |
+| is_deleted     | tinyint      | 否   | 0      | 软删除标记          |
 
 索引建议：
 
@@ -229,18 +230,18 @@ erDiagram
 
 用途：保存每个孩子的默认学习规则。
 
-| 字段名 | 类型 | 可空 | 默认值 | 说明 |
-| --- | --- | --- | --- | --- |
-| id | char(36) | 否 | UUID | 主键 |
-| child_id | char(36) | 否 | 无 | 关联孩子 |
-| question_count | int | 否 | 5 | 每轮题量 |
-| default_content_types | json | 否 | [] | 默认参与抽题的内容类型 |
-| allow_child_select_types | tinyint | 否 | 1 | 是否允许孩子选择类型 |
-| status | tinyint | 否 | 1 | 是否启用规则 |
-| created_at | datetime | 否 | now | 创建时间 |
-| updated_at | datetime | 否 | now | 更新时间 |
-| deleted_at | datetime | 是 | null | 软删除时间 |
-| is_deleted | tinyint | 否 | 0 | 软删除标记 |
+| 字段名                   | 类型     | 可空 | 默认值 | 说明                   |
+| ------------------------ | -------- | ---- | ------ | ---------------------- |
+| id                       | char(36) | 否   | UUID   | 主键                   |
+| child_id                 | char(36) | 否   | 无     | 关联孩子               |
+| question_count           | int      | 否   | 5      | 每轮题量               |
+| default_content_types    | json     | 否   | []     | 默认参与抽题的内容类型 |
+| allow_child_select_types | tinyint  | 否   | 1      | 是否允许孩子选择类型   |
+| status                   | tinyint  | 否   | 1      | 是否启用规则           |
+| created_at               | datetime | 否   | now    | 创建时间               |
+| updated_at               | datetime | 否   | now    | 更新时间               |
+| deleted_at               | datetime | 是   | null   | 软删除时间             |
+| is_deleted               | tinyint  | 否   | 0      | 软删除标记             |
 
 索引建议：
 
@@ -258,23 +259,23 @@ erDiagram
 
 用途：保存五类学习内容的共性字段，是内容管理和题目生成的主数据来源。
 
-| 字段名 | 类型 | 可空 | 默认值 | 说明 |
-| --- | --- | --- | --- | --- |
-| id | char(36) | 否 | UUID | 主键 |
-| child_id | char(36) | 否 | 无 | 关联孩子 |
-| content_type | varchar(30) | 否 | 无 | 内容类型 |
-| title | varchar(100) | 否 | 无 | 标题或主展示名称 |
-| content_text | text | 否 | 无 | 内容正文 |
-| pronunciation | varchar(100) | 是 | null | 拼音、音标或发音 |
-| meaning | varchar(255) | 是 | null | 释义 |
-| example | varchar(255) | 是 | null | 示例 |
-| difficulty | tinyint | 否 | 1 | 难度级别 1-3 |
-| status | varchar(20) | 否 | enabled | 状态：enabled、disabled |
-| sort_order | int | 否 | 0 | 排序值 |
-| created_at | datetime | 否 | now | 创建时间 |
-| updated_at | datetime | 否 | now | 更新时间 |
-| deleted_at | datetime | 是 | null | 软删除时间 |
-| is_deleted | tinyint | 否 | 0 | 软删除标记 |
+| 字段名        | 类型         | 可空 | 默认值  | 说明                    |
+| ------------- | ------------ | ---- | ------- | ----------------------- |
+| id            | char(36)     | 否   | UUID    | 主键                    |
+| child_id      | char(36)     | 否   | 无      | 关联孩子                |
+| content_type  | varchar(30)  | 否   | 无      | 内容类型                |
+| title         | varchar(100) | 否   | 无      | 标题或主展示名称        |
+| content_text  | text         | 否   | 无      | 内容正文                |
+| pronunciation | varchar(100) | 是   | null    | 拼音、音标或发音        |
+| meaning       | varchar(255) | 是   | null    | 释义                    |
+| example       | varchar(255) | 是   | null    | 示例                    |
+| difficulty    | tinyint      | 否   | 1       | 难度级别 1-3            |
+| status        | varchar(20)  | 否   | enabled | 状态：enabled、disabled |
+| sort_order    | int          | 否   | 0       | 排序值                  |
+| created_at    | datetime     | 否   | now     | 创建时间                |
+| updated_at    | datetime     | 否   | now     | 更新时间                |
+| deleted_at    | datetime     | 是   | null    | 软删除时间              |
+| is_deleted    | tinyint      | 否   | 0       | 软删除标记              |
 
 索引建议：
 
@@ -285,7 +286,7 @@ erDiagram
 
 约束建议：
 
-- `content_type` 仅允许：character、classic、poem、idiom、englishWord
+- `content_type` 仅允许：character、classic、poem、idiom、englishWord、math（其中 `math` 为虚拟类型，无具体内容条目，仅用于会话类型选择，题目由 `math_settings` 即时生成）
 - `difficulty` 仅允许：1、2、3
 - `status` 仅允许：enabled、disabled
 - `title` 不允许为空字符串
@@ -299,15 +300,15 @@ erDiagram
 - 该表使用 `detail_payload` 承载类型专属字段。
 - 若未来迁移到关系型数据库且查询复杂度提升，可进一步拆分为 `character_content_detail`、`poem_content_detail` 等专属表。
 
-| 字段名 | 类型 | 可空 | 默认值 | 说明 |
-| --- | --- | --- | --- | --- |
-| id | char(36) | 否 | UUID | 主键 |
-| content_id | char(36) | 否 | 无 | 关联学习内容 |
-| detail_payload | json | 否 | {} | 类型扩展字段 |
-| created_at | datetime | 否 | now | 创建时间 |
-| updated_at | datetime | 否 | now | 更新时间 |
-| deleted_at | datetime | 是 | null | 软删除时间 |
-| is_deleted | tinyint | 否 | 0 | 软删除标记 |
+| 字段名         | 类型     | 可空 | 默认值 | 说明         |
+| -------------- | -------- | ---- | ------ | ------------ |
+| id             | char(36) | 否   | UUID   | 主键         |
+| content_id     | char(36) | 否   | 无     | 关联学习内容 |
+| detail_payload | json     | 否   | {}     | 类型扩展字段 |
+| created_at     | datetime | 否   | now    | 创建时间     |
+| updated_at     | datetime | 否   | now    | 更新时间     |
+| deleted_at     | datetime | 是   | null   | 软删除时间   |
+| is_deleted     | tinyint  | 否   | 0      | 软删除标记   |
 
 索引建议：
 
@@ -331,22 +332,22 @@ erDiagram
 
 用途：保存一轮学习的会话级汇总数据。
 
-| 字段名 | 类型 | 可空 | 默认值 | 说明 |
-| --- | --- | --- | --- | --- |
-| id | char(36) | 否 | UUID | 主键 |
-| child_id | char(36) | 否 | 无 | 关联孩子 |
-| selected_content_types | json | 否 | [] | 孩子本轮选择的内容类型，可为空数组 |
-| total_questions | int | 否 | 0 | 本轮题目总数 |
-| answered_questions | int | 否 | 0 | 已作答题数 |
-| correct_questions | int | 否 | 0 | 正确题数 |
-| accuracy_rate | decimal(5,2) | 否 | 0.00 | 正确率，百分比或小数都可，需统一 |
-| session_status | varchar(20) | 否 | in_progress | 会话状态 |
-| started_at | datetime | 否 | now | 开始时间 |
-| finished_at | datetime | 是 | null | 完成时间 |
-| created_at | datetime | 否 | now | 创建时间 |
-| updated_at | datetime | 否 | now | 更新时间 |
-| deleted_at | datetime | 是 | null | 软删除时间 |
-| is_deleted | tinyint | 否 | 0 | 软删除标记 |
+| 字段名                 | 类型         | 可空 | 默认值      | 说明                               |
+| ---------------------- | ------------ | ---- | ----------- | ---------------------------------- |
+| id                     | char(36)     | 否   | UUID        | 主键                               |
+| child_id               | char(36)     | 否   | 无          | 关联孩子                           |
+| selected_content_types | json         | 否   | []          | 孩子本轮选择的内容类型，可为空数组 |
+| total_questions        | int          | 否   | 0           | 本轮题目总数                       |
+| answered_questions     | int          | 否   | 0           | 已作答题数                         |
+| correct_questions      | int          | 否   | 0           | 正确题数                           |
+| accuracy_rate          | decimal(5,2) | 否   | 0.00        | 正确率，百分比或小数都可，需统一   |
+| session_status         | varchar(20)  | 否   | in_progress | 会话状态                           |
+| started_at             | datetime     | 否   | now         | 开始时间                           |
+| finished_at            | datetime     | 是   | null        | 完成时间                           |
+| created_at             | datetime     | 否   | now         | 创建时间                           |
+| updated_at             | datetime     | 否   | now         | 更新时间                           |
+| deleted_at             | datetime     | 是   | null        | 软删除时间                         |
+| is_deleted             | tinyint      | 否   | 0           | 软删除标记                         |
 
 索引建议：
 
@@ -365,23 +366,23 @@ erDiagram
 
 用途：保存某次学习会话中的题目快照，保证会话历史稳定可回放。
 
-| 字段名 | 类型 | 可空 | 默认值 | 说明 |
-| --- | --- | --- | --- | --- |
-| id | char(36) | 否 | UUID | 主键 |
-| session_id | char(36) | 否 | 无 | 关联学习会话 |
-| content_id | char(36) | 否 | 无 | 来源学习内容 |
-| content_type | varchar(30) | 否 | 无 | 内容类型 |
-| question_type | varchar(30) | 否 | 无 | 题型 |
-| question_stem | text | 否 | 无 | 题干 |
-| question_options | json | 是 | null | 选项数组 |
-| correct_answer | varchar(255) | 否 | 无 | 正确答案 |
-| answer_explanation | varchar(255) | 是 | null | 答案解释 |
-| question_order | int | 否 | 无 | 题目顺序，从 1 开始 |
-| content_snapshot | json | 否 | {} | 内容快照 |
-| created_at | datetime | 否 | now | 创建时间 |
-| updated_at | datetime | 否 | now | 更新时间 |
-| deleted_at | datetime | 是 | null | 软删除时间 |
-| is_deleted | tinyint | 否 | 0 | 软删除标记 |
+| 字段名             | 类型         | 可空 | 默认值 | 说明                |
+| ------------------ | ------------ | ---- | ------ | ------------------- |
+| id                 | char(36)     | 否   | UUID   | 主键                |
+| session_id         | char(36)     | 否   | 无     | 关联学习会话        |
+| content_id         | char(36)     | 否   | 无     | 来源学习内容        |
+| content_type       | varchar(30)  | 否   | 无     | 内容类型            |
+| question_type      | varchar(30)  | 否   | 无     | 题型                |
+| question_stem      | text         | 否   | 无     | 题干                |
+| question_options   | json         | 是   | null   | 选项数组            |
+| correct_answer     | varchar(255) | 否   | 无     | 正确答案            |
+| answer_explanation | varchar(255) | 是   | null   | 答案解释            |
+| question_order     | int          | 否   | 无     | 题目顺序，从 1 开始 |
+| content_snapshot   | json         | 否   | {}     | 内容快照            |
+| created_at         | datetime     | 否   | now    | 创建时间            |
+| updated_at         | datetime     | 否   | now    | 更新时间            |
+| deleted_at         | datetime     | 是   | null   | 软删除时间          |
+| is_deleted         | tinyint      | 否   | 0      | 软删除标记          |
 
 索引建议：
 
@@ -400,21 +401,21 @@ erDiagram
 
 用途：保存孩子对每道题的作答记录。
 
-| 字段名 | 类型 | 可空 | 默认值 | 说明 |
-| --- | --- | --- | --- | --- |
-| id | char(36) | 否 | UUID | 主键 |
-| session_question_id | char(36) | 否 | 无 | 关联会话题目 |
-| session_id | char(36) | 否 | 无 | 关联学习会话 |
-| child_id | char(36) | 否 | 无 | 关联孩子 |
-| user_answer | varchar(255) | 是 | null | 用户作答 |
-| correct_answer | varchar(255) | 否 | 无 | 正确答案快照 |
-| is_correct | tinyint | 否 | 0 | 是否答对 |
-| answer_duration_ms | int | 是 | null | 作答耗时，毫秒 |
-| answered_at | datetime | 否 | now | 作答时间 |
-| created_at | datetime | 否 | now | 创建时间 |
-| updated_at | datetime | 否 | now | 更新时间 |
-| deleted_at | datetime | 是 | null | 软删除时间 |
-| is_deleted | tinyint | 否 | 0 | 软删除标记 |
+| 字段名              | 类型         | 可空 | 默认值 | 说明           |
+| ------------------- | ------------ | ---- | ------ | -------------- |
+| id                  | char(36)     | 否   | UUID   | 主键           |
+| session_question_id | char(36)     | 否   | 无     | 关联会话题目   |
+| session_id          | char(36)     | 否   | 无     | 关联学习会话   |
+| child_id            | char(36)     | 否   | 无     | 关联孩子       |
+| user_answer         | varchar(255) | 是   | null   | 用户作答       |
+| correct_answer      | varchar(255) | 否   | 无     | 正确答案快照   |
+| is_correct          | tinyint      | 否   | 0      | 是否答对       |
+| answer_duration_ms  | int          | 是   | null   | 作答耗时，毫秒 |
+| answered_at         | datetime     | 否   | now    | 作答时间       |
+| created_at          | datetime     | 否   | now    | 创建时间       |
+| updated_at          | datetime     | 否   | now    | 更新时间       |
+| deleted_at          | datetime     | 是   | null   | 软删除时间     |
+| is_deleted          | tinyint      | 否   | 0      | 软删除标记     |
 
 索引建议：
 

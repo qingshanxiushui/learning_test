@@ -10,8 +10,29 @@ export type ContentType =
   | "classic"
   | "poem"
   | "idiom"
-  | "englishWord";
+  | "englishWord"
+  | "math";
 export type ContentStatus = "enabled" | "disabled";
+
+export type MathOperator = "add" | "subtract" | "multiply" | "divide";
+
+export type MathSettings = {
+  id: string;
+  child_id: string;
+  min_value: number;
+  max_value: number;
+  operators: MathOperator[];
+  status: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type MathSettingsPayload = {
+  min_value: number;
+  max_value: number;
+  operators: MathOperator[];
+  status: number;
+};
 
 export type Child = {
   id: string;

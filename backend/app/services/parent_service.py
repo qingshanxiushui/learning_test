@@ -19,6 +19,8 @@ from app.models import (
     ContentUpdate,
     EnglishBatchCreate,
     IdiomBatchCreate,
+    MathSettings,
+    MathSettingsUpsert,
     Parent,
     ParentCreate,
     PoemBatchCreate,
@@ -674,6 +676,44 @@ class ParentService:
                 self.store.write_list("learning_rules.json", rows)
                 return Rule(**r)
         return self.create_rule(parent_id, child_id, payload)
+
+    def get_math_settings(self, parent_id: str, child_id: str) -> MathSettings | None:
+        self.assert_child_owned(parent_id, child_id)
+        rows = self._active(self.store.read_list("math_settings.json"))
+        for r in rows:
+            if r.get("child_id") == child_id:
+                return MathSettings(**r)
+        return None
+
+    def upsert_math_settings(
+        self, parent_id: str, child_id: str, payload: MathSettingsUpsert
+    ) -> MathSettings:
+        self.assert_child_owned(parent_id, child_id)
+        if payload.min_value >= payload.max_value:
+            raise ValueError("min_value must be less than max_value")
+        if not payload.operators:
+            raise ValueError("operators must not be empty")
+        rows = self.store.read_list("math_settings.json")
+        for r in rows:
+            if r.get("child_id") == child_id and r.get("is_deleted", 0) == 0:
+                r.update(payload.model_dump())
+                r["updated_at"] = now_iso()
+                self.store.write_list("math_settings.json", rows)
+                return MathSettings(**r)
+        now = now_iso()
+        item = MathSettings(
+            id=new_id(),
+            child_id=child_id,
+            min_value=payload.min_value,
+            max_value=payload.max_value,
+            operators=payload.operators,
+            status=payload.status,
+            created_at=now,
+            updated_at=now,
+        ).model_dump()
+        rows.append(item)
+        self.store.write_list("math_settings.json", rows)
+        return MathSettings(**item)
 
     def list_sessions(
         self, parent_id: str, child_id: str, page: int, page_size: int, session_status: str | None

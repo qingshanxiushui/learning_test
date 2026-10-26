@@ -3,6 +3,7 @@ import {
   Alert,
   Button,
   Card,
+  Checkbox,
   Col,
   Empty,
   Form,
@@ -41,12 +42,14 @@ import {
   updateContent,
 } from "@/api/contents";
 import { createRule, getRule, updateRule } from "@/api/rules";
+import { getMathSettings, updateMathSettings } from "@/api/math";
 import { login } from "@/api/auth";
 import type {
   Child,
   ContentPayload,
   ContentType,
   LearningContent,
+  MathOperator,
   OverviewStats,
   RulePayload,
 } from "@/types/api";
@@ -59,6 +62,18 @@ const CONTENT_TYPE_OPTIONS: { label: string; value: ContentType }[] = [
   { label: "古诗", value: "poem" },
   { label: "成语", value: "idiom" },
   { label: "英语", value: "englishWord" },
+];
+
+const LEARNING_TYPE_OPTIONS: { label: string; value: ContentType }[] = [
+  ...CONTENT_TYPE_OPTIONS,
+  { label: "算术", value: "math" },
+];
+
+const MATH_OPERATOR_OPTIONS: { label: string; value: MathOperator }[] = [
+  { label: "加法 +", value: "add" },
+  { label: "减法 -", value: "subtract" },
+  { label: "乘法 ×", value: "multiply" },
+  { label: "除法 ÷", value: "divide" },
 ];
 
 const CONTENT_PAGE_SIZE_OPTIONS = [10, 20, 50];
@@ -103,6 +118,7 @@ export default function ParentDashboard() {
   const [childForm] = Form.useForm();
   const [contentForm] = Form.useForm();
   const [ruleForm] = Form.useForm();
+  const [mathForm] = Form.useForm();
   const [loginForm] = Form.useForm();
   const selectedContentType = Form.useWatch("content_type", contentForm);
   const isBatchCreate =
@@ -181,6 +197,43 @@ export default function ParentDashboard() {
     }
   }
 
+  async function loadMathSettings(activeToken: string, childId: string) {
+    try {
+      const settings = await getMathSettings(activeToken, childId);
+      mathForm.setFieldsValue(
+        settings
+          ? {
+              min_value: settings.min_value,
+              max_value: settings.max_value,
+              operators: settings.operators,
+              status: settings.status === 1,
+            }
+          : { min_value: 0, max_value: 20, operators: ["add"], status: true },
+      );
+    } catch {
+      mathForm.setFieldsValue({
+        min_value: 0,
+        max_value: 20,
+        operators: ["add"],
+        status: true,
+      });
+    }
+  }
+
+  async function submitMathSettings() {
+    if (!token || !selectedChildId) {
+      return;
+    }
+    const values = await mathForm.validateFields();
+    await updateMathSettings(token, selectedChildId, {
+      min_value: values.min_value,
+      max_value: values.max_value,
+      operators: values.operators,
+      status: values.status ? 1 : 0,
+    });
+    messageApi.success("算术设置已保存");
+  }
+
   useEffect(() => {
     let mounted = true;
     async function fetchData() {
@@ -202,6 +255,7 @@ export default function ParentDashboard() {
               contentTypeFilter,
             ),
             loadRule(token, selectedChildId),
+            loadMathSettings(token, selectedChildId),
           ]);
         }
       } catch {
@@ -501,6 +555,7 @@ export default function ParentDashboard() {
     await Promise.all([
       loadContents(token, nextChildId, 1, 10),
       loadRule(token, nextChildId),
+      loadMathSettings(token, nextChildId),
       loadChildrenAndStats(token, nextChildId),
     ]);
   }
@@ -825,11 +880,72 @@ export default function ParentDashboard() {
                         { required: true, message: "请选择至少一个类型" },
                       ]}
                     >
-                      <Select mode="multiple" options={CONTENT_TYPE_OPTIONS} />
+                      <Select mode="multiple" options={LEARNING_TYPE_OPTIONS} />
                     </Form.Item>
 
                     <Button htmlType="submit" type="primary">
                       保存规则
+                    </Button>
+                  </Form>
+                )}
+              </Card>
+            ),
+          },
+          {
+            key: "math",
+            label: "算术设置",
+            children: (
+              <Card title="算术设置">
+                {!selectedChild ? (
+                  <Empty description="请先选择孩子" />
+                ) : (
+                  <Form
+                    form={mathForm}
+                    layout="vertical"
+                    onFinish={submitMathSettings}
+                  >
+                    <Row gutter={16}>
+                      <Col xs={24} md={8}>
+                        <Form.Item
+                          label="最小值"
+                          name="min_value"
+                          rules={[{ required: true, message: "请输入最小值" }]}
+                        >
+                          <InputNumber min={0} className="w-full" />
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24} md={8}>
+                        <Form.Item
+                          label="最大值"
+                          name="max_value"
+                          rules={[{ required: true, message: "请输入最大值" }]}
+                        >
+                          <InputNumber min={1} className="w-full" />
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24} md={8}>
+                        <Form.Item
+                          label="启用算术"
+                          name="status"
+                          valuePropName="checked"
+                        >
+                          <Switch />
+                        </Form.Item>
+                      </Col>
+                    </Row>
+
+                    <Form.Item
+                      label="运算符"
+                      name="operators"
+                      rules={[
+                        { required: true, message: "请选择至少一个运算符" },
+                      ]}
+                    >
+                      <Checkbox.Group options={MATH_OPERATOR_OPTIONS} />
+                    </Form.Item>
+
+                    <Button htmlType="submit" type="primary">
+                      保存算术设置
                     </Button>
                   </Form>
                 )}

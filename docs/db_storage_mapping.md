@@ -23,6 +23,7 @@ data/
   parent_users.json
   children.json
   learning_rules.json
+  math_settings.json
   contents/
     character.json
     classic.json
@@ -42,6 +43,7 @@ data/
 | parent_user             | `data/parent_users.json`               | 家长账户集合                   |
 | child_profile           | `data/children.json`                   | 孩子档案集合                   |
 | learning_rule           | `data/learning_rules.json`             | 学习规则集合                   |
+| math_settings           | `data/math_settings.json`              | 算术设置集合（每孩子一条）     |
 | learning_content        | `data/contents/*.json`                 | 按内容类型拆分主数据           |
 | learning_content_detail | `data/contents/*.json`                 | 与主数据合并存储在同一条记录中 |
 | learning_session        | `data/sessions/learning_sessions.json` | 学习会话摘要                   |
@@ -220,6 +222,35 @@ data/
   }
 ]
 ```
+
+### 5.8 math_settings.json
+
+```json
+[
+  {
+    "id": "uuid",
+    "child_id": "uuid",
+    "min_value": 1,
+    "max_value": 20,
+    "operators": ["add", "subtract", "multiply", "divide"],
+    "status": 1,
+    "created_at": "2026-08-20T10:00:00Z",
+    "updated_at": "2026-08-20T10:00:00Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  }
+]
+```
+
+说明：
+
+- 每个孩子仅保留一条有效设置（`is_deleted = 0`），采用 upsert 语义。
+- `min_value ≥ 0`、`max_value > min_value`、`operators` 为非空子集 `{add, subtract, multiply, divide}`。
+- 算术无内容条目，不写入 `contents/`，题目由设置在会话开始时即时生成。
+
+### 5.9 算术题目快照（session_questions.json）
+
+算术题 `content_id` 为 `null`、`content_type` 为 `math`、`question_type` 为 `math_arithmetic`，`question_options` 为空，`correct_answer` 为整数结果的字符串形式，`content_snapshot` 保存出题参数（`min_value`、`max_value`、`operator`、`operand_a`、`operand_b`、`title`）以便历史追溯。
 
 ## 6. 读写约定
 

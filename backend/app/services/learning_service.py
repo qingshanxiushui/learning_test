@@ -3,7 +3,7 @@ from __future__ import annotations
 import random
 from typing import Any
 
-from app.models import CARD_QUESTION_TYPES, AnswerSubmit, Content, Session, SessionStart, new_id, now_iso
+from app.models import CARD_QUESTION_TYPES, AnswerSubmit, Content, MathSettings, Session, SessionStart, new_id, now_iso
 from app.services.parent_service import ParentService
 from app.services.parent_service import service as parent_service
 
@@ -37,25 +37,74 @@ class LearningService:
         if not selected_types:
             selected_types = rule.default_content_types
 
+        content_types = [t for t in selected_types if t != "math"]
+        math_selected = "math" in selected_types
+
         contents, _ = self.parents.list_contents(parent_id, child_id, 1, 100000, None, "enabled", None)
-        if selected_types:
-            contents = [item for item in contents if item.content_type in selected_types]
-        if not contents:
+        if content_types:
+            contents = [item for item in contents if item.content_type in content_types]
+        else:
+            contents = []
+
+        math_settings: MathSettings | None = None
+        if math_selected:
+            math_settings = self.parents.get_math_settings(parent_id, child_id)
+            if not math_settings or math_settings.status != 1:
+                raise LearningError(404, 40407, "math settings not found")
+
+        if not math_selected and not contents:
             raise LearningError(422, 42204, "not enough enabled content to start a session")
 
-        selected_contents = random.sample(contents, min(rule.question_count, len(contents)))
-        actual_types = list(dict.fromkeys(item.content_type for item in selected_contents))
+        question_count = rule.question_count
+        math_count = 0
+        content_count = 0
+        if math_selected and contents:
+            num_types = len(selected_types)
+            math_count = max(1, -(-question_count // num_types))
+            content_count = question_count - math_count
+        elif math_selected:
+            math_count = question_count
+        else:
+            content_count = question_count
+
+        selected_contents = random.sample(contents, min(content_count, len(contents)))
+        shortfall = content_count - len(selected_contents)
+        if math_selected and shortfall > 0:
+            math_count += shortfall
+
         now = now_iso()
+        session_id = new_id()
+
+        math_questions = (
+            [self._build_math_question(session_id, math_settings, index, now) for index in range(1, math_count + 1)]
+            if math_selected
+            else []
+        )
+        content_questions = [
+            self._build_question(session_id, item, index, now)
+            for index, item in enumerate(selected_contents, len(math_questions) + 1)
+        ]
+        questions = math_questions + content_questions
+        random.shuffle(questions)
+        for index, question in enumerate(questions, 1):
+            question["question_order"] = index
+
+        actual_types: list[str] = []
+        if math_selected and math_count > 0:
+            actual_types.append("math")
+        for item in selected_contents:
+            if item.content_type not in actual_types:
+                actual_types.append(item.content_type)
+
         session = Session(
-            id=new_id(),
+            id=session_id,
             child_id=child_id,
             selected_content_types=actual_types,
-            total_questions=len(selected_contents),
+            total_questions=len(questions),
             started_at=now,
             created_at=now,
             updated_at=now,
         )
-        questions = [self._build_question(session.id, item, index, now) for index, item in enumerate(selected_contents, 1)]
 
         sessions = self.store.read_list("sessions/learning_sessions.json")
         sessions.append(session.model_dump())
@@ -92,14 +141,21 @@ class LearningService:
         )
         if not question:
             raise LearningError(404, 40406, "session question not found")
-        if payload.user_answer not in question.get("question_options", []):
-            raise LearningError(422, 42205, "answer must be one of the question options")
+        if question.get("question_type") == "math_arithmetic":
+            try:
+                user_value = int(str(payload.user_answer).strip())
+            except ValueError:
+                raise LearningError(422, 42208, "answer must be an integer")
+            is_correct = user_value == int(str(question["correct_answer"]).strip())
+        else:
+            if payload.user_answer not in question.get("question_options", []):
+                raise LearningError(422, 42205, "answer must be one of the question options")
+            is_correct = payload.user_answer.strip() == str(question["correct_answer"]).strip()
 
         answers = self.store.read_list("sessions/answer_records.json")
         if any(row.get("session_question_id") == payload.session_question_id and row.get("is_deleted", 0) == 0 for row in answers):
             raise LearningError(409, 40903, "question has already been answered")
 
-        is_correct = payload.user_answer.strip() == str(question["correct_answer"]).strip()
         now = now_iso()
         answers.append(
             {
@@ -285,6 +341,60 @@ class LearningService:
             "answer_explanation": "",
             "question_order": order,
             "content_snapshot": content.model_dump(),
+            "created_at": now,
+            "updated_at": now,
+            "deleted_at": None,
+            "is_deleted": 0,
+        }
+
+    def _build_math_question(
+        self, session_id: str, settings: MathSettings, order: int, now: str
+    ) -> dict[str, Any]:
+        operator = random.choice(settings.operators)
+        min_value = settings.min_value
+        max_value = settings.max_value
+        symbols = {"add": "+", "subtract": "-", "multiply": "×", "divide": "÷"}
+
+        if operator == "add":
+            a = random.randint(min_value, max_value)
+            b = random.randint(min_value, max_value)
+            result = a + b
+        elif operator == "subtract":
+            a = random.randint(min_value, max_value)
+            b = random.randint(min_value, max_value)
+            if a < b:
+                a, b = b, a
+            result = a - b
+        elif operator == "multiply":
+            a = random.randint(min_value, max_value)
+            b = random.randint(min_value, max_value)
+            result = a * b
+        else:
+            b = random.randint(max(1, min_value), max_value)
+            quotient = random.randint(min_value, max_value)
+            a = b * quotient
+            result = quotient
+
+        stem = f"{a} {symbols[operator]} {b} = ?"
+        return {
+            "id": new_id(),
+            "session_id": session_id,
+            "content_id": None,
+            "content_type": "math",
+            "question_type": "math_arithmetic",
+            "question_stem": stem,
+            "question_options": [],
+            "correct_answer": str(result),
+            "answer_explanation": "",
+            "question_order": order,
+            "content_snapshot": {
+                "title": stem,
+                "min_value": min_value,
+                "max_value": max_value,
+                "operator": operator,
+                "operand_a": a,
+                "operand_b": b,
+            },
             "created_at": now,
             "updated_at": now,
             "deleted_at": None,

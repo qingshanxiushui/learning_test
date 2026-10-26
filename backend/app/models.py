@@ -7,10 +7,11 @@ from uuid import uuid4
 from pydantic import BaseModel, Field
 
 
-ContentType = Literal["character", "classic", "poem", "idiom", "englishWord"]
+ContentType = Literal["character", "classic", "poem", "idiom", "englishWord", "math"]
 ContentStatus = Literal["enabled", "disabled"]
 SessionStatus = Literal["in_progress", "completed", "abandoned"]
 UserStatus = Literal["active", "disabled"]
+MathOperator = Literal["add", "subtract", "multiply", "divide"]
 
 # 以“卡片”形式展示、无需作答的题型（点击“下一个”即视为已学习）
 CARD_QUESTION_TYPES: tuple[str, ...] = (
@@ -100,6 +101,26 @@ class Rule(BaseModel):
     question_count: int
     default_content_types: list[ContentType]
     allow_child_select_types: bool
+    status: int
+    created_at: str
+    updated_at: str
+    deleted_at: str | None = None
+    is_deleted: int = 0
+
+
+class MathSettingsUpsert(BaseModel):
+    min_value: int = Field(default=0, ge=0)
+    max_value: int = Field(default=20, ge=1)
+    operators: list[MathOperator] = Field(default_factory=list)
+    status: int = Field(default=1, ge=0, le=1)
+
+
+class MathSettings(BaseModel):
+    id: str
+    child_id: str
+    min_value: int
+    max_value: int
+    operators: list[MathOperator]
     status: int
     created_at: str
     updated_at: str

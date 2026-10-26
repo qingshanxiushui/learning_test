@@ -9,6 +9,7 @@ import {
   batchUpsertPoems,
   listContents,
 } from "@/api/contents";
+import { updateMathSettings } from "@/api/math";
 import ParentDashboard from "@/features/parent/pages/ParentDashboard";
 
 const { contentsState } = vi.hoisted(() => ({
@@ -113,6 +114,20 @@ vi.mock("@/api/rules", () => ({
 
 vi.mock("@/api/auth", () => ({
   login: vi.fn(),
+}));
+
+vi.mock("@/api/math", () => ({
+  getMathSettings: vi.fn(async () => null),
+  updateMathSettings: vi.fn(async () => ({
+    id: "math-1",
+    child_id: "child-1",
+    min_value: 1,
+    max_value: 20,
+    operators: ["add"],
+    status: 1,
+    created_at: "2026-08-20T10:00:00Z",
+    updated_at: "2026-08-20T10:00:00Z",
+  })),
 }));
 
 describe("ParentDashboard", () => {
@@ -336,4 +351,26 @@ describe("ParentDashboard", () => {
       content_type: undefined,
     });
   });
+
+  it("saves math settings", async () => {
+    const user = userEvent.setup();
+    render(<ParentDashboard />);
+
+    await screen.findByText("家长端总览");
+    await user.click(screen.getByRole("tab", { name: "算术设置" }));
+    expect(await screen.findByText("运算符")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "保存算术设置" }));
+
+    expect(updateMathSettings).toHaveBeenCalledWith(
+      "mock-token",
+      "child-1",
+      expect.objectContaining({
+        min_value: 0,
+        max_value: 20,
+        operators: ["add"],
+        status: 1,
+      }),
+    );
+  }, 15000);
 });

@@ -5,6 +5,7 @@ import {
   Empty,
   Form,
   Input,
+  InputNumber,
   Progress,
   Select,
   Spin,
@@ -51,6 +52,7 @@ const CONTENT_TYPES: Array<{
   { value: "poem", label: "古诗", mark: "诗" },
   { value: "idiom", label: "成语", mark: "言" },
   { value: "englishWord", label: "英语", mark: "Aa" },
+  { value: "math", label: "算术", mark: "算" },
 ];
 
 type Phase = "choose" | "learning" | "result";
@@ -418,7 +420,20 @@ export default function ChildLearning() {
             <Typography.Title level={2}>
               {currentQuestion.question_stem}
             </Typography.Title>
-            {!CARD_QUESTION_TYPES.has(currentQuestion.question_type) && (
+            {currentQuestion.question_type === "math_arithmetic" ? (
+              <div className="math-input">
+                <InputNumber
+                  size="large"
+                  min={0}
+                  value={selectedAnswer === "" ? null : Number(selectedAnswer)}
+                  onChange={(value) =>
+                    setSelectedAnswer(value == null ? "" : String(value))
+                  }
+                  disabled={Boolean(feedback)}
+                  autoFocus
+                />
+              </div>
+            ) : !CARD_QUESTION_TYPES.has(currentQuestion.question_type) ? (
               <div className="answer-grid">
                 {currentQuestion.question_options.map((option) => {
                   const state = feedback
@@ -443,7 +458,7 @@ export default function ChildLearning() {
                   );
                 })}
               </div>
-            )}
+            ) : null}
           </div>
 
           {CARD_QUESTION_TYPES.has(currentQuestion.question_type) ? (
