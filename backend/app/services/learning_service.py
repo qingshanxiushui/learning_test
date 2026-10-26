@@ -3,7 +3,7 @@ from __future__ import annotations
 import random
 from typing import Any
 
-from app.models import AnswerSubmit, Content, Session, SessionStart, new_id, now_iso
+from app.models import CARD_QUESTION_TYPES, AnswerSubmit, Content, Session, SessionStart, new_id, now_iso
 from app.services.parent_service import ParentService
 from app.services.parent_service import service as parent_service
 
@@ -161,8 +161,8 @@ class LearningService:
         )
         if not question:
             raise LearningError(404, 40406, "session question not found")
-        if question.get("question_type") != "character_card":
-            raise LearningError(422, 42206, "question is not a character card")
+        if question.get("question_type") not in CARD_QUESTION_TYPES:
+            raise LearningError(422, 42206, "question is not a learning card")
 
         if not question.get("viewed_at"):
             now = now_iso()
@@ -233,7 +233,7 @@ class LearningService:
             for row in questions
             if row.get("session_id") == session_id
             and row.get("is_deleted", 0) == 0
-            and row.get("question_type") == "character_card"
+            and row.get("question_type") in CARD_QUESTION_TYPES
             and row.get("viewed_at")
         )
         return len(completed_ids)
@@ -260,9 +260,14 @@ class LearningService:
     def _build_question(
         self, session_id: str, content: Content, order: int, pool: list[Content], now: str
     ) -> dict[str, Any]:
-        if content.content_type == "character":
-            question_type = "character_card"
-            stem = content.title
+        if content.content_type in ("character", "englishWord", "poem", "idiom"):
+            question_type = {
+                "character": "character_card",
+                "englishWord": "english_word_card",
+                "poem": "poem_card",
+                "idiom": "idiom_card",
+            }[content.content_type]
+            stem = self._format_poem(content) if content.content_type == "poem" else content.title
             answer = ""
             explanation = ""
             options: list[str] = []
@@ -311,21 +316,31 @@ class LearningService:
             if content.meaning:
                 return "meaning_choice", f"“{sentence}”是什么意思？", content.meaning, content.title
 
-        if content.content_type == "poem":
-            poem_lines = detail.get("poem_lines")
-            if isinstance(poem_lines, list):
-                lines = [str(line).strip() for line in poem_lines if str(line).strip()]
-                if len(lines) >= 2:
-                    return "next_line_choice", f"“{lines[0]}”下一句是什么？", lines[1], f"出自《{content.title}》"
-            return "poem_content_choice", f"哪一句出自《{content.title}》？", content.content_text, content.meaning or content.title
-
-        if content.content_type == "idiom" and content.meaning:
-            return "meaning_choice", f"“{content.title}”是什么意思？", content.meaning, content.example or content.content_text
-
-        if content.content_type == "englishWord" and content.meaning:
-            return "translation_choice", f"“{content.title}”的中文意思是什么？", content.meaning, content.example or content.content_text
-
         return "content_choice", f"请选择《{content.title}》的学习内容", content.content_text, content.meaning or content.example or content.title
+
+    @staticmethod
+    def _poem_lines(content: Content) -> list[str]:
+        detail = content.detail or {}
+        raw = detail.get("poem_lines")
+        if isinstance(raw, list):
+            return [str(line).strip() for line in raw if str(line).strip()]
+        return [str(content.content_text).strip()] if content.content_text else []
+
+    @staticmethod
+    def _format_poem(content: Content) -> str:
+        detail = content.detail or {}
+        dynasty = str(detail.get("dynasty") or "").strip()
+        author = str(detail.get("author") or "").strip()
+        title = str(content.title or "").strip()
+        header = f"《{title}》"
+        if dynasty and author:
+            header += f"{dynasty}·{author}"
+        elif author:
+            header += author
+        lines = LearningService._poem_lines(content)
+        if lines:
+            return f"{header}\n" + "\n".join(lines)
+        return header
 
 
 learning_service = LearningService(parent_service)

@@ -103,22 +103,21 @@ def test_child_learning_full_flow() -> None:
         json={"name": "小雨", "nickname": "雨点", "age": 5},
     ).json()["data"]
 
-    poems = [
-        ("静夜思", ["床前明月光", "疑是地上霜"]),
-        ("春晓", ["春眠不觉晓", "处处闻啼鸟"]),
+    classics = [
+        ("三字经", "人之初", "性本善"),
+        ("弟子规", "弟子规", "圣人训"),
     ]
-    for title, lines in poems:
+    for title, sentence, next_sentence in classics:
         response = client.post(
             f"/api/v1/children/{child['id']}/contents",
             headers=headers,
             json={
-                "content_type": "poem",
+                "content_type": "classic",
                 "title": title,
-                "content_text": "，".join(lines),
-                "meaning": f"{title}的诗意",
+                "content_text": sentence,
                 "difficulty": 1,
                 "status": "enabled",
-                "detail": {"poem_lines": lines},
+                "detail": {"sentence_text": sentence, "next_sentence": next_sentence},
             },
         )
         assert response.status_code == 201
@@ -128,7 +127,7 @@ def test_child_learning_full_flow() -> None:
         headers=headers,
         json={
             "question_count": 5,
-            "default_content_types": ["poem"],
+            "default_content_types": ["classic"],
             "allow_child_select_types": True,
             "status": 1,
         },
@@ -153,6 +152,12 @@ def test_child_learning_full_flow() -> None:
     first, second = detail["questions"]
     assert "correct_answer" not in first
 
+    def answer_for(question: dict) -> str:
+        for title, sentence, next_sentence in classics:
+            if sentence in question["question_stem"]:
+                return next_sentence
+        raise AssertionError(f"unrecognized question: {question}")
+
     invalid = client.post(
         f"/api/v1/children/{child['id']}/sessions/{session_id}/answers",
         headers=headers,
@@ -161,10 +166,9 @@ def test_child_learning_full_flow() -> None:
     assert invalid.status_code == 422
     assert invalid.json()["code"] == 42205
 
-    correct_answers = {"床前明月光": "疑是地上霜", "春眠不觉晓": "处处闻啼鸟"}
-    first_answer = next(answer for line, answer in correct_answers.items() if line in first["question_stem"])
+    first_answer = answer_for(first)
     first_wrong_answer = next(option for option in first["question_options"] if option != first_answer)
-    second_answer = next(answer for line, answer in correct_answers.items() if line in second["question_stem"])
+    second_answer = answer_for(second)
 
     wrong = client.post(
         f"/api/v1/children/{child['id']}/sessions/{session_id}/answers",
@@ -280,7 +284,203 @@ def test_generates_templates_for_all_content_types() -> None:
     assert question_types == {
         "character": "character_card",
         "classic": "next_line_choice",
-        "poem": "next_line_choice",
-        "idiom": "meaning_choice",
-        "englishWord": "translation_choice",
+        "poem": "poem_card",
+        "idiom": "idiom_card",
+        "englishWord": "english_word_card",
     }
+
+
+def test_poem_is_viewed_as_card() -> None:
+    client = TestClient(app)
+    client.post(
+        "/api/v1/parents",
+        json={"account_name": "poem_card_parent", "display_name": "Parent", "password": "123456"},
+    )
+    login = client.post(
+        "/api/v1/auth/login",
+        json={"account_name": "poem_card_parent", "password": "123456"},
+    )
+    headers = {"Authorization": f"Bearer {login.json()['data']['access_token']}"}
+    child_id = client.post(
+        "/api/v1/children",
+        headers=headers,
+        json={"name": "小诗", "age": 6},
+    ).json()["data"]["id"]
+    client.post(
+        f"/api/v1/children/{child_id}/contents",
+        headers=headers,
+        json={
+            "content_type": "poem",
+            "title": "静夜思",
+            "content_text": "床前明月光，疑是地上霜。",
+            "difficulty": 1,
+            "status": "enabled",
+            "detail": {"poem_lines": ["床前明月光", "疑是地上霜"], "dynasty": "唐", "author": "李白"},
+        },
+    )
+    client.post(
+        f"/api/v1/children/{child_id}/rules",
+        headers=headers,
+        json={
+            "question_count": 1,
+            "default_content_types": ["poem"],
+            "allow_child_select_types": True,
+            "status": 1,
+        },
+    )
+
+    started = client.post(
+        f"/api/v1/children/{child_id}/sessions",
+        headers=headers,
+        json={"selected_content_types": ["poem"]},
+    )
+    assert started.status_code == 201
+    data = started.json()["data"]
+    question = data["questions"][0]
+    assert question["question_type"] == "poem_card"
+    assert question["question_stem"] == "《静夜思》唐·李白\n床前明月光\n疑是地上霜"
+    assert question["question_options"] == []
+
+    session_id = data["session"]["id"]
+    viewed = client.post(
+        f"/api/v1/children/{child_id}/sessions/{session_id}/questions/{question['id']}/viewed",
+        headers=headers,
+        json={"view_duration_ms": 800},
+    )
+    assert viewed.status_code == 200
+    assert viewed.json()["data"]["progress"]["completed_questions"] == 1
+
+    completed = client.post(
+        f"/api/v1/children/{child_id}/sessions/{session_id}/complete", headers=headers
+    )
+    assert completed.status_code == 200
+    assert completed.json()["data"]["session"]["answered_questions"] == 0
+    assert completed.json()["data"]["session"]["completed_questions"] == 1
+
+
+def test_idiom_is_viewed_as_card() -> None:
+    client = TestClient(app)
+    client.post(
+        "/api/v1/parents",
+        json={"account_name": "idiom_card_parent", "display_name": "Parent", "password": "123456"},
+    )
+    login = client.post(
+        "/api/v1/auth/login",
+        json={"account_name": "idiom_card_parent", "password": "123456"},
+    )
+    headers = {"Authorization": f"Bearer {login.json()['data']['access_token']}"}
+    child_id = client.post(
+        "/api/v1/children",
+        headers=headers,
+        json={"name": "小成", "age": 6},
+    ).json()["data"]["id"]
+    client.post(
+        f"/api/v1/children/{child_id}/contents",
+        headers=headers,
+        json={
+            "content_type": "idiom",
+            "title": "地大物博",
+            "content_text": "地大物博",
+            "difficulty": 1,
+            "status": "enabled",
+        },
+    )
+    client.post(
+        f"/api/v1/children/{child_id}/rules",
+        headers=headers,
+        json={
+            "question_count": 1,
+            "default_content_types": ["idiom"],
+            "allow_child_select_types": True,
+            "status": 1,
+        },
+    )
+
+    started = client.post(
+        f"/api/v1/children/{child_id}/sessions",
+        headers=headers,
+        json={"selected_content_types": ["idiom"]},
+    )
+    assert started.status_code == 201
+    data = started.json()["data"]
+    question = data["questions"][0]
+    assert question["question_type"] == "idiom_card"
+    assert question["question_stem"] == "地大物博"
+    assert question["question_options"] == []
+
+    session_id = data["session"]["id"]
+    viewed = client.post(
+        f"/api/v1/children/{child_id}/sessions/{session_id}/questions/{question['id']}/viewed",
+        headers=headers,
+        json={"view_duration_ms": 800},
+    )
+    assert viewed.status_code == 200
+    assert viewed.json()["data"]["progress"]["completed_questions"] == 1
+
+    completed = client.post(
+        f"/api/v1/children/{child_id}/sessions/{session_id}/complete", headers=headers
+    )
+    assert completed.status_code == 200
+    assert completed.json()["data"]["session"]["answered_questions"] == 0
+    assert completed.json()["data"]["session"]["completed_questions"] == 1
+
+
+def test_english_words_are_viewed_as_cards() -> None:
+    client = TestClient(app)
+    client.post(
+        "/api/v1/parents",
+        json={"account_name": "english_parent", "display_name": "Parent", "password": "123456"},
+    )
+    login = client.post(
+        "/api/v1/auth/login",
+        json={"account_name": "english_parent", "password": "123456"},
+    )
+    headers = {"Authorization": f"Bearer {login.json()['data']['access_token']}"}
+    child_id = client.post(
+        "/api/v1/children",
+        headers=headers,
+        json={"name": "小英", "age": 6},
+    ).json()["data"]["id"]
+    imported = client.post(
+        f"/api/v1/children/{child_id}/contents/english/batch",
+        headers=headers,
+        json={"content_text": "apple\nbanana", "difficulty": 1, "status": "enabled"},
+    )
+    assert imported.status_code == 201
+    client.post(
+        f"/api/v1/children/{child_id}/rules",
+        headers=headers,
+        json={
+            "question_count": 2,
+            "default_content_types": ["englishWord"],
+            "allow_child_select_types": True,
+            "status": 1,
+        },
+    )
+
+    started = client.post(
+        f"/api/v1/children/{child_id}/sessions",
+        headers=headers,
+        json={"selected_content_types": ["englishWord"]},
+    )
+    assert started.status_code == 201
+    data = started.json()["data"]
+    assert {question["question_stem"] for question in data["questions"]} == {"apple", "banana"}
+    assert all(question["question_type"] == "english_word_card" for question in data["questions"])
+    assert all(question["question_options"] == [] for question in data["questions"])
+
+    session_id = data["session"]["id"]
+    for question in data["questions"]:
+        viewed = client.post(
+            f"/api/v1/children/{child_id}/sessions/{session_id}/questions/{question['id']}/viewed",
+            headers=headers,
+            json={"view_duration_ms": 600},
+        )
+        assert viewed.status_code == 200
+
+    completed = client.post(
+        f"/api/v1/children/{child_id}/sessions/{session_id}/complete", headers=headers
+    )
+    assert completed.status_code == 200
+    assert completed.json()["data"]["session"]["answered_questions"] == 0
+    assert completed.json()["data"]["session"]["completed_questions"] == 2

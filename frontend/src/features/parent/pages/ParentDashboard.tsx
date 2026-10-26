@@ -31,6 +31,8 @@ import { getOverviewStats } from "@/api/stats";
 import {
   batchUpsertCharacters,
   batchUpsertEnglishWords,
+  batchUpsertIdioms,
+  batchUpsertPoems,
   createContent,
   deleteContent,
   listContents,
@@ -104,7 +106,12 @@ export default function ParentDashboard() {
   const selectedContentType = Form.useWatch("content_type", contentForm);
   const isBatchCreate =
     !contentEditing &&
-    (selectedContentType === "character" || selectedContentType === "englishWord");
+    (selectedContentType === "character" ||
+      selectedContentType === "englishWord" ||
+      selectedContentType === "poem" ||
+      selectedContentType === "idiom");
+  const isPoemBatch = isBatchCreate && selectedContentType === "poem";
+  const isIdiomBatch = isBatchCreate && selectedContentType === "idiom";
 
   const selectedChild = useMemo(
     () => children.find((item) => item.id === selectedChildId) ?? null,
@@ -345,6 +352,34 @@ export default function ParentDashboard() {
       });
       messageApi.success(
         `已新增 ${result.created_count} 个单词，更新 ${result.updated_count} 个单词`,
+      );
+    } else if (values.content_type === "poem") {
+      const result = await batchUpsertPoems(token, selectedChildId, {
+        content_text: payload.content_text,
+        pronunciation: payload.pronunciation,
+        meaning: payload.meaning,
+        example: payload.example,
+        difficulty: payload.difficulty,
+        status: payload.status,
+        sort_order: payload.sort_order,
+        detail: payload.detail,
+      });
+      messageApi.success(
+        `已新增 ${result.created_count} 首古诗，更新 ${result.updated_count} 首古诗`,
+      );
+    } else if (values.content_type === "idiom") {
+      const result = await batchUpsertIdioms(token, selectedChildId, {
+        content_text: payload.content_text,
+        pronunciation: payload.pronunciation,
+        meaning: payload.meaning,
+        example: payload.example,
+        difficulty: payload.difficulty,
+        status: payload.status,
+        sort_order: payload.sort_order,
+        detail: payload.detail,
+      });
+      messageApi.success(
+        `已新增 ${result.created_count} 个成语，更新 ${result.updated_count} 个成语`,
       );
     } else {
       await createContent(token, selectedChildId, payload);
@@ -773,10 +808,7 @@ export default function ParentDashboard() {
                         { required: true, message: "请选择至少一个类型" },
                       ]}
                     >
-                      <Select
-                        mode="multiple"
-                        options={CONTENT_TYPE_OPTIONS}
-                      />
+                      <Select mode="multiple" options={CONTENT_TYPE_OPTIONS} />
                     </Form.Item>
 
                     <Button htmlType="submit" type="primary">
@@ -844,17 +876,13 @@ export default function ParentDashboard() {
       >
         <Form form={contentForm} layout="vertical">
           <Row gutter={16}>
-            <Col
-              span={contentEditing || !isBatchCreate ? 12 : 24}
-            >
+            <Col span={contentEditing || !isBatchCreate ? 12 : 24}>
               <Form.Item
                 label="类型"
                 name="content_type"
                 rules={[{ required: true }]}
               >
-                <Select
-                  options={CONTENT_TYPE_OPTIONS}
-                />
+                <Select options={CONTENT_TYPE_OPTIONS} />
               </Form.Item>
             </Col>
             {(contentEditing || !isBatchCreate) && (
@@ -875,7 +903,11 @@ export default function ParentDashboard() {
                 ? "汉字正文"
                 : isBatchCreate && selectedContentType === "englishWord"
                   ? "英语正文"
-                  : "正文"
+                  : isBatchCreate && selectedContentType === "poem"
+                    ? "古诗正文"
+                    : isBatchCreate && selectedContentType === "idiom"
+                      ? "成语正文"
+                      : "正文"
             }
             name="content_text"
             rules={[{ required: true, message: "请输入正文" }]}
@@ -884,32 +916,42 @@ export default function ParentDashboard() {
                 ? "支持多行、项目符号和标点；保存后将按单字去重导入。"
                 : isBatchCreate && selectedContentType === "englishWord"
                   ? "支持多行、标点、连字符和撇号；空格不分割，保存后将按词组去重导入。"
-                  : undefined
+                  : isBatchCreate && selectedContentType === "poem"
+                    ? "每首古诗以“《诗名》朝代·诗人”开头，正文分行/分句；保存后自动提取诗名、朝代、诗人和诗句。"
+                    : isBatchCreate && selectedContentType === "idiom"
+                      ? "每个《》内的成语作为一条记录，保存后按成语去重导入。"
+                      : undefined
             }
           >
             <Input.TextArea
-              rows={3}
+              rows={isPoemBatch ? 8 : 3}
               placeholder={
                 isBatchCreate && selectedContentType === "character"
                   ? "- 根、茂、但、闻、响\n- 苔、初、本、习"
                   : isBatchCreate && selectedContentType === "englishWord"
                     ? "apple, banana\norange pear"
-                    : undefined
+                    : isBatchCreate && selectedContentType === "poem"
+                      ? "《静夜思》唐·李白\n床前明月光，疑是地上霜。举头望明月，低头思故乡。\n\n《春晓》唐·孟浩然\n春眠不觉晓，处处闻啼鸟。夜来风雨声，花落知多少。"
+                      : isBatchCreate && selectedContentType === "idiom"
+                        ? "《 地大物博》《博大精深》《深入人心》\n《照章办事》《事出有因》《因小失大》"
+                        : undefined
               }
             />
           </Form.Item>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item label="发音" name="pronunciation">
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item label="释义" name="meaning">
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
+          {!isPoemBatch && !isIdiomBatch && (
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item label="发音" name="pronunciation">
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="释义" name="meaning">
+                  <Input />
+                </Form.Item>
+              </Col>
+            </Row>
+          )}
           <Row gutter={16}>
             <Col span={8}>
               <Form.Item
@@ -944,17 +986,21 @@ export default function ParentDashboard() {
               </Form.Item>
             </Col>
           </Row>
-          <Form.Item label="示例" name="example">
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="扩展字段 detail_json"
-            name="detail_json"
-            tooltip={'输入 JSON 字符串，例如 {"author":"李白"}'}
-            rules={[{ required: true, message: "请输入 detail_json" }]}
-          >
-            <Input.TextArea rows={6} />
-          </Form.Item>
+          {!isPoemBatch && !isIdiomBatch && (
+            <Form.Item label="示例" name="example">
+              <Input />
+            </Form.Item>
+          )}
+          {!isPoemBatch && !isIdiomBatch && (
+            <Form.Item
+              label="扩展字段 detail_json"
+              name="detail_json"
+              tooltip={'输入 JSON 字符串，例如 {"author":"李白"}'}
+              rules={[{ required: true, message: "请输入 detail_json" }]}
+            >
+              <Input.TextArea rows={6} />
+            </Form.Item>
+          )}
         </Form>
       </Modal>
     </Space>

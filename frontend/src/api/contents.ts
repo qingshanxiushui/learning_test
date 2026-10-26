@@ -80,6 +80,36 @@ export function batchUpsertEnglishWords(
   );
 }
 
+export function batchUpsertPoems(
+  token: string,
+  childId: string,
+  payload: CharacterBatchPayload,
+): Promise<CharacterBatchResult> {
+  return request<CharacterBatchResult>(
+    `/children/${childId}/contents/poems/batch`,
+    {
+      method: "POST",
+      token,
+      body: payload,
+    },
+  );
+}
+
+export function batchUpsertIdioms(
+  token: string,
+  childId: string,
+  payload: CharacterBatchPayload,
+): Promise<CharacterBatchResult> {
+  return request<CharacterBatchResult>(
+    `/children/${childId}/contents/idioms/batch`,
+    {
+      method: "POST",
+      token,
+      body: payload,
+    },
+  );
+}
+
 export function updateContent(
   token: string,
   childId: string,

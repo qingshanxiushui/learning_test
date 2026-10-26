@@ -4,13 +4,12 @@
     "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
     "question_count": 5,
     "default_content_types": [
-      "character",
-      "poem"
+      "character"
     ],
     "allow_child_select_types": true,
     "status": 1,
     "created_at": "2026-10-22T02:37:30Z",
-    "updated_at": "2026-10-22T02:37:30Z",
+    "updated_at": "2026-10-23T11:47:49Z",
     "deleted_at": null,
     "is_deleted": 0
   }

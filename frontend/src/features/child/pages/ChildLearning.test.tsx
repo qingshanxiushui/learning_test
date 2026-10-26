@@ -181,12 +181,204 @@ describe("ChildLearning", () => {
 
     await user.click(screen.getByRole("button", { name: "完成学习" }));
     expect(await screen.findByText("1")).toBeInTheDocument();
-    expect(screen.getByText("个汉字已学习")).toBeInTheDocument();
+    expect(screen.getByText("个内容已学习")).toBeInTheDocument();
     expect(markCardViewed).toHaveBeenCalledWith(
       "mock-token",
       "child-1",
       "card-session",
       "card-1",
+      expect.any(Number),
+    );
+    expect(submitAnswer).not.toHaveBeenCalled();
+  });
+
+  it("views an english word card without submitting an answer", async () => {
+    vi.mocked(startSession).mockResolvedValueOnce({
+      session: {
+        id: "word-session",
+        child_id: "child-1",
+        selected_content_types: ["englishWord"],
+        total_questions: 1,
+        completed_questions: 0,
+        answered_questions: 0,
+        correct_questions: 0,
+        accuracy_rate: 0,
+        session_status: "in_progress",
+        started_at: "2026-08-20T10:00:00Z",
+        finished_at: null,
+      },
+      questions: [
+        {
+          id: "word-1",
+          question_order: 1,
+          content_type: "englishWord",
+          question_type: "english_word_card",
+          question_stem: "apple",
+          question_options: [],
+        },
+      ],
+    });
+    vi.mocked(completeSession).mockResolvedValueOnce({
+      session: {
+        id: "word-session",
+        child_id: "child-1",
+        selected_content_types: ["englishWord"],
+        total_questions: 1,
+        completed_questions: 1,
+        answered_questions: 0,
+        correct_questions: 0,
+        accuracy_rate: 0,
+        session_status: "completed",
+        started_at: "2026-08-20T10:00:00Z",
+        finished_at: "2026-08-20T10:01:00Z",
+      },
+      summary: { need_review_contents: [] },
+    });
+    const user = userEvent.setup();
+    render(<ChildLearning />);
+
+    await screen.findByText(/准备好了吗.*雨点/);
+    await user.click(screen.getByRole("button", { name: "开始学习" }));
+    expect(await screen.findByText("apple")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "提交答案" }),
+    ).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "完成学习" }));
+    expect(await screen.findByText("1")).toBeInTheDocument();
+    expect(markCardViewed).toHaveBeenCalledWith(
+      "mock-token",
+      "child-1",
+      "word-session",
+      "word-1",
+      expect.any(Number),
+    );
+    expect(submitAnswer).not.toHaveBeenCalled();
+  });
+
+  it("views a poem card without submitting an answer", async () => {
+    vi.mocked(startSession).mockResolvedValueOnce({
+      session: {
+        id: "poem-session",
+        child_id: "child-1",
+        selected_content_types: ["poem"],
+        total_questions: 1,
+        completed_questions: 0,
+        answered_questions: 0,
+        correct_questions: 0,
+        accuracy_rate: 0,
+        session_status: "in_progress",
+        started_at: "2026-08-20T10:00:00Z",
+        finished_at: null,
+      },
+      questions: [
+        {
+          id: "poem-1",
+          question_order: 1,
+          content_type: "poem",
+          question_type: "poem_card",
+          question_stem: "《静夜思》唐·李白\n床前明月光\n疑是地上霜",
+          question_options: [],
+        },
+      ],
+    });
+    vi.mocked(completeSession).mockResolvedValueOnce({
+      session: {
+        id: "poem-session",
+        child_id: "child-1",
+        selected_content_types: ["poem"],
+        total_questions: 1,
+        completed_questions: 1,
+        answered_questions: 0,
+        correct_questions: 0,
+        accuracy_rate: 0,
+        session_status: "completed",
+        started_at: "2026-08-20T10:00:00Z",
+        finished_at: "2026-08-20T10:01:00Z",
+      },
+      summary: { need_review_contents: [] },
+    });
+    const user = userEvent.setup();
+    render(<ChildLearning />);
+
+    await screen.findByText(/准备好了吗.*雨点/);
+    await user.click(screen.getByRole("button", { name: "开始学习" }));
+    expect(await screen.findByText(/床前明月光/)).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "提交答案" }),
+    ).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "完成学习" }));
+    expect(await screen.findByText("1")).toBeInTheDocument();
+    expect(markCardViewed).toHaveBeenCalledWith(
+      "mock-token",
+      "child-1",
+      "poem-session",
+      "poem-1",
+      expect.any(Number),
+    );
+    expect(submitAnswer).not.toHaveBeenCalled();
+  });
+
+  it("views an idiom card without submitting an answer", async () => {
+    vi.mocked(startSession).mockResolvedValueOnce({
+      session: {
+        id: "idiom-session",
+        child_id: "child-1",
+        selected_content_types: ["idiom"],
+        total_questions: 1,
+        completed_questions: 0,
+        answered_questions: 0,
+        correct_questions: 0,
+        accuracy_rate: 0,
+        session_status: "in_progress",
+        started_at: "2026-08-20T10:00:00Z",
+        finished_at: null,
+      },
+      questions: [
+        {
+          id: "idiom-1",
+          question_order: 1,
+          content_type: "idiom",
+          question_type: "idiom_card",
+          question_stem: "地大物博",
+          question_options: [],
+        },
+      ],
+    });
+    vi.mocked(completeSession).mockResolvedValueOnce({
+      session: {
+        id: "idiom-session",
+        child_id: "child-1",
+        selected_content_types: ["idiom"],
+        total_questions: 1,
+        completed_questions: 1,
+        answered_questions: 0,
+        correct_questions: 0,
+        accuracy_rate: 0,
+        session_status: "completed",
+        started_at: "2026-08-20T10:00:00Z",
+        finished_at: "2026-08-20T10:01:00Z",
+      },
+      summary: { need_review_contents: [] },
+    });
+    const user = userEvent.setup();
+    render(<ChildLearning />);
+
+    await screen.findByText(/准备好了吗.*雨点/);
+    await user.click(screen.getByRole("button", { name: "开始学习" }));
+    expect(await screen.findByText("地大物博")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "提交答案" }),
+    ).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "完成学习" }));
+    expect(await screen.findByText("1")).toBeInTheDocument();
+    expect(markCardViewed).toHaveBeenCalledWith(
+      "mock-token",
+      "child-1",
+      "idiom-session",
+      "idiom-1",
       expect.any(Number),
     );
     expect(submitAnswer).not.toHaveBeenCalled();

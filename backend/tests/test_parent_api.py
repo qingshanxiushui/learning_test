@@ -137,6 +137,146 @@ def test_batch_upsert_english_words() -> None:
     assert all(item["meaning"] == "覆盖释义" for item in updated_data["list"])
 
 
+def test_batch_upsert_poems() -> None:
+    client = TestClient(app)
+    client.post(
+        "/api/v1/parents",
+        json={"account_name": "poem-parent", "display_name": "Parent", "password": "123456"},
+    )
+    login = client.post(
+        "/api/v1/auth/login",
+        json={"account_name": "poem-parent", "password": "123456"},
+    )
+    token = login.json()["data"]["access_token"]
+    headers = _auth_header(token)
+    child = client.post(
+        "/api/v1/children",
+        headers=headers,
+        json={"name": "Kid", "nickname": None, "age": 6, "grade_level": None, "avatar_url": None},
+    )
+    child_id = child.json()["data"]["id"]
+
+    payload = {
+        "content_text": (
+            "《静夜思》唐·李白\n"
+            "    床前明月光，疑是地上霜。举头望明月，低头思故乡。\n"
+            "\n"
+            "《春晓》唐·孟浩然\n"
+            "    春眠不觉晓，处处闻啼鸟。夜来风雨声，花落知多少。\n"
+        ),
+        "difficulty": 1,
+        "status": "enabled",
+    }
+    created = client.post(
+        f"/api/v1/children/{child_id}/contents/poems/batch",
+        headers=headers,
+        json=payload,
+    )
+
+    assert created.status_code == 201
+    created_data = created.json()["data"]
+    assert created_data["created_count"] == 2
+    assert created_data["updated_count"] == 0
+    assert [item["title"] for item in created_data["list"]] == ["静夜思", "春晓"]
+    assert created_data["list"][0]["detail"]["dynasty"] == "唐"
+    assert created_data["list"][0]["detail"]["author"] == "李白"
+    assert created_data["list"][0]["detail"]["poem_lines"] == [
+        "床前明月光",
+        "疑是地上霜",
+        "举头望明月",
+        "低头思故乡",
+    ]
+    assert created_data["list"][1]["detail"]["dynasty"] == "唐"
+    assert created_data["list"][1]["detail"]["author"] == "孟浩然"
+    assert created_data["list"][1]["detail"]["poem_lines"] == [
+        "春眠不觉晓",
+        "处处闻啼鸟",
+        "夜来风雨声",
+        "花落知多少",
+    ]
+    ids = {item["title"]: item["id"] for item in created_data["list"]}
+
+    payload["difficulty"] = 2
+    updated = client.post(
+        f"/api/v1/children/{child_id}/contents/poems/batch",
+        headers=headers,
+        json=payload,
+    )
+
+    assert updated.status_code == 201
+    updated_data = updated.json()["data"]
+    assert updated_data["created_count"] == 0
+    assert updated_data["updated_count"] == 2
+    assert {item["title"]: item["id"] for item in updated_data["list"]} == ids
+    assert all(item["difficulty"] == 2 for item in updated_data["list"])
+
+
+def test_batch_upsert_idioms() -> None:
+    client = TestClient(app)
+    client.post(
+        "/api/v1/parents",
+        json={"account_name": "idiom-parent", "display_name": "Parent", "password": "123456"},
+    )
+    login = client.post(
+        "/api/v1/auth/login",
+        json={"account_name": "idiom-parent", "password": "123456"},
+    )
+    token = login.json()["data"]["access_token"]
+    headers = _auth_header(token)
+    child = client.post(
+        "/api/v1/children",
+        headers=headers,
+        json={"name": "Kid", "nickname": None, "age": 6, "grade_level": None, "avatar_url": None},
+    )
+    child_id = child.json()["data"]["id"]
+
+    payload = {
+        "content_text": (
+            "《 地大物博》《博大精深》《深入人心》\n"
+            "《照章办事》《事出有因》《因小失大》《地大物博》"
+        ),
+        "meaning": "共同释义",
+        "difficulty": 2,
+        "status": "enabled",
+        "sort_order": 10,
+    }
+    created = client.post(
+        f"/api/v1/children/{child_id}/contents/idioms/batch",
+        headers=headers,
+        json=payload,
+    )
+
+    assert created.status_code == 201
+    created_data = created.json()["data"]
+    assert created_data["created_count"] == 6
+    assert created_data["updated_count"] == 0
+    assert [item["title"] for item in created_data["list"]] == [
+        "地大物博",
+        "博大精深",
+        "深入人心",
+        "照章办事",
+        "事出有因",
+        "因小失大",
+    ]
+    assert all(item["title"] == item["content_text"] for item in created_data["list"])
+    assert all(item["meaning"] == "共同释义" for item in created_data["list"])
+    ids = {item["title"]: item["id"] for item in created_data["list"]}
+
+    payload["meaning"] = "覆盖释义"
+    updated = client.post(
+        f"/api/v1/children/{child_id}/contents/idioms/batch",
+        headers=headers,
+        json=payload,
+    )
+
+    assert updated.status_code == 201
+    updated_data = updated.json()["data"]
+    assert updated_data["created_count"] == 0
+    assert updated_data["updated_count"] == 6
+    assert {item["title"]: item["id"] for item in updated_data["list"]} == ids
+    assert all(item["meaning"] == "覆盖释义" for item in updated_data["list"])
+
+
 def test_parent_full_flow() -> None:
     client = TestClient(app)
 

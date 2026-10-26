@@ -31,6 +31,13 @@ import type {
 
 const TOKEN_KEY = "parent_demo_token";
 
+const CARD_QUESTION_TYPES = new Set([
+  "character_card",
+  "english_word_card",
+  "poem_card",
+  "idiom_card",
+]);
+
 const CONTENT_TYPES: Array<{
   value: ContentType;
   label: string;
@@ -391,7 +398,13 @@ export default function ChildLearning() {
               strokeColor="#ea6a47"
             />
           </div>
-          <div className="question-panel">
+          <div
+            className={`question-panel ${
+              currentQuestion.question_type === "poem_card"
+                ? "is-poem-card"
+                : ""
+            }`}
+          >
             <span className="question-kind">
               {
                 CONTENT_TYPES.find(
@@ -402,7 +415,7 @@ export default function ChildLearning() {
             <Typography.Title level={2}>
               {currentQuestion.question_stem}
             </Typography.Title>
-            {currentQuestion.question_type !== "character_card" && (
+            {!CARD_QUESTION_TYPES.has(currentQuestion.question_type) && (
               <div className="answer-grid">
                 {currentQuestion.question_options.map((option) => {
                   const state = feedback
@@ -430,7 +443,7 @@ export default function ChildLearning() {
             )}
           </div>
 
-          {currentQuestion.question_type === "character_card" ? (
+          {CARD_QUESTION_TYPES.has(currentQuestion.question_type) ? (
             <Button
               className="submit-answer"
               size="large"
@@ -494,7 +507,7 @@ export default function ChildLearning() {
           ) : (
             <div className="result-score">
               <strong>{result.session.completed_questions}</strong>
-              <span>个汉字已学习</span>
+              <span>个内容已学习</span>
             </div>
           )}
           {result.session.answered_questions > 0 && (

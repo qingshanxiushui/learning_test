@@ -4,6 +4,8 @@ import { vi } from "vitest";
 import {
   batchUpsertCharacters,
   batchUpsertEnglishWords,
+  batchUpsertIdioms,
+  batchUpsertPoems,
   listContents,
 } from "@/api/contents";
 import ParentDashboard from "@/features/parent/pages/ParentDashboard";
@@ -69,6 +71,18 @@ vi.mock("@/api/contents", () => ({
     created_count: 4,
     updated_count: 0,
     total_count: 4,
+  })),
+  batchUpsertPoems: vi.fn(async () => ({
+    list: [],
+    created_count: 2,
+    updated_count: 0,
+    total_count: 2,
+  })),
+  batchUpsertIdioms: vi.fn(async () => ({
+    list: [],
+    created_count: 6,
+    updated_count: 0,
+    total_count: 6,
   })),
   updateContent: vi.fn(),
   deleteContent: vi.fn(),
@@ -166,7 +180,63 @@ describe("ParentDashboard", () => {
         status: "enabled",
       }),
     );
-  });
+  }, 15000);
+
+  it("uses the batch endpoint when creating poem content and hides the title input", async () => {
+    const user = userEvent.setup();
+    render(<ParentDashboard />);
+
+    await screen.findByText("家长端总览");
+    await user.click(screen.getByRole("tab", { name: "学习内容管理" }));
+    await user.click(screen.getByRole("button", { name: "新建内容" }));
+    await user.click(screen.getByLabelText("类型"));
+    await user.click(await screen.findByText("古诗"));
+
+    expect(screen.queryByLabelText("标题")).not.toBeInTheDocument();
+    await user.type(
+      screen.getByLabelText("古诗正文"),
+      "《静夜思》唐·李白\n床前明月光，疑是地上霜。",
+    );
+    await user.click(screen.getByRole("button", { name: "OK" }));
+
+    expect(batchUpsertPoems).toHaveBeenCalledWith(
+      "mock-token",
+      "child-1",
+      expect.objectContaining({
+        content_text: "《静夜思》唐·李白\n床前明月光，疑是地上霜。",
+        difficulty: 1,
+        status: "enabled",
+      }),
+    );
+  }, 15000);
+
+  it("uses the batch endpoint when creating idiom content and hides the title input", async () => {
+    const user = userEvent.setup();
+    render(<ParentDashboard />);
+
+    await screen.findByText("家长端总览");
+    await user.click(screen.getByRole("tab", { name: "学习内容管理" }));
+    await user.click(screen.getByRole("button", { name: "新建内容" }));
+    await user.click(screen.getByLabelText("类型"));
+    await user.click(await screen.findByText("成语"));
+
+    expect(screen.queryByLabelText("标题")).not.toBeInTheDocument();
+    await user.type(
+      screen.getByLabelText("成语正文"),
+      "《 地大物博》《博大精深》\n《照章办事》《事出有因》",
+    );
+    await user.click(screen.getByRole("button", { name: "OK" }));
+
+    expect(batchUpsertIdioms).toHaveBeenCalledWith(
+      "mock-token",
+      "child-1",
+      expect.objectContaining({
+        content_text: "《 地大物博》《博大精深》\n《照章办事》《事出有因》",
+        difficulty: 1,
+        status: "enabled",
+      }),
+    );
+  }, 15000);
 
   it("filters contents by learning type and resets to page 1", async () => {
     const user = userEvent.setup();
@@ -189,9 +259,7 @@ describe("ParentDashboard", () => {
     });
 
     // open the type filter and pick 古诗
-    await user.click(
-      screen.getByRole("combobox", { name: "按学习类型过滤" }),
-    );
+    await user.click(screen.getByRole("combobox", { name: "按学习类型过滤" }));
     await user.click(await screen.findByTitle("古诗"));
     await screen.findByText("古诗乙");
 

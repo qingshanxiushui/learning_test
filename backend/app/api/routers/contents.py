@@ -10,6 +10,8 @@ from app.models import (
     ContentStatusUpdate,
     ContentUpdate,
     EnglishBatchCreate,
+    IdiomBatchCreate,
+    PoemBatchCreate,
 )
 from app.services.parent_service import service
 
@@ -70,6 +72,50 @@ def batch_upsert_english_words(
 ) -> ApiResponse:
     try:
         items, created_count, updated_count = service.batch_upsert_english_words(
+            current["user_id"], child_id, payload
+        )
+    except LookupError:
+        raise HTTPException(status_code=404, detail={"code": 40402, "message": "child not found"})
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail={"code": 42206, "message": str(exc)}) from exc
+    return ApiResponse(
+        data={
+            "list": [item.model_dump(exclude={"is_deleted", "deleted_at"}) for item in items],
+            "created_count": created_count,
+            "updated_count": updated_count,
+            "total_count": len(items),
+        }
+    )
+
+
+@router.post("/poems/batch", response_model=ApiResponse, status_code=201)
+def batch_upsert_poems(
+    child_id: str, payload: PoemBatchCreate, current=Depends(get_current_parent)
+) -> ApiResponse:
+    try:
+        items, created_count, updated_count = service.batch_upsert_poems(
+            current["user_id"], child_id, payload
+        )
+    except LookupError:
+        raise HTTPException(status_code=404, detail={"code": 40402, "message": "child not found"})
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail={"code": 42206, "message": str(exc)}) from exc
+    return ApiResponse(
+        data={
+            "list": [item.model_dump(exclude={"is_deleted", "deleted_at"}) for item in items],
+            "created_count": created_count,
+            "updated_count": updated_count,
+            "total_count": len(items),
+        }
+    )
+
+
+@router.post("/idioms/batch", response_model=ApiResponse, status_code=201)
+def batch_upsert_idioms(
+    child_id: str, payload: IdiomBatchCreate, current=Depends(get_current_parent)
+) -> ApiResponse:
+    try:
+        items, created_count, updated_count = service.batch_upsert_idioms(
             current["user_id"], child_id, payload
         )
     except LookupError:

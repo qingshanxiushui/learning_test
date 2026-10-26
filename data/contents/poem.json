@@ -1,1 +1,928 @@
-[]
+[
+  {
+    "id": "cceef733-f20e-463c-a05e-90d62a45e3b5",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "静夜思",
+    "content_text": "床前明月光，疑是地上霜。举头望明月，低头思故乡。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "静夜思",
+      "dynasty": "唐",
+      "author": "李白",
+      "poem_lines": [
+        "床前明月光",
+        "疑是地上霜",
+        "举头望明月",
+        "低头思故乡"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "7fc8c727-1ce7-4347-a090-c85233cdbefb",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "春晓",
+    "content_text": "春眠不觉晓，处处闻啼鸟。夜来风雨声，花落知多少。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "春晓",
+      "dynasty": "唐",
+      "author": "孟浩然",
+      "poem_lines": [
+        "春眠不觉晓",
+        "处处闻啼鸟",
+        "夜来风雨声",
+        "花落知多少"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "ee9f63cd-4b76-44ce-876e-bb51e99dba8a",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "画",
+    "content_text": "远看山有色，近听水无声。春去花还在，人来鸟不惊。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "画",
+      "dynasty": "唐",
+      "author": "王维",
+      "poem_lines": [
+        "远看山有色",
+        "近听水无声",
+        "春去花还在",
+        "人来鸟不惊"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "a0daeba6-c439-4c5f-8637-f6a7b73bbe29",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "明日歌",
+    "content_text": "明日复明日，明日何其多。我生待明日，万事成蹉跎。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "明日歌",
+      "dynasty": "明",
+      "author": "钱福",
+      "poem_lines": [
+        "明日复明日",
+        "明日何其多",
+        "我生待明日",
+        "万事成蹉跎"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "4a1aa97c-7c1f-4cb9-836f-657f9d1269d9",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "池上",
+    "content_text": "小娃撑小艇，偷采白莲回。不解藏踪迹，浮萍一道开。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "池上",
+      "dynasty": "唐",
+      "author": "白居易",
+      "poem_lines": [
+        "小娃撑小艇",
+        "偷采白莲回",
+        "不解藏踪迹",
+        "浮萍一道开"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "a7319898-57c9-43f7-8ffb-66749d593281",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "江上渔者",
+    "content_text": "江上往来人，但爱鲈鱼美。君看一叶舟，出没风波里。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "江上渔者",
+      "dynasty": "宋",
+      "author": "范仲淹",
+      "poem_lines": [
+        "江上往来人",
+        "但爱鲈鱼美",
+        "君看一叶舟",
+        "出没风波里"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "31c925e2-890e-484d-9e65-9d8c8b65f738",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "寻隐者不遇",
+    "content_text": "松下问童子，言师采药去。只在此山中，云深不知处。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "寻隐者不遇",
+      "dynasty": "唐",
+      "author": "贾岛",
+      "poem_lines": [
+        "松下问童子",
+        "言师采药去",
+        "只在此山中",
+        "云深不知处"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "9a3a2ca9-5bc8-4dce-b962-02c530be9c5a",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "咏鹅",
+    "content_text": "鹅，鹅，鹅，曲项向天歌。白毛浮绿水，红掌拨清波。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "咏鹅",
+      "dynasty": "唐",
+      "author": "骆宾王",
+      "poem_lines": [
+        "鹅",
+        "鹅",
+        "鹅",
+        "曲项向天歌",
+        "白毛浮绿水",
+        "红掌拨清波"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "1ae29a38-8b20-4428-a3b8-426aa60a83da",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "草",
+    "content_text": "离离原上草，一岁一枯荣。野火烧不尽，春风吹又生。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "草",
+      "dynasty": "唐",
+      "author": "白居易",
+      "poem_lines": [
+        "离离原上草",
+        "一岁一枯荣",
+        "野火烧不尽",
+        "春风吹又生"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "b2ebc9b8-a4f9-4984-aaeb-ad4990c96ea0",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "古朗月行",
+    "content_text": "小时不识月，呼作白玉盘。又疑瑶台镜，飞在青云端。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "古朗月行",
+      "dynasty": "唐",
+      "author": "李白",
+      "poem_lines": [
+        "小时不识月",
+        "呼作白玉盘",
+        "又疑瑶台镜",
+        "飞在青云端"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "d07bc4ad-5373-43df-a53f-cf443c0fa8e8",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "鹿柴",
+    "content_text": "空山不见人，但闻人语响。返景入深林，复照青苔上。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "鹿柴",
+      "dynasty": "唐",
+      "author": "王维",
+      "poem_lines": [
+        "空山不见人",
+        "但闻人语响",
+        "返景入深林",
+        "复照青苔上"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "953455aa-2cde-43f0-b90d-26a6841757c2",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "夜宿山寺",
+    "content_text": "危楼高百尺，手可摘星辰。不敢高声语，恐惊天上人。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "夜宿山寺",
+      "dynasty": "唐",
+      "author": "李白",
+      "poem_lines": [
+        "危楼高百尺",
+        "手可摘星辰",
+        "不敢高声语",
+        "恐惊天上人"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "5cc8cd93-ae84-475f-a64c-0ee7d864a24e",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "悯农",
+    "content_text": "锄禾日当午，汗滴禾下土。谁知盘中餐，粒粒皆辛苦？",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "悯农",
+      "dynasty": "唐",
+      "author": "李绅",
+      "poem_lines": [
+        "锄禾日当午",
+        "汗滴禾下土",
+        "谁知盘中餐",
+        "粒粒皆辛苦"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "9f57dd3c-cea0-4c8c-8089-1d4c1d5faa7d",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "竹里馆",
+    "content_text": "独坐幽篁里，弹琴复长啸。深林人不知，明月来相照。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "竹里馆",
+      "dynasty": "唐",
+      "author": "王维",
+      "poem_lines": [
+        "独坐幽篁里",
+        "弹琴复长啸",
+        "深林人不知",
+        "明月来相照"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "b0a51e79-891b-4ee5-af12-2df11fa512bc",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "舟夜书所见",
+    "content_text": "月黑见渔灯，孤光一点萤。微微风簇浪，散作满河星。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "舟夜书所见",
+      "dynasty": "清",
+      "author": "查慎行",
+      "poem_lines": [
+        "月黑见渔灯",
+        "孤光一点萤",
+        "微微风簇浪",
+        "散作满河星"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "9f5f213f-0564-4876-8b16-26303b9b6702",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "梅花",
+    "content_text": "墙角数枝梅，凌寒独自开。遥知不是雪，为有暗香来。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "梅花",
+      "dynasty": "宋",
+      "author": "王安石",
+      "poem_lines": [
+        "墙角数枝梅",
+        "凌寒独自开",
+        "遥知不是雪",
+        "为有暗香来"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "fce8a5be-937c-4cf9-a4a4-efda2171cfa8",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "望天门山",
+    "content_text": "天门中断楚江开，碧水东流至此回。两岸青山相对出，孤帆一片日边来。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "望天门山",
+      "dynasty": "唐",
+      "author": "李白",
+      "poem_lines": [
+        "天门中断楚江开",
+        "碧水东流至此回",
+        "两岸青山相对出",
+        "孤帆一片日边来"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "fc6e9b34-f4e2-465b-9696-d062384304d0",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "小池",
+    "content_text": "泉眼无声惜细流，树阴照水爱晴柔。小荷才露尖尖角，早有蜻蜓立上头。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "小池",
+      "dynasty": "宋",
+      "author": "杨万里",
+      "poem_lines": [
+        "泉眼无声惜细流",
+        "树阴照水爱晴柔",
+        "小荷才露尖尖角",
+        "早有蜻蜓立上头"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "e53378fe-02bd-4479-822a-3a2d774b020b",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "望洞庭",
+    "content_text": "湖光秋月两相和，潭面无风镜未磨。遥望洞庭山水翠，白银盘里一青螺。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "望洞庭",
+      "dynasty": "唐",
+      "author": "刘禹锡",
+      "poem_lines": [
+        "湖光秋月两相和",
+        "潭面无风镜未磨",
+        "遥望洞庭山水翠",
+        "白银盘里一青螺"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "acc52e2d-56a5-4a81-8919-23886d2e9d3b",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "元日",
+    "content_text": "爆竹声中一岁除，春风送暖入屠苏。千门万户曈曈日，总把新桃换旧符。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "元日",
+      "dynasty": "宋",
+      "author": "王安石",
+      "poem_lines": [
+        "爆竹声中一岁除",
+        "春风送暖入屠苏",
+        "千门万户曈曈日",
+        "总把新桃换旧符"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "d3513ac5-0848-4186-a445-7381b1973662",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "画鸡",
+    "content_text": "头上红冠不用裁，身雪白走将来。平生不敢轻言语，一叫千门万户开。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "画鸡",
+      "dynasty": "明",
+      "author": "唐寅（唐伯虎）",
+      "poem_lines": [
+        "头上红冠不用裁",
+        "身雪白走将来",
+        "平生不敢轻言语",
+        "一叫千门万户开"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "c98500a5-a2bd-45fd-9cc3-01a0d814ab77",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "咏柳",
+    "content_text": "碧玉妆成一树高，万条垂下绿丝绦。不知细叶谁裁出，二月春风似剪刀。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "咏柳",
+      "dynasty": "",
+      "author": "唐・贺知章",
+      "poem_lines": [
+        "碧玉妆成一树高",
+        "万条垂下绿丝绦",
+        "不知细叶谁裁出",
+        "二月春风似剪刀"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "ddcbc9dc-aec2-4d00-9c07-73d63b5831b0",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "黄鹤楼送孟浩然之广陵",
+    "content_text": "故人西辞黄鹤楼，烟花三月下扬州。孤帆远影碧空尽，唯见长江天际流。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "黄鹤楼送孟浩然之广陵",
+      "dynasty": "",
+      "author": "唐・李白",
+      "poem_lines": [
+        "故人西辞黄鹤楼",
+        "烟花三月下扬州",
+        "孤帆远影碧空尽",
+        "唯见长江天际流"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "5ca288df-f194-4d7d-8040-d9c6232f1e7b",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "遗爱寺",
+    "content_text": "弄石临溪坐，寻花绕寺行。时时闻鸟语，处处是泉声。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "遗爱寺",
+      "dynasty": "",
+      "author": "唐・白居易",
+      "poem_lines": [
+        "弄石临溪坐",
+        "寻花绕寺行",
+        "时时闻鸟语",
+        "处处是泉声"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "03498fe6-255a-4e65-9181-6aa3cdedd4f0",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "小儿垂钓",
+    "content_text": "蓬头稚子学垂纶，侧坐莓苔草映身。路人借问遥招手，怕得鱼惊不应人。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "小儿垂钓",
+      "dynasty": "",
+      "author": "唐・胡令能",
+      "poem_lines": [
+        "蓬头稚子学垂纶",
+        "侧坐莓苔草映身",
+        "路人借问遥招手",
+        "怕得鱼惊不应人"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "5ccda582-1c97-4598-b7c5-5d542642401f",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "登乐游原",
+    "content_text": "向晚意不适，驱车登古原。夕阳无限好，只是近黄昏。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "登乐游原",
+      "dynasty": "",
+      "author": "唐・李商隐",
+      "poem_lines": [
+        "向晚意不适",
+        "驱车登古原",
+        "夕阳无限好",
+        "只是近黄昏"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "35a539c1-d4eb-49b7-8f26-39e1d479b9ae",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "赠汪伦",
+    "content_text": "李白乘舟将欲行，忽闻岸上踏歌声。桃花潭水深千尺，不及汪伦送我情。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "赠汪伦",
+      "dynasty": "",
+      "author": "唐・李白",
+      "poem_lines": [
+        "李白乘舟将欲行",
+        "忽闻岸上踏歌声",
+        "桃花潭水深千尺",
+        "不及汪伦送我情"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "74a3bcad-52d1-4ca9-b9c4-a75d649abb26",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "题临安邸",
+    "content_text": "山外青山楼外楼，西湖歌舞几时休？暖风熏得游人醉，直把杭州作汴州。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "题临安邸",
+      "dynasty": "",
+      "author": "宋・林升",
+      "poem_lines": [
+        "山外青山楼外楼",
+        "西湖歌舞几时休",
+        "暖风熏得游人醉",
+        "直把杭州作汴州"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "919211a0-be6c-42a0-aa06-5de85df8af8d",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "画鸡",
+    "content_text": "头上红冠不用裁，满身雪白走将来。平生不敢轻言语，一叫千门万户开。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "画鸡",
+      "dynasty": "",
+      "author": "明・唐寅 唐伯虎",
+      "poem_lines": [
+        "头上红冠不用裁",
+        "满身雪白走将来",
+        "平生不敢轻言语",
+        "一叫千门万户开"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "a48cc45b-d0bc-4213-9eb8-026cf97bf581",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "所见",
+    "content_text": "牧童骑黄牛，歌声振林樾。意欲捕鸣蝉，忽然闭口立。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "所见",
+      "dynasty": "",
+      "author": "清・袁枚",
+      "poem_lines": [
+        "牧童骑黄牛",
+        "歌声振林樾",
+        "意欲捕鸣蝉",
+        "忽然闭口立"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "c1bb5d9e-5ed8-4d4a-bd40-350ac60cad3a",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "夏日绝句",
+    "content_text": "生当作人杰，死亦为鬼雄。至今思项羽，不肯过江东。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "夏日绝句",
+      "dynasty": "",
+      "author": "宋・李清照",
+      "poem_lines": [
+        "生当作人杰",
+        "死亦为鬼雄",
+        "至今思项羽",
+        "不肯过江东"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "c5fdd6dd-fbe3-4fe1-8d0e-46d71fad57db",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "登鹳雀楼",
+    "content_text": "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "登鹳雀楼",
+      "dynasty": "",
+      "author": "唐・王之涣",
+      "poem_lines": [
+        "白日依山尽",
+        "黄河入海流",
+        "欲穷千里目",
+        "更上一层楼"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "88b8dea2-8e8e-443c-98eb-c665b5b5e340",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "content_type": "poem",
+    "title": "江雪",
+    "content_text": "千山鸟飞绝，万径人踪灭。孤舟蓑笠翁，独钓寒江雪。",
+    "pronunciation": null,
+    "meaning": null,
+    "example": null,
+    "difficulty": 1,
+    "status": "enabled",
+    "sort_order": 0,
+    "detail": {
+      "poem_title": "江雪",
+      "dynasty": "",
+      "author": "唐・柳宗元",
+      "poem_lines": [
+        "千山鸟飞绝",
+        "万径人踪灭",
+        "孤舟蓑笠翁",
+        "独钓寒江雪"
+      ]
+    },
+    "created_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-10-23T12:24:05Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  }
+]

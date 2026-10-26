@@ -7,6 +7,7 @@ import unicodedata
 
 from app.core.config import settings
 from app.models import (
+    CARD_QUESTION_TYPES,
     CharacterBatchCreate,
     Child,
     ChildCreate,
@@ -16,8 +17,10 @@ from app.models import (
     ContentStatusUpdate,
     ContentUpdate,
     EnglishBatchCreate,
+    IdiomBatchCreate,
     Parent,
     ParentCreate,
+    PoemBatchCreate,
     Rule,
     RuleCreate,
     Session,
@@ -296,6 +299,179 @@ class ParentService:
         self.store.write_list(rel, rows)
         return items, created_count, updated_count
 
+    def batch_upsert_poems(
+        self, parent_id: str, child_id: str, payload: PoemBatchCreate
+    ) -> tuple[list[Content], int, int]:
+        self.assert_child_owned(parent_id, child_id)
+        poems = self._extract_poems(payload.content_text)
+        if not poems:
+            raise ValueError("content text must contain at least one poem")
+
+        rel = self._content_file("poem")
+        rows = self.store.read_list(rel)
+        existing: dict[str, dict[str, Any]] = {}
+        for row in rows:
+            if (
+                row.get("child_id") == child_id
+                and row.get("content_type") == "poem"
+                and row.get("is_deleted", 0) == 0
+            ):
+                existing.setdefault(str(row.get("title", "")), row)
+
+        now = now_iso()
+        items: list[Content] = []
+        created_count = 0
+        updated_count = 0
+        common = payload.model_dump(exclude={"content_text", "detail"})
+        for poem in poems:
+            title = poem["title"]
+            detail = {
+                "poem_title": title,
+                "dynasty": poem["dynasty"],
+                "author": poem["author"],
+                "poem_lines": poem["poem_lines"],
+            }
+            row = existing.get(title)
+            if row is None:
+                row = Content(
+                    id=new_id(),
+                    child_id=child_id,
+                    content_type="poem",
+                    title=title,
+                    content_text=poem["content_text"],
+                    created_at=now,
+                    updated_at=now,
+                    detail=detail,
+                    **common,
+                ).model_dump()
+                rows.append(row)
+                created_count += 1
+            else:
+                row.update(common)
+                row.update(
+                    {
+                        "title": title,
+                        "content_text": poem["content_text"],
+                        "detail": detail,
+                        "updated_at": now,
+                    }
+                )
+                updated_count += 1
+            items.append(Content(**row))
+
+        self.store.write_list(rel, rows)
+        return items, created_count, updated_count
+
+    def batch_upsert_idioms(
+        self, parent_id: str, child_id: str, payload: IdiomBatchCreate
+    ) -> tuple[list[Content], int, int]:
+        self.assert_child_owned(parent_id, child_id)
+        idioms = self._extract_idioms(payload.content_text)
+        if not idioms:
+            raise ValueError("content text must contain at least one idiom")
+
+        rel = self._content_file("idiom")
+        rows = self.store.read_list(rel)
+        existing: dict[str, dict[str, Any]] = {}
+        for row in rows:
+            if (
+                row.get("child_id") == child_id
+                and row.get("content_type") == "idiom"
+                and row.get("is_deleted", 0) == 0
+            ):
+                existing.setdefault(str(row.get("title", "")), row)
+
+        now = now_iso()
+        items: list[Content] = []
+        created_count = 0
+        updated_count = 0
+        common = payload.model_dump(exclude={"content_text"})
+        for idiom in idioms:
+            row = existing.get(idiom)
+            if row is None:
+                row = Content(
+                    id=new_id(),
+                    child_id=child_id,
+                    content_type="idiom",
+                    title=idiom,
+                    content_text=idiom,
+                    created_at=now,
+                    updated_at=now,
+                    **common,
+                ).model_dump()
+                rows.append(row)
+                created_count += 1
+            else:
+                row.update(common)
+                row.update({"title": idiom, "content_text": idiom, "updated_at": now})
+                updated_count += 1
+            items.append(Content(**row))
+
+        self.store.write_list(rel, rows)
+        return items, created_count, updated_count
+
+    @staticmethod
+    def _extract_poems(content_text: str) -> list[dict[str, Any]]:
+        poems: list[dict[str, Any]] = []
+        current: dict[str, Any] | None = None
+        body_lines: list[str] = []
+
+        def flush() -> None:
+            nonlocal current, body_lines
+            if current is not None:
+                current["poem_lines"] = ParentService._split_poem_lines("\n".join(body_lines))
+                current["content_text"] = "\n".join(body_lines)
+                poems.append(current)
+            current = None
+            body_lines = []
+
+        for raw_line in content_text.splitlines():
+            line = raw_line.strip()
+            if not line:
+                continue
+            header = ParentService._parse_poem_header(line)
+            if header is not None:
+                flush()
+                current = header
+                body_lines = []
+            elif current is not None:
+                body_lines.append(line)
+
+        flush()
+        return poems
+
+    @staticmethod
+    def _parse_poem_header(line: str) -> dict[str, str] | None:
+        match = re.match(r"^《(.+?)》(.*)$", line)
+        if not match:
+            return None
+        title = match.group(1).strip()
+        attribution = match.group(2).strip()
+        dynasty = ""
+        author = ""
+        if "·" in attribution:
+            dynasty, author = attribution.split("·", 1)
+            dynasty = dynasty.strip()
+            author = author.strip()
+        elif attribution:
+            author = attribution
+        return {"title": title, "dynasty": dynasty, "author": author}
+
+    @staticmethod
+    def _split_poem_lines(body: str) -> list[str]:
+        return [part for part in re.split(r"[，。！？；、,.!?;:：\n]+", body) if part.strip()]
+
+    @staticmethod
+    def _extract_idioms(content_text: str) -> list[str]:
+        idioms: list[str] = []
+        seen: set[str] = set()
+        for match in re.findall(r"《([^《》]+)》", content_text):
+            idiom = match.strip()
+            if idiom and idiom not in seen:
+                seen.add(idiom)
+                idioms.append(idiom)
+        return idioms
+
     @staticmethod
     def _extract_english_words(content_text: str) -> list[str]:
         # 按换行与标点切分，但空格不分割（空格分隔的词组作为整体保留），
@@ -462,7 +638,7 @@ class ParentService:
         result_answers = []
         for q in sorted(questions, key=lambda x: x.get("question_order", 0)):
             a = answer_map.get(q.get("id"), {})
-            is_card = q.get("question_type") == "character_card"
+            is_card = q.get("question_type") in CARD_QUESTION_TYPES
             result_answers.append(
                 {
                     "session_question_id": q.get("id"),
