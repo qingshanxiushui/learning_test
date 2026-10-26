@@ -39,3 +39,16 @@ def weak_contents(
     except LookupError:
         raise HTTPException(status_code=404, detail={"code": 40402, "message": "child not found"})
     return ApiResponse(data=data)
+
+
+@router.delete("", response_model=ApiResponse)
+def clear_stats(
+    child_id: str,
+    content_type: str = Query(...),
+    current=Depends(get_current_parent),
+) -> ApiResponse:
+    try:
+        cleared = service.clear_content_stats(current["user_id"], child_id, content_type)
+    except LookupError:
+        raise HTTPException(status_code=404, detail={"code": 40402, "message": "child not found"})
+    return ApiResponse(data={"cleared": cleared})

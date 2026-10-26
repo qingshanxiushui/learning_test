@@ -29,9 +29,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-22T02:37:33Z",
-    "updated_at": "2026-10-22T02:37:34Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-22T02:37:34Z",
     "view_duration_ms": 881
   },
@@ -65,9 +65,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-22T02:37:33Z",
-    "updated_at": "2026-10-22T02:37:34Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-22T02:37:34Z",
     "view_duration_ms": 372
   },
@@ -101,9 +101,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-22T02:37:33Z",
-    "updated_at": "2026-10-22T02:37:35Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-22T02:37:35Z",
     "view_duration_ms": 358
   },
@@ -137,9 +137,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-22T02:37:33Z",
-    "updated_at": "2026-10-22T02:37:35Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-22T02:37:35Z",
     "view_duration_ms": 266
   },
@@ -173,9 +173,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-22T02:37:33Z",
-    "updated_at": "2026-10-22T02:37:36Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-22T02:37:36Z",
     "view_duration_ms": 463
   },
@@ -399,9 +399,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T11:36:32Z",
-    "updated_at": "2026-10-23T11:36:43Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-23T11:36:43Z",
     "view_duration_ms": 11330
   },
@@ -435,9 +435,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T11:36:32Z",
-    "updated_at": "2026-10-23T11:37:07Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-23T11:37:07Z",
     "view_duration_ms": 23482
   },
@@ -471,9 +471,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T11:36:32Z",
-    "updated_at": "2026-10-23T11:37:36Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-23T11:37:36Z",
     "view_duration_ms": 28708
   },
@@ -507,9 +507,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T11:36:32Z",
-    "updated_at": "2026-10-23T11:37:40Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-23T11:37:40Z",
     "view_duration_ms": 4354
   },
@@ -543,9 +543,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T11:36:32Z",
-    "updated_at": "2026-10-23T11:37:52Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-23T11:37:52Z",
     "view_duration_ms": 12103
   },
@@ -769,9 +769,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T11:40:56Z",
-    "updated_at": "2026-10-23T11:41:02Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-23T11:41:02Z",
     "view_duration_ms": 6285
   },
@@ -805,9 +805,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T11:40:56Z",
-    "updated_at": "2026-10-23T11:41:30Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-23T11:41:30Z",
     "view_duration_ms": 27438
   },
@@ -841,9 +841,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T11:40:56Z",
-    "updated_at": "2026-10-23T11:42:08Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-23T11:42:08Z",
     "view_duration_ms": 38215
   },
@@ -877,9 +877,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T11:40:56Z",
-    "updated_at": "2026-10-23T11:40:56Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1
   },
   {
     "id": "6ae6663a-f0ee-4626-869c-5f7d2d9d8baf",
@@ -911,9 +911,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T11:40:56Z",
-    "updated_at": "2026-10-23T11:40:56Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1
   },
   {
     "id": "852b357f-ac55-4bc3-a535-273b9a759a6d",
@@ -945,9 +945,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T11:40:56Z",
-    "updated_at": "2026-10-23T11:40:56Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1
   },
   {
     "id": "84e6eb83-9f31-46f8-938a-087152afa8d6",
@@ -979,9 +979,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T11:40:56Z",
-    "updated_at": "2026-10-23T11:40:56Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1
   },
   {
     "id": "79b2d138-f5d5-43ba-b663-4d2f7598f474",
@@ -1013,9 +1013,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T11:40:56Z",
-    "updated_at": "2026-10-23T11:40:56Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1
   },
   {
     "id": "5563ebdb-f579-4e85-b1b3-0fd3cc63feaf",
@@ -1047,9 +1047,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T11:40:56Z",
-    "updated_at": "2026-10-23T11:40:56Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1
   },
   {
     "id": "f2fc1c50-0d5c-44ff-aa31-17427cfb1d26",
@@ -1081,9 +1081,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T11:40:56Z",
-    "updated_at": "2026-10-23T11:40:56Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1
   },
   {
     "id": "089ebc0c-fc16-4ae8-a81b-a735280b57d9",
@@ -3166,5 +3166,185 @@
     "updated_at": "2026-10-26T07:43:11Z",
     "deleted_at": null,
     "is_deleted": 0
+  },
+  {
+    "id": "bd71bb1a-e91f-4465-8715-ca197918d516",
+    "session_id": "06c0e41d-fab6-4889-973f-b7de99b8f64f",
+    "content_id": "a60a31b3-cfa2-4204-af62-c5fa586b374a",
+    "content_type": "character",
+    "question_type": "character_card",
+    "question_stem": "粉",
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 1,
+    "content_snapshot": {
+      "id": "a60a31b3-cfa2-4204-af62-c5fa586b374a",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "character",
+      "title": "粉",
+      "content_text": "粉",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-22T02:09:52Z",
+      "updated_at": "2026-10-22T02:09:52Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-10-26T09:04:13Z",
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
+    "viewed_at": "2026-10-26T09:04:14Z",
+    "view_duration_ms": 944
+  },
+  {
+    "id": "27509abf-359d-423c-b2d5-02d25fbb431d",
+    "session_id": "06c0e41d-fab6-4889-973f-b7de99b8f64f",
+    "content_id": "a9b53788-c74c-42c6-8edf-168ef625013d",
+    "content_type": "character",
+    "question_type": "character_card",
+    "question_stem": "黑",
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 2,
+    "content_snapshot": {
+      "id": "a9b53788-c74c-42c6-8edf-168ef625013d",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "character",
+      "title": "黑",
+      "content_text": "黑",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-22T02:09:52Z",
+      "updated_at": "2026-10-22T02:09:52Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-10-26T09:04:13Z",
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
+    "viewed_at": "2026-10-26T09:04:15Z",
+    "view_duration_ms": 314
+  },
+  {
+    "id": "9574ee9b-69f9-4df4-9ec3-1c3091c6f85b",
+    "session_id": "06c0e41d-fab6-4889-973f-b7de99b8f64f",
+    "content_id": "d2f5ae32-6cb0-4180-9dc8-eaf1de89f70b",
+    "content_type": "character",
+    "question_type": "character_card",
+    "question_stem": "实",
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 3,
+    "content_snapshot": {
+      "id": "d2f5ae32-6cb0-4180-9dc8-eaf1de89f70b",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "character",
+      "title": "实",
+      "content_text": "实",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-22T02:09:52Z",
+      "updated_at": "2026-10-22T02:09:52Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-10-26T09:04:13Z",
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
+    "viewed_at": "2026-10-26T09:04:15Z",
+    "view_duration_ms": 293
+  },
+  {
+    "id": "1ece5965-e010-4af7-81f4-623da3e2b4e0",
+    "session_id": "06c0e41d-fab6-4889-973f-b7de99b8f64f",
+    "content_id": "1bdc093f-38ef-4391-98fd-762b140eb789",
+    "content_type": "character",
+    "question_type": "character_card",
+    "question_stem": "条",
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 4,
+    "content_snapshot": {
+      "id": "1bdc093f-38ef-4391-98fd-762b140eb789",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "character",
+      "title": "条",
+      "content_text": "条",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-22T02:09:52Z",
+      "updated_at": "2026-10-22T02:09:52Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-10-26T09:04:13Z",
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
+    "viewed_at": "2026-10-26T09:04:15Z",
+    "view_duration_ms": 247
+  },
+  {
+    "id": "0d427e1b-0618-43c2-86c5-f07844392fea",
+    "session_id": "06c0e41d-fab6-4889-973f-b7de99b8f64f",
+    "content_id": "af57cdf8-4a40-44e3-9e09-7e4c8804b7fe",
+    "content_type": "character",
+    "question_type": "character_card",
+    "question_stem": "啸",
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 5,
+    "content_snapshot": {
+      "id": "af57cdf8-4a40-44e3-9e09-7e4c8804b7fe",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "character",
+      "title": "啸",
+      "content_text": "啸",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-22T02:09:52Z",
+      "updated_at": "2026-10-22T02:09:52Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-10-26T09:04:13Z",
+    "updated_at": "2026-10-26T09:21:09Z",
+    "deleted_at": "2026-10-26T09:21:09Z",
+    "is_deleted": 1,
+    "viewed_at": "2026-10-26T09:04:16Z",
+    "view_duration_ms": 233
   }
 ]

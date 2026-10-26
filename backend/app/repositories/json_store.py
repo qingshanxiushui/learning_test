@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import threading
+import time
 from pathlib import Path
 from typing import Any
 
@@ -39,4 +40,15 @@ class JsonStore:
         with self._lock(path):
             tmp = path.with_suffix(path.suffix + ".tmp")
             tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-            tmp.replace(path)
+            # Windows 下杀软/系统可能短暂锁定临时文件导致 os.replace 偶发 PermissionError，
+            # 做有限次重试以保证原子替换写入稳定。
+            last_error: Exception | None = None
+            for attempt in range(5):
+                try:
+                    tmp.replace(path)
+                    return
+                except PermissionError as exc:
+                    last_error = exc
+                    time.sleep(0.05 * (attempt + 1))
+            if last_error:
+                raise last_error

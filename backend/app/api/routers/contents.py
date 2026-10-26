@@ -27,13 +27,17 @@ def list_contents(
     content_type: str | None = None,
     status: str | None = None,
     keyword: str | None = None,
+    sort_by: str | None = None,
+    sort_order: str = Query(default="asc"),
     current=Depends(get_current_parent),
 ) -> ApiResponse:
     try:
-        items, total = service.list_contents(current["user_id"], child_id, page, page_size, content_type, status, keyword)
+        items, total = service.list_contents_with_stats(
+            current["user_id"], child_id, page, page_size, content_type, status, keyword, sort_by, sort_order
+        )
     except LookupError:
         raise HTTPException(status_code=404, detail={"code": 40402, "message": "child not found"})
-    return ApiResponse(data={"list": [i.model_dump(exclude={"is_deleted", "deleted_at"}) for i in items], "pagination": {"page": page, "page_size": page_size, "total": total}})
+    return ApiResponse(data={"list": items, "pagination": {"page": page, "page_size": page_size, "total": total}})
 
 
 @router.post("", response_model=ApiResponse, status_code=201)

@@ -180,6 +180,85 @@ class ParentService:
         end = start + page_size
         return [Content(**r) for r in out[start:end]], total
 
+    def _content_stats(self, child_id: str) -> dict[str, dict[str, int]]:
+        questions = self._active(self.store.read_list("sessions/session_questions.json"))
+        learn_counts: dict[str, int] = {}
+        for q in questions:
+            cid = q.get("content_id")
+            if cid and q.get("viewed_at") and q.get("question_type") in CARD_QUESTION_TYPES:
+                learn_counts[cid] = learn_counts.get(cid, 0) + 1
+        return {
+            cid: {"learn_count": count, "error_count": 0, "error_rate": 0}
+            for cid, count in learn_counts.items()
+        }
+
+    def list_contents_with_stats(
+        self,
+        parent_id: str,
+        child_id: str,
+        page: int,
+        page_size: int,
+        content_type: str | None,
+        status: str | None,
+        keyword: str | None,
+        sort_by: str | None = None,
+        sort_order: str = "asc",
+    ) -> tuple[list[dict[str, Any]], int]:
+        self.assert_child_owned(parent_id, child_id)
+        types = [content_type] if content_type else ["character", "classic", "poem", "idiom", "englishWord"]
+        out: list[dict[str, Any]] = []
+        for t in types:
+            for r in self._active(self.store.read_list(self._content_file(t))):
+                if r.get("child_id") != child_id:
+                    continue
+                if status and r.get("status") != status:
+                    continue
+                if keyword and keyword.lower() not in (f"{r.get('title', '')} {r.get('content_text', '')}").lower():
+                    continue
+                out.append(r)
+
+        stats = self._content_stats(child_id)
+        reverse = sort_order == "desc"
+        if sort_by == "title":
+            out.sort(key=lambda x: str(x.get("title", "")), reverse=reverse)
+        elif sort_by == "learn_count":
+            out.sort(key=lambda x: stats.get(x.get("id"), {}).get("learn_count", 0), reverse=reverse)
+        elif sort_by == "error_count":
+            out.sort(key=lambda x: stats.get(x.get("id"), {}).get("error_count", 0), reverse=reverse)
+        elif sort_by == "error_rate":
+            out.sort(key=lambda x: stats.get(x.get("id"), {}).get("error_rate", 0), reverse=reverse)
+        else:
+            out.sort(key=lambda x: (x.get("sort_order", 0), x.get("created_at", "")))
+
+        total = len(out)
+        start = (page - 1) * page_size
+        end = start + page_size
+        result: list[dict[str, Any]] = []
+        for r in out[start:end]:
+            item = Content(**r).model_dump(exclude={"is_deleted", "deleted_at"})
+            s = stats.get(r.get("id"), {"learn_count": 0, "error_count": 0, "error_rate": 0})
+            item["learn_count"] = s["learn_count"]
+            item["error_count"] = s["error_count"]
+            item["error_rate"] = s["error_rate"]
+            result.append(item)
+        return result, total
+
+    def clear_content_stats(self, parent_id: str, child_id: str, content_type: str) -> int:
+        self.assert_child_owned(parent_id, child_id)
+        contents, _ = self.list_contents(parent_id, child_id, 1, 100000, content_type, None, None)
+        content_ids = {c.id for c in contents}
+        questions = self.store.read_list("sessions/session_questions.json")
+        now = now_iso()
+        cleared = 0
+        for q in questions:
+            if q.get("content_id") in content_ids and q.get("is_deleted", 0) == 0:
+                q["is_deleted"] = 1
+                q["deleted_at"] = now
+                q["updated_at"] = now
+                cleared += 1
+        self.store.write_list("sessions/session_questions.json", questions)
+        return cleared
+
     def create_content(self, parent_id: str, child_id: str, payload: ContentCreate) -> Content:
         self.assert_child_owned(parent_id, child_id)
         now = now_iso()

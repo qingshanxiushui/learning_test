@@ -7,6 +7,7 @@ import {
   batchUpsertEnglishWords,
   batchUpsertIdioms,
   batchUpsertPoems,
+  clearContentStats,
   listContents,
 } from "@/api/contents";
 import { updateMathSettings } from "@/api/math";
@@ -62,6 +63,7 @@ vi.mock("@/api/contents", () => ({
     },
   })),
   createContent: vi.fn(),
+  clearContentStats: vi.fn(async () => ({ cleared: 3 })),
   batchUpsertCharacters: vi.fn(async () => ({
     list: [],
     created_count: 9,
@@ -186,7 +188,9 @@ describe("ParentDashboard", () => {
     await user.click(await screen.findByText("英语"));
 
     // Title input should be hidden for batch types
-    expect(screen.queryByLabelText("标题")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("textbox", { name: "标题" }),
+    ).not.toBeInTheDocument();
     await user.type(
       screen.getByLabelText("英语正文"),
       "apple, banana\norange pear",
@@ -214,7 +218,9 @@ describe("ParentDashboard", () => {
     await user.click(screen.getByLabelText("类型"));
     await user.click(await screen.findByText("古诗"));
 
-    expect(screen.queryByLabelText("标题")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("textbox", { name: "标题" }),
+    ).not.toBeInTheDocument();
     await user.type(
       screen.getByLabelText("古诗正文"),
       "《静夜思》唐·李白\n床前明月光，疑是地上霜。",
@@ -242,7 +248,9 @@ describe("ParentDashboard", () => {
     await user.click(screen.getByLabelText("类型"));
     await user.click(await screen.findByText("成语"));
 
-    expect(screen.queryByLabelText("标题")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("textbox", { name: "标题" }),
+    ).not.toBeInTheDocument();
     await user.type(
       screen.getByLabelText("成语正文"),
       "《 地大物博》《博大精深》\n《照章办事》《事出有因》",
@@ -270,7 +278,9 @@ describe("ParentDashboard", () => {
     await user.click(screen.getByLabelText("类型"));
     await user.click(await screen.findByText("国学"));
 
-    expect(screen.queryByLabelText("标题")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("textbox", { name: "标题" }),
+    ).not.toBeInTheDocument();
     await user.type(
       screen.getByLabelText("国学正文"),
       "人之初，性本善。性相近，习相远。\n苟不教，性乃迁。教之道，贵以专。",
@@ -307,6 +317,8 @@ describe("ParentDashboard", () => {
       page: 1,
       page_size: 10,
       content_type: undefined,
+      sort_by: undefined,
+      sort_order: "asc",
     });
 
     // open the type filter and pick 古诗
@@ -318,6 +330,8 @@ describe("ParentDashboard", () => {
       page: 1,
       page_size: 10,
       content_type: "poem",
+      sort_by: undefined,
+      sort_order: "asc",
     });
   });
 
@@ -340,6 +354,8 @@ describe("ParentDashboard", () => {
       page: 2,
       page_size: 10,
       content_type: undefined,
+      sort_by: undefined,
+      sort_order: "asc",
     });
 
     // change page size to 20 (current page stays at 2 since still in range)
@@ -349,6 +365,8 @@ describe("ParentDashboard", () => {
       page: 2,
       page_size: 20,
       content_type: undefined,
+      sort_by: undefined,
+      sort_order: "asc",
     });
   });
 
@@ -371,6 +389,30 @@ describe("ParentDashboard", () => {
         operators: ["add"],
         status: 1,
       }),
+    );
+  }, 15000);
+
+  it("clears stats for the selected type", async () => {
+    const user = userEvent.setup();
+    render(<ParentDashboard />);
+
+    await screen.findByText("家长端总览");
+    await user.click(screen.getByRole("tab", { name: "学习内容管理" }));
+
+    // 未选择类型时按钮禁用
+    expect(screen.getByRole("button", { name: "清除统计" })).toBeDisabled();
+
+    // 选择「汉字」类型
+    await user.click(screen.getByRole("combobox", { name: "按学习类型过滤" }));
+    await user.click(await screen.findByTitle("汉字"));
+
+    await user.click(screen.getByRole("button", { name: "清除统计" }));
+    await user.click(await screen.findByRole("button", { name: "OK" }));
+
+    expect(clearContentStats).toHaveBeenCalledWith(
+      "mock-token",
+      "child-1",
+      "character",
     );
   }, 15000);
 });

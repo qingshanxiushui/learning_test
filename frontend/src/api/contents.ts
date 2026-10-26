@@ -18,6 +18,8 @@ export function listContents(
     content_type?: ContentType;
     status?: ContentStatus;
     keyword?: string;
+    sort_by?: string;
+    sort_order?: "asc" | "desc";
   } = {},
 ): Promise<Paginated<LearningContent>> {
   const params = new URLSearchParams();
@@ -32,9 +34,26 @@ export function listContents(
   if (query.keyword) {
     params.set("keyword", query.keyword);
   }
+  if (query.sort_by) {
+    params.set("sort_by", query.sort_by);
+  }
+  if (query.sort_order) {
+    params.set("sort_order", query.sort_order);
+  }
   return request<Paginated<LearningContent>>(
     `/children/${childId}/contents?${params.toString()}`,
     { token },
+  );
+}
+
+export function clearContentStats(
+  token: string,
+  childId: string,
+  content_type: ContentType,
+): Promise<{ cleared: number }> {
+  return request<{ cleared: number }>(
+    `/children/${childId}/stats?content_type=${content_type}`,
+    { method: "DELETE", token },
   );
 }
 

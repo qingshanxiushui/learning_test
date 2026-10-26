@@ -20,6 +20,7 @@ import {
   Tabs,
   Typography,
   message,
+  type TableProps,
 } from "antd";
 import StatCard from "@/features/parent/components/StatCard";
 import {
@@ -35,6 +36,7 @@ import {
   batchUpsertEnglishWords,
   batchUpsertIdioms,
   batchUpsertPoems,
+  clearContentStats,
   createContent,
   deleteContent,
   listContents,
@@ -107,6 +109,12 @@ export default function ParentDashboard() {
   const [contentPage, setContentPage] = useState(1);
   const [contentPageSize, setContentPageSize] = useState(10);
   const [contentTotal, setContentTotal] = useState(0);
+  const [contentSortBy, setContentSortBy] = useState<string | undefined>(
+    undefined,
+  );
+  const [contentSortOrder, setContentSortOrder] = useState<"asc" | "desc">(
+    "asc",
+  );
 
   const [childModalOpen, setChildModalOpen] = useState(false);
   const [childEditing, setChildEditing] = useState<Child | null>(null);
@@ -168,11 +176,15 @@ export default function ParentDashboard() {
     page: number,
     pageSize: number,
     contentType?: ContentType,
+    sortBy?: string,
+    sortOrder?: "asc" | "desc",
   ) {
     const contentResp = await listContents(activeToken, childId, {
       page,
       page_size: pageSize,
       content_type: contentType,
+      sort_by: sortBy,
+      sort_order: sortOrder,
     });
     setContents(contentResp.list);
     setContentTotal(contentResp.pagination.total);
@@ -253,6 +265,8 @@ export default function ParentDashboard() {
               contentPage,
               contentPageSize,
               contentTypeFilter,
+              contentSortBy,
+              contentSortOrder,
             ),
             loadRule(token, selectedChildId),
             loadMathSettings(token, selectedChildId),
@@ -463,6 +477,8 @@ export default function ParentDashboard() {
       contentPage,
       contentPageSize,
       contentTypeFilter,
+      contentSortBy,
+      contentSortOrder,
     );
   }
 
@@ -478,6 +494,8 @@ export default function ParentDashboard() {
       contentPage,
       contentPageSize,
       contentTypeFilter,
+      contentSortBy,
+      contentSortOrder,
     );
   }
 
@@ -500,6 +518,25 @@ export default function ParentDashboard() {
       contentPage,
       contentPageSize,
       contentTypeFilter,
+      contentSortBy,
+      contentSortOrder,
+    );
+  }
+
+  async function handleClearStats() {
+    if (!token || !selectedChildId || !contentTypeFilter) {
+      return;
+    }
+    await clearContentStats(token, selectedChildId, contentTypeFilter);
+    messageApi.success("统计已清除");
+    await loadContents(
+      token,
+      selectedChildId,
+      1,
+      contentPageSize,
+      contentTypeFilter,
+      contentSortBy,
+      contentSortOrder,
     );
   }
 
@@ -507,7 +544,15 @@ export default function ParentDashboard() {
     setContentTypeFilter(value);
     setContentPage(1);
     if (token && selectedChildId) {
-      await loadContents(token, selectedChildId, 1, contentPageSize, value);
+      await loadContents(
+        token,
+        selectedChildId,
+        1,
+        contentPageSize,
+        value,
+        contentSortBy,
+        contentSortOrder,
+      );
     }
   }
 
@@ -521,9 +566,39 @@ export default function ParentDashboard() {
         page,
         pageSize,
         contentTypeFilter,
+        contentSortBy,
+        contentSortOrder,
       );
     }
   }
+
+  const onContentTableChange: TableProps<LearningContent>["onChange"] = (
+    _pagination,
+    _filters,
+    sorter,
+    extra,
+  ) => {
+    if (extra.action !== "sort") {
+      return;
+    }
+    const sorterResult = Array.isArray(sorter) ? sorter[0] : sorter;
+    const sortBy = sorterResult?.field ? String(sorterResult.field) : undefined;
+    const sortOrder = sorterResult?.order === "descend" ? "desc" : "asc";
+    setContentSortBy(sortBy);
+    setContentSortOrder(sortOrder);
+    setContentPage(1);
+    if (token && selectedChildId) {
+      loadContents(
+        token,
+        selectedChildId,
+        1,
+        contentPageSize,
+        contentTypeFilter,
+        sortBy,
+        sortOrder,
+      );
+    }
+  };
 
   async function submitRuleForm() {
     if (!token || !selectedChildId) {
@@ -552,6 +627,8 @@ export default function ParentDashboard() {
     setContentTypeFilter(undefined);
     setContentPage(1);
     setContentPageSize(10);
+    setContentSortBy(undefined);
+    setContentSortOrder("asc");
     await Promise.all([
       loadContents(token, nextChildId, 1, 10),
       loadRule(token, nextChildId),
@@ -765,6 +842,17 @@ export default function ParentDashboard() {
                     >
                       新建内容
                     </Button>
+                    <Popconfirm
+                      title="确认清除所选类型的统计？"
+                      onConfirm={handleClearStats}
+                    >
+                      <Button
+                        danger
+                        disabled={!selectedChildId || !contentTypeFilter}
+                      >
+                        清除统计
+                      </Button>
+                    </Popconfirm>
                   </Space>
                 }
               >
@@ -784,10 +872,30 @@ export default function ParentDashboard() {
                         `第 ${range[0]}-${range[1]} 条 / 共 ${total} 条`,
                       onChange: onContentPaginationChange,
                     }}
+                    onChange={onContentTableChange}
                     columns={[
-                      { title: "标题", dataIndex: "title" },
+                      { title: "标题", dataIndex: "title", sorter: true },
                       { title: "类型", dataIndex: "content_type", width: 120 },
                       { title: "难度", dataIndex: "difficulty", width: 80 },
+                      {
+                        title: "答题次数",
+                        dataIndex: "learn_count",
+                        width: 100,
+                        sorter: true,
+                      },
+                      {
+                        title: "错误次数",
+                        dataIndex: "error_count",
+                        width: 100,
+                        sorter: true,
+                      },
+                      {
+                        title: "错误率",
+                        dataIndex: "error_rate",
+                        width: 90,
+                        sorter: true,
+                        render: (value: number) => `${value}%`,
+                      },
                       {
                         title: "启用",
                         dataIndex: "status",

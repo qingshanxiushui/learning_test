@@ -458,13 +458,15 @@ Authorization: Bearer <token>
 
 查询参数：
 
-| 参数         | 类型   | 必填 | 说明                                               |
-| ------------ | ------ | ---- | -------------------------------------------------- |
-| page         | int    | 否   | 页码                                               |
-| page_size    | int    | 否   | 每页条数                                           |
-| content_type | string | 否   | 类型：character、classic、poem、idiom、englishWord |
-| status       | string | 否   | 状态：enabled、disabled                            |
-| keyword      | string | 否   | 标题或内容关键字                                   |
+| 参数         | 类型   | 必填 | 说明                                                  |
+| ------------ | ------ | ---- | ----------------------------------------------------- |
+| page         | int    | 否   | 页码                                                  |
+| page_size    | int    | 否   | 每页条数                                              |
+| content_type | string | 否   | 类型：character、classic、poem、idiom、englishWord    |
+| status       | string | 否   | 状态：enabled、disabled                               |
+| keyword      | string | 否   | 标题或内容关键字                                      |
+| sort_by      | string | 否   | 排序字段：title、learn_count、error_count、error_rate |
+| sort_order   | string | 否   | 排序方向：asc、desc（默认 asc）                       |
 
 成功响应 `data.list` 单项示例：
 
@@ -488,10 +490,15 @@ Authorization: Bearer <token>
     "poem_lines": ["床前明月光", "疑是地上霜", "举头望明月", "低头思故乡"],
     "poem_meaning": "表达诗人的思乡情感"
   },
+  "learn_count": 3,
+  "error_count": 0,
+  "error_rate": 0,
   "created_at": "2026-08-20T10:00:00Z",
   "updated_at": "2026-08-20T10:00:00Z"
 }
 ```
+
+说明：`learn_count` 为「答题次数（学习次数）」，按卡片被查看次数统计；因当前五类内容为卡片模式（无对错判定），`error_count`、`error_rate` 恒为 0（占位）。
 
 错误码：
 
@@ -1171,6 +1178,35 @@ Authorization: Bearer <token>
   "request_id": "req_018"
 }
 ```
+
+## 12.4 清除类型统计
+
+- 接口：`DELETE /api/v1/children/{child_id}/stats`
+- 鉴权：是
+- 说明：清除指定内容类型的学习统计（软删除该类型相关的会话题目快照），使该类型各内容的「答题次数」从 0 重新累计。
+
+查询参数：
+
+| 参数         | 类型   | 必填 | 说明                                               |
+| ------------ | ------ | ---- | -------------------------------------------------- |
+| content_type | string | 是   | 类型：character、classic、poem、idiom、englishWord |
+
+成功响应：
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "cleared": 4
+  },
+  "request_id": "req_019"
+}
+```
+
+错误码：
+
+- `40402` 孩子不存在
 
 ## 13. 数据字典约定
 

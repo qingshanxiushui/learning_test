@@ -98,6 +98,9 @@ export type LearningContent = {
   status: ContentStatus;
   sort_order: number;
   detail: Record<string, unknown>;
+  learn_count: number;
+  error_count: number;
+  error_rate: number;
   created_at: string;
   updated_at: string;
 };

@@ -302,5 +302,24 @@
     "updated_at": "2026-10-26T07:43:38Z",
     "deleted_at": null,
     "is_deleted": 0
+  },
+  {
+    "id": "06c0e41d-fab6-4889-973f-b7de99b8f64f",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "character"
+    ],
+    "total_questions": 5,
+    "completed_questions": 5,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "completed",
+    "started_at": "2026-10-26T09:04:13Z",
+    "finished_at": "2026-10-26T09:04:16Z",
+    "created_at": "2026-10-26T09:04:13Z",
+    "updated_at": "2026-10-26T09:04:16Z",
+    "deleted_at": null,
+    "is_deleted": 0
   }
 ]
