@@ -387,6 +387,114 @@ def test_idiom_is_viewed_as_card() -> None:
     assert completed.json()["data"]["session"]["completed_questions"] == 1
 
 
+def test_pinyin_is_viewed_as_card() -> None:
+    client = TestClient(app)
+    client.post(
+        "/api/v1/parents",
+        json={"account_name": "pinyin_card_parent", "display_name": "Parent", "password": "123456"},
+    )
+    login = client.post(
+        "/api/v1/auth/login",
+        json={"account_name": "pinyin_card_parent", "password": "123456"},
+    )
+    headers = {"Authorization": f"Bearer {login.json()['data']['access_token']}"}
+    child_id = client.post(
+        "/api/v1/children",
+        headers=headers,
+        json={"name": "小拼", "age": 6},
+    ).json()["data"]["id"]
+    client.put(
+        f"/api/v1/children/{child_id}/pinyin-settings",
+        headers=headers,
+        json={"categories": ["initial"], "with_tone": False, "status": 1},
+    )
+    client.post(
+        f"/api/v1/children/{child_id}/rules",
+        headers=headers,
+        json={
+            "question_count": 3,
+            "default_content_types": ["pinyin"],
+            "allow_child_select_types": True,
+            "status": 1,
+        },
+    )
+
+    started = client.post(
+        f"/api/v1/children/{child_id}/sessions",
+        headers=headers,
+        json={"selected_content_types": ["pinyin"]},
+    )
+    assert started.status_code == 201
+    data = started.json()["data"]
+    questions = data["questions"]
+    assert len(questions) == 3
+    assert all(q["question_type"] == "pinyin_card" for q in questions)
+    assert all(q["content_type"] == "pinyin" for q in questions)
+    assert all(q["question_options"] == [] for q in questions)
+    initials = set("b p m f d t n l g k h j q x zh ch sh r z c s y w".split())
+    assert all(q["question_stem"] in initials for q in questions)
+
+    session_id = data["session"]["id"]
+    for question in questions:
+        viewed = client.post(
+            f"/api/v1/children/{child_id}/sessions/{session_id}/questions/{question['id']}/viewed",
+            headers=headers,
+            json={"view_duration_ms": 700},
+        )
+        assert viewed.status_code == 200
+
+    completed = client.post(
+        f"/api/v1/children/{child_id}/sessions/{session_id}/complete", headers=headers
+    )
+    assert completed.status_code == 200
+    assert completed.json()["data"]["session"]["answered_questions"] == 0
+    assert completed.json()["data"]["session"]["completed_questions"] == 3
+
+
+def test_pinyin_with_tone_marks() -> None:
+    client = TestClient(app)
+    client.post(
+        "/api/v1/parents",
+        json={"account_name": "pinyin_tone_parent", "display_name": "Parent", "password": "123456"},
+    )
+    login = client.post(
+        "/api/v1/auth/login",
+        json={"account_name": "pinyin_tone_parent", "password": "123456"},
+    )
+    headers = {"Authorization": f"Bearer {login.json()['data']['access_token']}"}
+    child_id = client.post(
+        "/api/v1/children",
+        headers=headers,
+        json={"name": "小调", "age": 6},
+    ).json()["data"]["id"]
+    client.put(
+        f"/api/v1/children/{child_id}/pinyin-settings",
+        headers=headers,
+        json={"categories": ["single_final"], "with_tone": True, "status": 1},
+    )
+    client.post(
+        f"/api/v1/children/{child_id}/rules",
+        headers=headers,
+        json={
+            "question_count": 6,
+            "default_content_types": ["pinyin"],
+            "allow_child_select_types": True,
+            "status": 1,
+        },
+    )
+
+    started = client.post(
+        f"/api/v1/children/{child_id}/sessions",
+        headers=headers,
+        json={"selected_content_types": ["pinyin"]},
+    )
+    assert started.status_code == 201
+    stems = {q["question_stem"] for q in started.json()["data"]["questions"]}
+    assert len(stems) == 6
+    # 单韵母带声调：不应出现无调号的原始字母
+    assert all(s not in {"a", "o", "e", "i", "u", "ü"} for s in stems)
+
+
 def test_english_words_are_viewed_as_cards() -> None:
     client = TestClient(app)
     client.post(

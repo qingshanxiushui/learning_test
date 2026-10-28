@@ -3,9 +3,44 @@ from __future__ import annotations
 import random
 from typing import Any
 
-from app.models import CARD_QUESTION_TYPES, AnswerSubmit, Content, MathSettings, Session, SessionStart, new_id, now_iso
+from app.models import CARD_QUESTION_TYPES, AnswerSubmit, Content, MathSettings, PinyinSettings, Session, SessionStart, new_id, now_iso
 from app.services.parent_service import ParentService
 from app.services.parent_service import service as parent_service
+
+# 拼音内置内容（家长无需录入，直接按分类启用）
+PINYIN_LISTS: dict[str, list[str]] = {
+    "initial": "b p m f d t n l g k h j q x zh ch sh r z c s y w".split(),
+    "single_final": "a o e i u ü".split(),
+    "final": "ai ei ui ao ou iu ie üe er an en in un ün ang eng ing ong".split(),
+    "whole_syllable": "zhi chi shi ri zi ci si yi wu yu ye yue yuan yin yun ying".split(),
+}
+
+_TONE_MARKS: dict[str, str] = {
+    "a": "āáǎà",
+    "o": "ōóǒò",
+    "e": "ēéěè",
+    "i": "īíǐì",
+    "u": "ūúǔù",
+    "ü": "ǖǘǚǜ",
+}
+
+
+def _apply_tone(pinyin: str, tone: int) -> str:
+    if "a" in pinyin:
+        target = "a"
+    elif "o" in pinyin:
+        target = "o"
+    elif "e" in pinyin:
+        target = "e"
+    else:
+        target = ""
+        for ch in reversed(pinyin):
+            if ch in ("i", "u", "ü"):
+                target = ch
+                break
+        if not target:
+            return pinyin
+    return pinyin.replace(target, _TONE_MARKS[target][tone], 1)
 
 
 class LearningError(Exception):
@@ -37,8 +72,8 @@ class LearningService:
         if not selected_types:
             selected_types = rule.default_content_types
 
-        content_types = [t for t in selected_types if t != "math"]
-        math_selected = "math" in selected_types
+        content_types = [t for t in selected_types if t not in ("math", "pinyin")]
+        rule_types = [t for t in ("math", "pinyin") if t in selected_types]
 
         contents, _ = self.parents.list_contents(parent_id, child_id, 1, 100000, None, "enabled", None)
         if content_types:
@@ -47,51 +82,87 @@ class LearningService:
             contents = []
 
         math_settings: MathSettings | None = None
-        if math_selected:
+        if "math" in rule_types:
             math_settings = self.parents.get_math_settings(parent_id, child_id)
             if not math_settings or math_settings.status != 1:
                 raise LearningError(404, 40407, "math settings not found")
 
-        if not math_selected and not contents:
+        pinyin_settings: PinyinSettings | None = None
+        if "pinyin" in rule_types:
+            pinyin_settings = self.parents.get_pinyin_settings(parent_id, child_id)
+            if not pinyin_settings or pinyin_settings.status != 1:
+                raise LearningError(404, 40408, "pinyin settings not found")
+
+        if not rule_types and not contents:
             raise LearningError(422, 42204, "not enough enabled content to start a session")
 
         question_count = rule.question_count
-        math_count = 0
-        content_count = 0
-        if math_selected and contents:
-            num_types = len(selected_types)
-            math_count = max(1, -(-question_count // num_types))
-            content_count = question_count - math_count
-        elif math_selected:
-            math_count = question_count
-        else:
-            content_count = question_count
+
+        # 将总题量在「内容」与「规则驱动类型（math/pinyin）」之间均分
+        slots: list[str] = []
+        if content_types:
+            slots.append("content")
+        slots.extend(rule_types)
+        num_slots = len(slots)
+        counts: dict[str, int] = {s: question_count // num_slots for s in slots}
+        remainder = question_count - sum(counts.values())
+        for i in range(remainder):
+            counts[slots[i]] += 1
+
+        math_count = counts.get("math", 0)
+        pinyin_count = counts.get("pinyin", 0)
+        content_count = counts.get("content", 0)
 
         selected_contents = random.sample(contents, min(content_count, len(contents)))
         shortfall = content_count - len(selected_contents)
-        if math_selected and shortfall > 0:
-            math_count += shortfall
+        while shortfall > 0:
+            distributed = False
+            for rt in rule_types:
+                if shortfall <= 0:
+                    break
+                if rt == "math":
+                    math_count += 1
+                else:
+                    pinyin_count += 1
+                shortfall -= 1
+                distributed = True
+            if not distributed:
+                break
 
         now = now_iso()
         session_id = new_id()
 
         math_questions = (
             [self._build_math_question(session_id, math_settings, index, now) for index in range(1, math_count + 1)]
-            if math_selected
+            if math_count > 0
             else []
         )
+
+        pinyin_questions: list[dict[str, Any]] = []
+        if pinyin_count > 0:
+            pinyin_items = self._pinyin_items(pinyin_settings)
+            if not pinyin_items:
+                raise LearningError(422, 42209, "no pinyin categories selected")
+            sampled_pinyin = random.sample(pinyin_items, min(pinyin_count, len(pinyin_items)))
+            pinyin_questions = [
+                self._build_pinyin_question(session_id, pinyin_settings, pinyin, category, index, now)
+                for index, (pinyin, category) in enumerate(sampled_pinyin, 1)
+            ]
+
         content_questions = [
             self._build_question(session_id, item, index, now)
-            for index, item in enumerate(selected_contents, len(math_questions) + 1)
+            for index, item in enumerate(selected_contents, len(math_questions) + len(pinyin_questions) + 1)
         ]
-        questions = math_questions + content_questions
+        questions = math_questions + pinyin_questions + content_questions
         random.shuffle(questions)
         for index, question in enumerate(questions, 1):
             question["question_order"] = index
 
         actual_types: list[str] = []
-        if math_selected and math_count > 0:
+        if math_count > 0:
             actual_types.append("math")
+        if pinyin_count > 0:
+            actual_types.append("pinyin")
         for item in selected_contents:
             if item.content_type not in actual_types:
                 actual_types.append(item.content_type)
@@ -322,6 +393,7 @@ class LearningService:
             "poem": "poem_card",
             "idiom": "idiom_card",
             "classic": "classic_card",
+            "pinyin": "pinyin_card",
         }[content.content_type]
         if content.content_type == "poem":
             stem = self._format_poem(content)
@@ -394,6 +466,49 @@ class LearningService:
                 "operator": operator,
                 "operand_a": a,
                 "operand_b": b,
+            },
+            "created_at": now,
+            "updated_at": now,
+            "deleted_at": None,
+            "is_deleted": 0,
+        }
+
+    @staticmethod
+    def _pinyin_items(settings: PinyinSettings) -> list[tuple[str, str]]:
+        items: list[tuple[str, str]] = []
+        for category in settings.categories:
+            for pinyin in PINYIN_LISTS.get(category, []):
+                items.append((pinyin, category))
+        return items
+
+    def _build_pinyin_question(
+        self,
+        session_id: str,
+        settings: PinyinSettings,
+        pinyin: str,
+        category: str,
+        order: int,
+        now: str,
+    ) -> dict[str, Any]:
+        stem = pinyin
+        if settings.with_tone and category != "initial":
+            stem = _apply_tone(pinyin, random.randint(0, 3))
+        return {
+            "id": new_id(),
+            "session_id": session_id,
+            "content_id": None,
+            "content_type": "pinyin",
+            "question_type": "pinyin_card",
+            "question_stem": stem,
+            "question_options": [],
+            "correct_answer": "",
+            "answer_explanation": "",
+            "question_order": order,
+            "content_snapshot": {
+                "title": stem,
+                "pinyin": pinyin,
+                "pinyin_category": category,
+                "with_tone": settings.with_tone,
             },
             "created_at": now,
             "updated_at": now,

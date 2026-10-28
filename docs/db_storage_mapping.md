@@ -24,6 +24,7 @@ data/
   children.json
   learning_rules.json
   math_settings.json
+  pinyin_settings.json
   contents/
     character.json
     classic.json
@@ -44,6 +45,7 @@ data/
 | child_profile           | `data/children.json`                   | 孩子档案集合                   |
 | learning_rule           | `data/learning_rules.json`             | 学习规则集合                   |
 | math_settings           | `data/math_settings.json`              | 算术设置集合（每孩子一条）     |
+| pinyin_settings         | `data/pinyin_settings.json`            | 拼音设置集合（每孩子一条）     |
 | learning_content        | `data/contents/*.json`                 | 按内容类型拆分主数据           |
 | learning_content_detail | `data/contents/*.json`                 | 与主数据合并存储在同一条记录中 |
 | learning_session        | `data/sessions/learning_sessions.json` | 学习会话摘要                   |

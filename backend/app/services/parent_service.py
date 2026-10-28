@@ -23,6 +23,8 @@ from app.models import (
     MathSettingsUpsert,
     Parent,
     ParentCreate,
+    PinyinSettings,
+    PinyinSettingsUpsert,
     PoemBatchCreate,
     Rule,
     RuleCreate,
@@ -793,6 +795,41 @@ class ParentService:
         rows.append(item)
         self.store.write_list("math_settings.json", rows)
         return MathSettings(**item)
+
+    def get_pinyin_settings(self, parent_id: str, child_id: str) -> PinyinSettings | None:
+        self.assert_child_owned(parent_id, child_id)
+        rows = self._active(self.store.read_list("pinyin_settings.json"))
+        for r in rows:
+            if r.get("child_id") == child_id:
+                return PinyinSettings(**r)
+        return None
+
+    def upsert_pinyin_settings(
+        self, parent_id: str, child_id: str, payload: PinyinSettingsUpsert
+    ) -> PinyinSettings:
+        self.assert_child_owned(parent_id, child_id)
+        if not payload.categories:
+            raise ValueError("categories must not be empty")
+        rows = self.store.read_list("pinyin_settings.json")
+        for r in rows:
+            if r.get("child_id") == child_id and r.get("is_deleted", 0) == 0:
+                r.update(payload.model_dump())
+                r["updated_at"] = now_iso()
+                self.store.write_list("pinyin_settings.json", rows)
+                return PinyinSettings(**r)
+        now = now_iso()
+        item = PinyinSettings(
+            id=new_id(),
+            child_id=child_id,
+            categories=payload.categories,
+            with_tone=payload.with_tone,
+            status=payload.status,
+            created_at=now,
+            updated_at=now,
+        ).model_dump()
+        rows.append(item)
+        self.store.write_list("pinyin_settings.json", rows)
+        return PinyinSettings(**item)
 
     def list_sessions(
         self, parent_id: str, child_id: str, page: int, page_size: int, session_status: str | None

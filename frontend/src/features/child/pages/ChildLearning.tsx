@@ -38,6 +38,7 @@ const CARD_QUESTION_TYPES = new Set([
   "poem_card",
   "idiom_card",
   "classic_card",
+  "pinyin_card",
 ]);
 
 const MULTILINE_CARD_QUESTION_TYPES = new Set(["poem_card", "classic_card"]);
@@ -53,6 +54,7 @@ const CONTENT_TYPES: Array<{
   { value: "idiom", label: "成语", mark: "言" },
   { value: "englishWord", label: "英语", mark: "Aa" },
   { value: "math", label: "算术", mark: "算" },
+  { value: "pinyin", label: "拼音", mark: "拼" },
 ];
 
 type Phase = "choose" | "learning" | "result";

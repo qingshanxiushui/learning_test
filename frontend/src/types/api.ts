@@ -11,10 +11,16 @@ export type ContentType =
   | "poem"
   | "idiom"
   | "englishWord"
-  | "math";
+  | "math"
+  | "pinyin";
 export type ContentStatus = "enabled" | "disabled";
 
 export type MathOperator = "add" | "subtract" | "multiply" | "divide";
+export type PinyinCategory =
+  | "initial"
+  | "single_final"
+  | "final"
+  | "whole_syllable";
 
 export type MathSettings = {
   id: string;
@@ -31,6 +37,22 @@ export type MathSettingsPayload = {
   min_value: number;
   max_value: number;
   operators: MathOperator[];
+  status: number;
+};
+
+export type PinyinSettings = {
+  id: string;
+  child_id: string;
+  categories: PinyinCategory[];
+  with_tone: boolean;
+  status: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type PinyinSettingsPayload = {
+  categories: PinyinCategory[];
+  with_tone: boolean;
   status: number;
 };
 

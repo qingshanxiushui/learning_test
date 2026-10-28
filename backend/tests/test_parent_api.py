@@ -386,6 +386,85 @@ def test_batch_upsert_classics_keeps_last_odd_line() -> None:
     assert created_data["list"][1]["content_text"] == "昔孟母，择邻处。子不学，断机杼。"
 
 
+def test_pinyin_settings() -> None:
+    client = TestClient(app)
+    client.post(
+        "/api/v1/parents",
+        json={"account_name": "pinyin-parent", "display_name": "Parent", "password": "123456"},
+    )
+    login = client.post(
+        "/api/v1/auth/login",
+        json={"account_name": "pinyin-parent", "password": "123456"},
+    )
+    token = login.json()["data"]["access_token"]
+    headers = _auth_header(token)
+    child = client.post(
+        "/api/v1/children",
+        headers=headers,
+        json={"name": "Kid", "nickname": None, "age": 6, "grade_level": None, "avatar_url": None},
+    )
+    child_id = child.json()["data"]["id"]
+
+    empty = client.get(f"/api/v1/children/{child_id}/pinyin-settings", headers=headers)
+    assert empty.status_code == 200
+    assert empty.json()["data"] is None
+
+    payload = {
+        "categories": ["initial", "single_final", "final", "whole_syllable"],
+        "with_tone": True,
+        "status": 1,
+    }
+    created = client.put(
+        f"/api/v1/children/{child_id}/pinyin-settings", headers=headers, json=payload
+    )
+    assert created.status_code == 200
+    data = created.json()["data"]
+    assert data["categories"] == ["initial", "single_final", "final", "whole_syllable"]
+    assert data["with_tone"] is True
+    settings_id = data["id"]
+
+    got = client.get(f"/api/v1/children/{child_id}/pinyin-settings", headers=headers)
+    assert got.status_code == 200
+    assert got.json()["data"]["id"] == settings_id
+
+    payload["with_tone"] = False
+    payload["categories"] = ["initial"]
+    updated = client.put(
+        f"/api/v1/children/{child_id}/pinyin-settings", headers=headers, json=payload
+    )
+    assert updated.status_code == 200
+    assert updated.json()["data"]["id"] == settings_id
+    assert updated.json()["data"]["with_tone"] is False
+    assert updated.json()["data"]["categories"] == ["initial"]
+
+
+def test_pinyin_settings_invalid() -> None:
+    client = TestClient(app)
+    client.post(
+        "/api/v1/parents",
+        json={"account_name": "pinyin-invalid-parent", "display_name": "Parent", "password": "123456"},
+    )
+    login = client.post(
+        "/api/v1/auth/login",
+        json={"account_name": "pinyin-invalid-parent", "password": "123456"},
+    )
+    token = login.json()["data"]["access_token"]
+    headers = _auth_header(token)
+    child_id = client.post(
+        "/api/v1/children",
+        headers=headers,
+        json={"name": "Kid", "age": 6},
+    ).json()["data"]["id"]
+
+    empty_categories = client.put(
+        f"/api/v1/children/{child_id}/pinyin-settings",
+        headers=headers,
+        json={"categories": [], "with_tone": False, "status": 1},
+    )
+    assert empty_categories.status_code == 422
+    assert empty_categories.json()["code"] == 42209
+
+
 def test_parent_full_flow() -> None:
     client = TestClient(app)
 

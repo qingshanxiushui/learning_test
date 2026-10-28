@@ -507,4 +507,68 @@ describe("ChildLearning", () => {
       }),
     );
   });
+
+  it("views a pinyin card without submitting an answer", async () => {
+    vi.mocked(startSession).mockResolvedValueOnce({
+      session: {
+        id: "pinyin-session",
+        child_id: "child-1",
+        selected_content_types: ["pinyin"],
+        total_questions: 1,
+        completed_questions: 0,
+        answered_questions: 0,
+        correct_questions: 0,
+        accuracy_rate: 0,
+        session_status: "in_progress",
+        started_at: "2026-08-20T10:00:00Z",
+        finished_at: null,
+      },
+      questions: [
+        {
+          id: "pinyin-1",
+          question_order: 1,
+          content_type: "pinyin",
+          question_type: "pinyin_card",
+          question_stem: "b",
+          question_options: [],
+        },
+      ],
+    });
+    vi.mocked(completeSession).mockResolvedValueOnce({
+      session: {
+        id: "pinyin-session",
+        child_id: "child-1",
+        selected_content_types: ["pinyin"],
+        total_questions: 1,
+        completed_questions: 1,
+        answered_questions: 0,
+        correct_questions: 0,
+        accuracy_rate: 0,
+        session_status: "completed",
+        started_at: "2026-08-20T10:00:00Z",
+        finished_at: "2026-08-20T10:01:00Z",
+      },
+      summary: { need_review_contents: [] },
+    });
+    const user = userEvent.setup();
+    render(<ChildLearning />);
+
+    await screen.findByText(/准备好了吗.*雨点/);
+    await user.click(screen.getByRole("button", { name: "开始学习" }));
+    expect(await screen.findByText("b")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "提交答案" }),
+    ).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "完成学习" }));
+    expect(await screen.findByText("1")).toBeInTheDocument();
+    expect(markCardViewed).toHaveBeenCalledWith(
+      "mock-token",
+      "child-1",
+      "pinyin-session",
+      "pinyin-1",
+      expect.any(Number),
+    );
+    expect(submitAnswer).not.toHaveBeenCalled();
+  });
 });

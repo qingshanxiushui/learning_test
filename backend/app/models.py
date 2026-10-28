@@ -7,11 +7,12 @@ from uuid import uuid4
 from pydantic import BaseModel, Field
 
 
-ContentType = Literal["character", "classic", "poem", "idiom", "englishWord", "math"]
+ContentType = Literal["character", "classic", "poem", "idiom", "englishWord", "math", "pinyin"]
 ContentStatus = Literal["enabled", "disabled"]
 SessionStatus = Literal["in_progress", "completed", "abandoned"]
 UserStatus = Literal["active", "disabled"]
 MathOperator = Literal["add", "subtract", "multiply", "divide"]
+PinyinCategory = Literal["initial", "single_final", "final", "whole_syllable"]
 
 # 以“卡片”形式展示、无需作答的题型（点击“下一个”即视为已学习）
 CARD_QUESTION_TYPES: tuple[str, ...] = (
@@ -20,6 +21,7 @@ CARD_QUESTION_TYPES: tuple[str, ...] = (
     "poem_card",
     "idiom_card",
     "classic_card",
+    "pinyin_card",
 )
 
 
@@ -194,6 +196,24 @@ class ClassicBatchCreate(BaseModel):
     status: ContentStatus = "enabled"
     sort_order: int = 0
     detail: dict[str, Any] = Field(default_factory=dict)
+
+
+class PinyinSettingsUpsert(BaseModel):
+    categories: list[PinyinCategory] = Field(default_factory=list)
+    with_tone: bool = False
+    status: int = Field(default=1, ge=0, le=1)
+
+
+class PinyinSettings(BaseModel):
+    id: str
+    child_id: str
+    categories: list[PinyinCategory]
+    with_tone: bool
+    status: int
+    created_at: str
+    updated_at: str
+    deleted_at: str | None = None
+    is_deleted: int = 0
 
 
 class ContentUpdate(ContentCreate):

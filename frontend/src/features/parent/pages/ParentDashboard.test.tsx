@@ -11,6 +11,7 @@ import {
   listContents,
 } from "@/api/contents";
 import { updateMathSettings } from "@/api/math";
+import { updatePinyinSettings } from "@/api/pinyin";
 import ParentDashboard from "@/features/parent/pages/ParentDashboard";
 
 const { contentsState } = vi.hoisted(() => ({
@@ -97,6 +98,19 @@ vi.mock("@/api/contents", () => ({
   updateContent: vi.fn(),
   deleteContent: vi.fn(),
   patchContentStatus: vi.fn(),
+}));
+
+vi.mock("@/api/pinyin", () => ({
+  getPinyinSettings: vi.fn(async () => null),
+  updatePinyinSettings: vi.fn(async () => ({
+    id: "pinyin-1",
+    child_id: "child-1",
+    categories: ["initial"],
+    with_tone: false,
+    status: 1,
+    created_at: "2026-08-20T10:00:00Z",
+    updated_at: "2026-08-20T10:00:00Z",
+  })),
 }));
 
 vi.mock("@/api/rules", () => ({
@@ -295,6 +309,27 @@ describe("ParentDashboard", () => {
           "人之初，性本善。性相近，习相远。\n苟不教，性乃迁。教之道，贵以专。",
         difficulty: 1,
         status: "enabled",
+      }),
+    );
+  }, 15000);
+
+  it("saves pinyin settings", async () => {
+    const user = userEvent.setup();
+    render(<ParentDashboard />);
+
+    await screen.findByText("家长端总览");
+    await user.click(screen.getByRole("tab", { name: "拼音设置" }));
+    expect(await screen.findByText("拼音分类")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "保存拼音设置" }));
+
+    expect(updatePinyinSettings).toHaveBeenCalledWith(
+      "mock-token",
+      "child-1",
+      expect.objectContaining({
+        categories: ["initial"],
+        with_tone: false,
+        status: 1,
       }),
     );
   }, 15000);

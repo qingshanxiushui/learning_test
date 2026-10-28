@@ -592,6 +592,50 @@ Authorization: Bearer <token>
 
 成功响应的 `data` 包含 `list`、`created_count`、`updated_count` 和 `total_count`。正文未包含英语单词时返回 `42206`。
 
+## 9.2.3 拼音设置
+
+## 9.2.3.1 获取拼音设置
+
+- 接口：`GET /api/v1/children/{child_id}/pinyin-settings`
+- 鉴权：是
+- 说明：返回该孩子的拼音设置；未设置时 `data` 返回 `null`。
+
+成功响应（已设置）：
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "id": "uuid",
+    "child_id": "uuid",
+    "categories": ["initial", "single_final", "final", "whole_syllable"],
+    "with_tone": true,
+    "status": 1
+  }
+}
+```
+
+## 9.2.3.2 保存拼音设置
+
+- 接口：`PUT /api/v1/children/{child_id}/pinyin-settings`
+- 鉴权：是
+- 说明：upsert（存在则更新，不存在则创建）。`categories` 为拼音分类（声母 `initial` / 单韵母 `single_final` / 韵母 `final` / 整体认读音节 `whole_syllable`），`with_tone` 表示是否带声调。
+
+请求体：
+
+```json
+{
+  "categories": ["initial", "single_final", "final", "whole_syllable"],
+  "with_tone": true,
+  "status": 1
+}
+```
+
+错误码：
+
+- `42209` 拼音设置不合法（分类为空）
+
 ## 9.3 获取学习内容详情
 
 - 接口：`GET /api/v1/children/{child_id}/contents/{content_id}`
@@ -1212,13 +1256,15 @@ Authorization: Bearer <token>
 
 ### 13.1 content_type 枚举
 
-| 值          | 含义 |
-| ----------- | ---- |
-| character   | 汉字 |
-| classic     | 国学 |
-| poem        | 古诗 |
-| idiom       | 成语 |
-| englishWord | 英语 |
+| 值          | 含义                         |
+| ----------- | ---------------------------- |
+| character   | 汉字                         |
+| classic     | 国学                         |
+| poem        | 古诗                         |
+| idiom       | 成语                         |
+| englishWord | 英语                         |
+| math        | 算术（规则驱动，无内容条目） |
+| pinyin      | 拼音                         |
 
 ### 13.2 session_status 枚举
 

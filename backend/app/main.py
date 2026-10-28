@@ -5,7 +5,7 @@ from fastapi.exceptions import HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app.api.routers import auth, children, contents, math, parents, rules, sessions, stats
+from app.api.routers import auth, children, contents, math, parents, pinyin, rules, sessions, stats
 from app.core.config import settings
 from app.models import ApiResponse
 
@@ -25,6 +25,7 @@ app.include_router(children.router, prefix=settings.api_prefix)
 app.include_router(contents.router, prefix=settings.api_prefix)
 app.include_router(rules.router, prefix=settings.api_prefix)
 app.include_router(math.router, prefix=settings.api_prefix)
+app.include_router(pinyin.router, prefix=settings.api_prefix)
 app.include_router(sessions.router, prefix=settings.api_prefix)
 app.include_router(stats.router, prefix=settings.api_prefix)
 

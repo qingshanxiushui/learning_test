@@ -43,6 +43,7 @@ import {
   patchContentStatus,
   updateContent,
 } from "@/api/contents";
+import { getPinyinSettings, updatePinyinSettings } from "@/api/pinyin";
 import { createRule, getRule, updateRule } from "@/api/rules";
 import { getMathSettings, updateMathSettings } from "@/api/math";
 import { login } from "@/api/auth";
@@ -53,6 +54,7 @@ import type {
   LearningContent,
   MathOperator,
   OverviewStats,
+  PinyinCategory,
   RulePayload,
 } from "@/types/api";
 
@@ -69,6 +71,7 @@ const CONTENT_TYPE_OPTIONS: { label: string; value: ContentType }[] = [
 const LEARNING_TYPE_OPTIONS: { label: string; value: ContentType }[] = [
   ...CONTENT_TYPE_OPTIONS,
   { label: "算术", value: "math" },
+  { label: "拼音", value: "pinyin" },
 ];
 
 const MATH_OPERATOR_OPTIONS: { label: string; value: MathOperator }[] = [
@@ -76,6 +79,13 @@ const MATH_OPERATOR_OPTIONS: { label: string; value: MathOperator }[] = [
   { label: "减法 -", value: "subtract" },
   { label: "乘法 ×", value: "multiply" },
   { label: "除法 ÷", value: "divide" },
+];
+
+const PINYIN_CATEGORY_OPTIONS: { label: string; value: PinyinCategory }[] = [
+  { label: "声母", value: "initial" },
+  { label: "单韵母", value: "single_final" },
+  { label: "韵母", value: "final" },
+  { label: "整体认读音节", value: "whole_syllable" },
 ];
 
 const CONTENT_PAGE_SIZE_OPTIONS = [10, 20, 50];
@@ -127,6 +137,7 @@ export default function ParentDashboard() {
   const [contentForm] = Form.useForm();
   const [ruleForm] = Form.useForm();
   const [mathForm] = Form.useForm();
+  const [pinyinForm] = Form.useForm();
   const [loginForm] = Form.useForm();
   const selectedContentType = Form.useWatch("content_type", contentForm);
   const isBatchCreate =
@@ -246,6 +257,44 @@ export default function ParentDashboard() {
     messageApi.success("算术设置已保存");
   }
 
+  async function loadPinyinSettings(activeToken: string, childId: string) {
+    try {
+      const settings = await getPinyinSettings(activeToken, childId);
+      pinyinForm.setFieldsValue(
+        settings
+          ? {
+              categories: settings.categories,
+              with_tone: settings.with_tone,
+              status: settings.status === 1,
+            }
+          : {
+              categories: ["initial"],
+              with_tone: false,
+              status: true,
+            },
+      );
+    } catch {
+      pinyinForm.setFieldsValue({
+        categories: ["initial"],
+        with_tone: false,
+        status: true,
+      });
+    }
+  }
+
+  async function submitPinyinSettings() {
+    if (!token || !selectedChildId) {
+      return;
+    }
+    const values = await pinyinForm.validateFields();
+    await updatePinyinSettings(token, selectedChildId, {
+      categories: values.categories,
+      with_tone: values.with_tone ?? false,
+      status: values.status ? 1 : 0,
+    });
+    messageApi.success("拼音设置已保存");
+  }
+
   useEffect(() => {
     let mounted = true;
     async function fetchData() {
@@ -270,6 +319,7 @@ export default function ParentDashboard() {
             ),
             loadRule(token, selectedChildId),
             loadMathSettings(token, selectedChildId),
+            loadPinyinSettings(token, selectedChildId),
           ]);
         }
       } catch {
@@ -633,6 +683,7 @@ export default function ParentDashboard() {
       loadContents(token, nextChildId, 1, 10),
       loadRule(token, nextChildId),
       loadMathSettings(token, nextChildId),
+      loadPinyinSettings(token, nextChildId),
       loadChildrenAndStats(token, nextChildId),
     ]);
   }
@@ -1054,6 +1105,56 @@ export default function ParentDashboard() {
 
                     <Button htmlType="submit" type="primary">
                       保存算术设置
+                    </Button>
+                  </Form>
+                )}
+              </Card>
+            ),
+          },
+          {
+            key: "pinyin",
+            label: "拼音设置",
+            children: (
+              <Card title="拼音设置">
+                {!selectedChild ? (
+                  <Empty description="请先选择孩子" />
+                ) : (
+                  <Form
+                    form={pinyinForm}
+                    layout="vertical"
+                    onFinish={submitPinyinSettings}
+                  >
+                    <Form.Item
+                      label="拼音分类"
+                      name="categories"
+                      rules={[
+                        { required: true, message: "请选择至少一个分类" },
+                      ]}
+                    >
+                      <Select
+                        mode="multiple"
+                        options={PINYIN_CATEGORY_OPTIONS}
+                      />
+                    </Form.Item>
+
+                    <Form.Item
+                      label="是否带声调"
+                      name="with_tone"
+                      valuePropName="checked"
+                    >
+                      <Switch />
+                    </Form.Item>
+
+                    <Form.Item
+                      label="启用拼音"
+                      name="status"
+                      valuePropName="checked"
+                    >
+                      <Switch />
+                    </Form.Item>
+
+                    <Button htmlType="submit" type="primary">
+                      保存拼音设置
                     </Button>
                   </Form>
                 )}

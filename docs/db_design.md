@@ -286,7 +286,7 @@ erDiagram
 
 约束建议：
 
-- `content_type` 仅允许：character、classic、poem、idiom、englishWord、math（其中 `math` 为虚拟类型，无具体内容条目，仅用于会话类型选择，题目由 `math_settings` 即时生成）
+- `content_type` 仅允许：character、classic、poem、idiom、englishWord、pinyin、math（其中 `math`、`pinyin` 为虚拟类型，无具体内容条目，仅用于会话类型选择，题目分别由 `math_settings`、`pinyin_settings` 即时生成）
 - `difficulty` 仅允许：1、2、3
 - `status` 仅允许：enabled、disabled
 - `title` 不允许为空字符串
