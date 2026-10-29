@@ -43,6 +43,32 @@ const CARD_QUESTION_TYPES = new Set([
 
 const MULTILINE_CARD_QUESTION_TYPES = new Set(["poem_card", "classic_card"]);
 
+function AnnotatedText({ text, pinyin }: { text: string; pinyin: string[] }) {
+  return (
+    <span className="annotated-text">
+      {Array.from(text).map((char, index) => {
+        const py = pinyin[index];
+        if (char === "\n") {
+          return <br key={index} />;
+        }
+        if (py && py !== char) {
+          return (
+            <span className="char-unit" key={index}>
+              <span className="char-pinyin">{py}</span>
+              <span className="char-glyph">{char}</span>
+            </span>
+          );
+        }
+        return (
+          <span className="char-plain" key={index}>
+            {char}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
 const CONTENT_TYPES: Array<{
   value: ContentType;
   label: string;
@@ -409,7 +435,9 @@ export default function ChildLearning() {
             className={`question-panel ${
               MULTILINE_CARD_QUESTION_TYPES.has(currentQuestion.question_type)
                 ? "is-multiline-card"
-                : ""
+                : currentQuestion.question_type === "idiom_card"
+                  ? "is-idiom-card"
+                  : ""
             }`}
           >
             <span className="question-kind">
@@ -420,7 +448,15 @@ export default function ChildLearning() {
               }
             </span>
             <Typography.Title level={2}>
-              {currentQuestion.question_stem}
+              {currentQuestion.question_pinyin &&
+              currentQuestion.question_pinyin.length > 0 ? (
+                <AnnotatedText
+                  text={currentQuestion.question_stem}
+                  pinyin={currentQuestion.question_pinyin}
+                />
+              ) : (
+                currentQuestion.question_stem
+              )}
             </Typography.Title>
             {currentQuestion.question_type === "math_arithmetic" ? (
               <div className="math-input">

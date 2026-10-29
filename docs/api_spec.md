@@ -883,6 +883,15 @@ Authorization: Bearer <token>
 
 汉字内容生成 `character_card`，`question_stem` 为单个汉字且 `question_options` 为空。卡片通过查看接口推进，不调用答题接口。
 
+汉字、国学、古诗、成语四类卡片题目额外返回 `question_pinyin`（与 `question_stem` 逐字符对齐的拼音数组，带声调；非汉字符号/换行为原字符），用于在汉字上方标注拼音。示例：
+
+```json
+{
+  "question_stem": "地大物博",
+  "question_pinyin": ["dì", "dà", "wù", "bó"]
+}
+```
+
 算术内容生成 `math_arithmetic`，`question_stem` 为形如 `3 + 5 = ?` 的算式，`question_options` 为空，孩子通过输入整数作答（见 11.3）。
 
 错误码：

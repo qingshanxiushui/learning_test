@@ -3,6 +3,8 @@ from __future__ import annotations
 import random
 from typing import Any
 
+from pypinyin import Style, pinyin
+
 from app.models import CARD_QUESTION_TYPES, AnswerSubmit, Content, MathSettings, PinyinSettings, Session, SessionStart, new_id, now_iso
 from app.services.parent_service import ParentService
 from app.services.parent_service import service as parent_service
@@ -41,6 +43,18 @@ def _apply_tone(pinyin: str, tone: int) -> str:
         if not target:
             return pinyin
     return pinyin.replace(target, _TONE_MARKS[target][tone], 1)
+
+
+def _pinyin_annotation(text: str) -> list[str]:
+    """按字符返回与 `text` 对齐的拼音（带声调）；非汉字符号/换行返回原字符。"""
+    result: list[str] = []
+    lines = text.split("\n")
+    for index, line in enumerate(lines):
+        if index > 0:
+            result.append("\n")
+        for item in pinyin(line, style=Style.TONE):
+            result.append(item[0] if item else "")
+    return result
 
 
 class LearningError(Exception):
@@ -408,6 +422,7 @@ class LearningService:
             "content_type": content.content_type,
             "question_type": question_type,
             "question_stem": stem,
+            "question_pinyin": _pinyin_annotation(stem),
             "question_options": [],
             "correct_answer": "",
             "answer_explanation": "",
@@ -455,6 +470,7 @@ class LearningService:
             "content_type": "math",
             "question_type": "math_arithmetic",
             "question_stem": stem,
+            "question_pinyin": [],
             "question_options": [],
             "correct_answer": str(result),
             "answer_explanation": "",
@@ -500,6 +516,7 @@ class LearningService:
             "content_type": "pinyin",
             "question_type": "pinyin_card",
             "question_stem": stem,
+            "question_pinyin": [],
             "question_options": [],
             "correct_answer": "",
             "answer_explanation": "",

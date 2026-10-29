@@ -451,6 +451,55 @@ def test_pinyin_is_viewed_as_card() -> None:
     assert completed.json()["data"]["session"]["completed_questions"] == 3
 
 
+def test_card_questions_have_pinyin_annotation() -> None:
+    client = TestClient(app)
+    client.post(
+        "/api/v1/parents",
+        json={"account_name": "annotation_parent", "display_name": "Parent", "password": "123456"},
+    )
+    login = client.post(
+        "/api/v1/auth/login",
+        json={"account_name": "annotation_parent", "password": "123456"},
+    )
+    headers = {"Authorization": f"Bearer {login.json()['data']['access_token']}"}
+    child_id = client.post(
+        "/api/v1/children",
+        headers=headers,
+        json={"name": "小注", "age": 6},
+    ).json()["data"]["id"]
+    client.post(
+        f"/api/v1/children/{child_id}/contents",
+        headers=headers,
+        json={
+            "content_type": "idiom",
+            "title": "地大物博",
+            "content_text": "地大物博",
+            "difficulty": 1,
+            "status": "enabled",
+        },
+    )
+    client.post(
+        f"/api/v1/children/{child_id}/rules",
+        headers=headers,
+        json={
+            "question_count": 1,
+            "default_content_types": ["idiom"],
+            "allow_child_select_types": True,
+            "status": 1,
+        },
+    )
+
+    started = client.post(
+        f"/api/v1/children/{child_id}/sessions",
+        headers=headers,
+        json={"selected_content_types": ["idiom"]},
+    )
+    assert started.status_code == 201
+    question = started.json()["data"]["questions"][0]
+    assert question["question_stem"] == "地大物博"
+    assert question["question_pinyin"] == ["dì", "dà", "wù", "bó"]
+
+
 def test_pinyin_with_tone_marks() -> None:
     client = TestClient(app)
     client.post(

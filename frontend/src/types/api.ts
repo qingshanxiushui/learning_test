@@ -159,6 +159,7 @@ export type SessionQuestion = {
   question_type: string;
   question_stem: string;
   question_options: string[];
+  question_pinyin?: string[];
 };
 
 export type LearningSession = {

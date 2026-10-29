@@ -571,4 +571,43 @@ describe("ChildLearning", () => {
     );
     expect(submitAnswer).not.toHaveBeenCalled();
   });
+
+  it("annotates pinyin above characters for chinese cards", async () => {
+    vi.mocked(startSession).mockResolvedValueOnce({
+      session: {
+        id: "idiom-session",
+        child_id: "child-1",
+        selected_content_types: ["idiom"],
+        total_questions: 1,
+        completed_questions: 0,
+        answered_questions: 0,
+        correct_questions: 0,
+        accuracy_rate: 0,
+        session_status: "in_progress",
+        started_at: "2026-08-20T10:00:00Z",
+        finished_at: null,
+      },
+      questions: [
+        {
+          id: "idiom-1",
+          question_order: 1,
+          content_type: "idiom",
+          question_type: "idiom_card",
+          question_stem: "地大物博",
+          question_options: [],
+          question_pinyin: ["dì", "dà", "wù", "bó"],
+        },
+      ],
+    });
+    const user = userEvent.setup();
+    render(<ChildLearning />);
+
+    await screen.findByText(/准备好了吗.*雨点/);
+    await user.click(screen.getByRole("button", { name: "开始学习" }));
+    expect(await screen.findByText("地")).toBeInTheDocument();
+    expect(screen.getByText("dì")).toBeInTheDocument();
+    expect(screen.getByText("dà")).toBeInTheDocument();
+    expect(screen.getByText("wù")).toBeInTheDocument();
+    expect(screen.getByText("bó")).toBeInTheDocument();
+  });
 });
