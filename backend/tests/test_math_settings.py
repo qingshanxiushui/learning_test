@@ -32,9 +32,15 @@ def _setup() -> tuple[TestClient, dict[str, str], str]:
 def test_math_settings_upsert_and_get() -> None:
     client, headers, child_id = _setup()
 
-    empty = client.get(f"/api/v1/children/{child_id}/math-settings", headers=headers)
-    assert empty.status_code == 200
-    assert empty.json()["data"] is None
+    # 新建孩子时自动生成默认算术设置
+    defaults = client.get(f"/api/v1/children/{child_id}/math-settings", headers=headers)
+    assert defaults.status_code == 200
+    default_data = defaults.json()["data"]
+    assert default_data is not None
+    assert default_data["min_value"] == 0
+    assert default_data["max_value"] == 20
+    assert default_data["operators"] == ["add", "subtract"]
+    assert default_data["status"] == 1
 
     payload = {
         "min_value": 1,

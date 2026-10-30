@@ -27,7 +27,7 @@ def test_character_cards_are_viewed_before_session_completion() -> None:
         json={"content_text": "根、茂", "difficulty": 1, "status": "enabled"},
     )
     assert imported.status_code == 201
-    client.post(
+    client.put(
         f"/api/v1/children/{child_id}/rules",
         headers=headers,
         json={
@@ -117,7 +117,7 @@ def test_classic_cards_are_viewed_before_session_completion() -> None:
         },
     )
     assert imported.status_code == 201
-    client.post(
+    client.put(
         f"/api/v1/children/{child_id}/rules",
         headers=headers,
         json={
@@ -223,7 +223,7 @@ def test_generates_templates_for_all_content_types() -> None:
         assert response.status_code == 201
 
     content_types = ["character", "classic", "poem", "idiom", "englishWord"]
-    rule = client.post(
+    rule = client.put(
         f"/api/v1/children/{child_id}/rules",
         headers=headers,
         json={
@@ -233,7 +233,7 @@ def test_generates_templates_for_all_content_types() -> None:
             "status": 1,
         },
     )
-    assert rule.status_code == 201
+    assert rule.status_code == 200
 
     started = client.post(
         f"/api/v1/children/{child_id}/sessions",
@@ -280,7 +280,7 @@ def test_poem_is_viewed_as_card() -> None:
             "detail": {"poem_lines": ["床前明月光", "疑是地上霜"], "dynasty": "唐", "author": "李白"},
         },
     )
-    client.post(
+    client.put(
         f"/api/v1/children/{child_id}/rules",
         headers=headers,
         json={
@@ -347,7 +347,7 @@ def test_idiom_is_viewed_as_card() -> None:
             "status": "enabled",
         },
     )
-    client.post(
+    client.put(
         f"/api/v1/children/{child_id}/rules",
         headers=headers,
         json={
@@ -408,7 +408,7 @@ def test_pinyin_is_viewed_as_card() -> None:
         headers=headers,
         json={"categories": ["initial"], "with_tone": False, "status": 1},
     )
-    client.post(
+    client.put(
         f"/api/v1/children/{child_id}/rules",
         headers=headers,
         json={
@@ -478,7 +478,7 @@ def test_card_questions_have_pinyin_annotation() -> None:
             "status": "enabled",
         },
     )
-    client.post(
+    client.put(
         f"/api/v1/children/{child_id}/rules",
         headers=headers,
         json={
@@ -521,7 +521,7 @@ def test_pinyin_with_tone_marks() -> None:
         headers=headers,
         json={"categories": ["single_final"], "with_tone": True, "status": 1},
     )
-    client.post(
+    client.put(
         f"/api/v1/children/{child_id}/rules",
         headers=headers,
         json={
@@ -566,7 +566,7 @@ def test_english_words_are_viewed_as_cards() -> None:
         json={"content_text": "apple\nbanana", "difficulty": 1, "status": "enabled"},
     )
     assert imported.status_code == 201
-    client.post(
+    client.put(
         f"/api/v1/children/{child_id}/rules",
         headers=headers,
         json={
@@ -648,7 +648,7 @@ def test_math_session_generates_questions_and_judges_answer() -> None:
             "status": 1,
         },
     )
-    client.post(
+    client.put(
         f"/api/v1/children/{child_id}/rules",
         headers=headers,
         json={
@@ -730,7 +730,16 @@ def test_math_session_requires_settings() -> None:
         headers=headers,
         json={"name": "小算", "age": 6},
     ).json()["data"]["id"]
-    client.post(
+    # 新建孩子会生成默认算术设置，这里显式停用后再验证会话启动报错
+    disabled = client.put(
+        f"/api/v1/children/{child_id}/math-settings",
+        headers=headers,
+        json={"min_value": 0, "max_value": 20, "operators": ["add", "subtract"], "status": 0},
+    )
+    assert disabled.status_code == 200
+    assert disabled.json()["data"]["status"] == 0
+
+    client.put(
         f"/api/v1/children/{child_id}/rules",
         headers=headers,
         json={

@@ -16,13 +16,16 @@ from app.models import (
     Content,
     ContentCreate,
     ContentStatusUpdate,
+    ContentType,
     ContentUpdate,
     EnglishBatchCreate,
     IdiomBatchCreate,
+    MathOperator,
     MathSettings,
     MathSettingsUpsert,
     Parent,
     ParentCreate,
+    PinyinCategory,
     PinyinSettings,
     PinyinSettingsUpsert,
     PoemBatchCreate,
@@ -33,6 +36,21 @@ from app.models import (
     now_iso,
 )
 from app.repositories.json_store import JsonStore
+
+# 新建孩子时自动生成的默认学习规则与默认设置（对齐 PRD 10.1.3「首版默认规则建议」）
+DEFAULT_QUESTION_COUNT = 5
+DEFAULT_CONTENT_TYPES: tuple[ContentType, ...] = (
+    "character",
+    "classic",
+    "poem",
+    "idiom",
+    "englishWord",
+)
+DEFAULT_MATH_MIN_VALUE = 0
+DEFAULT_MATH_MAX_VALUE = 20
+DEFAULT_MATH_OPERATORS: tuple[MathOperator, ...] = ("add", "subtract")
+DEFAULT_PINYIN_CATEGORIES: tuple[PinyinCategory, ...] = ("initial",)
+DEFAULT_PINYIN_WITH_TONE = False
 
 
 class ParentService:
@@ -121,7 +139,40 @@ class ParentService:
         rows = self.store.read_list("children.json")
         rows.append(item)
         self.store.write_list("children.json", rows)
+        self._init_child_defaults(parent_id, item["id"])
         return Child(**item)
+
+    def _init_child_defaults(self, parent_id: str, child_id: str) -> None:
+        """为新孩子生成默认学习规则、算术设置与拼音设置，使孩子端开箱可用。"""
+        self.upsert_rule(
+            parent_id,
+            child_id,
+            RuleCreate(
+                question_count=DEFAULT_QUESTION_COUNT,
+                default_content_types=list(DEFAULT_CONTENT_TYPES),
+                allow_child_select_types=True,
+                status=1,
+            ),
+        )
+        self.upsert_math_settings(
+            parent_id,
+            child_id,
+            MathSettingsUpsert(
+                min_value=DEFAULT_MATH_MIN_VALUE,
+                max_value=DEFAULT_MATH_MAX_VALUE,
+                operators=list(DEFAULT_MATH_OPERATORS),
+                status=1,
+            ),
+        )
+        self.upsert_pinyin_settings(
+            parent_id,
+            child_id,
+            PinyinSettingsUpsert(
+                categories=list(DEFAULT_PINYIN_CATEGORIES),
+                with_tone=DEFAULT_PINYIN_WITH_TONE,
+                status=1,
+            ),
+        )
 
     def get_child(self, parent_id: str, child_id: str) -> Child | None:
         rows = [r for r in self._active(self.store.read_list("children.json")) if r.get("parent_user_id") == parent_id]

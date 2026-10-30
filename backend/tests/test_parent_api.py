@@ -405,9 +405,14 @@ def test_pinyin_settings() -> None:
     )
     child_id = child.json()["data"]["id"]
 
-    empty = client.get(f"/api/v1/children/{child_id}/pinyin-settings", headers=headers)
-    assert empty.status_code == 200
-    assert empty.json()["data"] is None
+    # 新建孩子时自动生成默认拼音设置
+    defaults = client.get(f"/api/v1/children/{child_id}/pinyin-settings", headers=headers)
+    assert defaults.status_code == 200
+    default_data = defaults.json()["data"]
+    assert default_data is not None
+    assert default_data["categories"] == ["initial"]
+    assert default_data["with_tone"] is False
+    assert default_data["status"] == 1
 
     payload = {
         "categories": ["initial", "single_final", "final", "whole_syllable"],
@@ -526,16 +531,40 @@ def test_parent_full_flow() -> None:
     assert patch_content.status_code == 200
     assert patch_content.json()["data"]["status"] == "disabled"
 
-    create_rule = client.post(
+    # 新建孩子时自动生成默认学习规则
+    default_rule = client.get(f"/api/v1/children/{child_id}/rules", headers=_auth_header(token))
+    assert default_rule.status_code == 200
+    assert default_rule.json()["data"]["question_count"] == 5
+    assert default_rule.json()["data"]["default_content_types"] == [
+        "character",
+        "classic",
+        "poem",
+        "idiom",
+        "englishWord",
+    ]
+    assert default_rule.json()["data"]["allow_child_select_types"] is True
+    assert default_rule.json()["data"]["status"] == 1
+
+    # 默认规则已存在，重复创建返回 409
+    duplicate_rule = client.post(
         f"/api/v1/children/{child_id}/rules",
         headers=_auth_header(token),
         json={"question_count": 5, "default_content_types": ["poem"], "allow_child_select_types": True, "status": 1},
     )
-    assert create_rule.status_code == 201
+    assert duplicate_rule.status_code == 409
+    assert duplicate_rule.json()["code"] == 40902
+
+    update_rule = client.put(
+        f"/api/v1/children/{child_id}/rules",
+        headers=_auth_header(token),
+        json={"question_count": 5, "default_content_types": ["poem"], "allow_child_select_types": True, "status": 1},
+    )
+    assert update_rule.status_code == 200
 
     get_rule = client.get(f"/api/v1/children/{child_id}/rules", headers=_auth_header(token))
     assert get_rule.status_code == 200
     assert get_rule.json()["data"]["question_count"] == 5
+    assert get_rule.json()["data"]["default_content_types"] == ["poem"]
 
     # Seed session files to verify parent-side session and stats queries.
     data_dir = Path(settings.data_dir) / "sessions"
