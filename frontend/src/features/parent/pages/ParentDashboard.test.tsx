@@ -10,19 +10,17 @@ import {
   clearContentStats,
   listContents,
 } from "@/api/contents";
-import { updateMathSettings } from "@/api/math";
-import { updatePinyinSettings } from "@/api/pinyin";
+import { getMathSettings, updateMathSettings } from "@/api/math";
+import { getPinyinSettings, updatePinyinSettings } from "@/api/pinyin";
+import { getRule } from "@/api/rules";
 import ParentDashboard from "@/features/parent/pages/ParentDashboard";
 
-const { contentsState } = vi.hoisted(() => ({
+const { contentsState, childrenState } = vi.hoisted(() => ({
   contentsState: {
     list: [] as Array<Record<string, unknown>>,
     total: 0,
   },
-}));
-
-vi.mock("@/api/children", () => ({
-  listChildren: vi.fn(async () => ({
+  childrenState: {
     list: [
       {
         id: "child-1",
@@ -35,11 +33,17 @@ vi.mock("@/api/children", () => ({
         created_at: "2026-08-20T10:00:00Z",
         updated_at: "2026-08-20T10:00:00Z",
       },
-    ],
+    ] as Array<Record<string, unknown>>,
+  },
+}));
+
+vi.mock("@/api/children", () => ({
+  listChildren: vi.fn(async () => ({
+    list: childrenState.list,
     pagination: {
       page: 1,
       page_size: 20,
-      total: 1,
+      total: childrenState.list.length,
     },
   })),
 }));
@@ -101,7 +105,15 @@ vi.mock("@/api/contents", () => ({
 }));
 
 vi.mock("@/api/pinyin", () => ({
-  getPinyinSettings: vi.fn(async () => null),
+  getPinyinSettings: vi.fn(async (_token: string, childId: string) => ({
+    id: `pinyin-${childId}`,
+    child_id: childId,
+    categories: childId === "child-1" ? ["initial"] : ["final"],
+    with_tone: childId !== "child-1",
+    status: 1,
+    created_at: "2026-08-20T10:00:00Z",
+    updated_at: "2026-08-20T10:00:00Z",
+  })),
   updatePinyinSettings: vi.fn(async () => ({
     id: "pinyin-1",
     child_id: "child-1",
@@ -114,10 +126,10 @@ vi.mock("@/api/pinyin", () => ({
 }));
 
 vi.mock("@/api/rules", () => ({
-  getRule: vi.fn(async () => ({
-    id: "rule-1",
-    child_id: "child-1",
-    question_count: 5,
+  getRule: vi.fn(async (_token: string, childId: string) => ({
+    id: `rule-${childId}`,
+    child_id: childId,
+    question_count: childId === "child-1" ? 5 : 8,
     default_content_types: ["character"],
     allow_child_select_types: true,
     status: 1,
@@ -133,7 +145,16 @@ vi.mock("@/api/auth", () => ({
 }));
 
 vi.mock("@/api/math", () => ({
-  getMathSettings: vi.fn(async () => null),
+  getMathSettings: vi.fn(async (_token: string, childId: string) => ({
+    id: `math-${childId}`,
+    child_id: childId,
+    min_value: childId === "child-1" ? 0 : 5,
+    max_value: childId === "child-1" ? 20 : 50,
+    operators: ["add"],
+    status: 1,
+    created_at: "2026-08-20T10:00:00Z",
+    updated_at: "2026-08-20T10:00:00Z",
+  })),
   updateMathSettings: vi.fn(async () => ({
     id: "math-1",
     child_id: "child-1",
@@ -147,8 +168,48 @@ vi.mock("@/api/math", () => ({
 }));
 
 describe("ParentDashboard", () => {
+  function withTwoChildren() {
+    childrenState.list = [
+      {
+        id: "child-1",
+        name: "小明",
+        nickname: "明明",
+        age: 5,
+        grade_level: "幼儿园大班",
+        avatar_url: null,
+        status: "active",
+        created_at: "2026-08-20T10:00:00Z",
+        updated_at: "2026-08-20T10:00:00Z",
+      },
+      {
+        id: "child-2",
+        name: "小禾",
+        nickname: "禾禾",
+        age: 6,
+        grade_level: "小学一年级",
+        avatar_url: null,
+        status: "active",
+        created_at: "2026-08-21T10:00:00Z",
+        updated_at: "2026-08-21T10:00:00Z",
+      },
+    ];
+  }
+
   beforeEach(() => {
     localStorage.setItem("parent_demo_token", "mock-token");
+    childrenState.list = [
+      {
+        id: "child-1",
+        name: "小明",
+        nickname: "明明",
+        age: 5,
+        grade_level: "幼儿园大班",
+        avatar_url: null,
+        status: "active",
+        created_at: "2026-08-20T10:00:00Z",
+        updated_at: "2026-08-20T10:00:00Z",
+      },
+    ];
   });
 
   afterEach(() => {
@@ -449,5 +510,78 @@ describe("ParentDashboard", () => {
       "child-1",
       "character",
     );
+  }, 15000);
+
+  it("switches child from the rule tab", async () => {
+    withTwoChildren();
+
+    const user = userEvent.setup();
+    render(<ParentDashboard />);
+
+    await screen.findByText("家长端总览");
+    await user.click(screen.getByRole("tab", { name: "学习规则" }));
+
+    const ruleSelect = await screen.findByRole("combobox", {
+      name: "选择规则所属孩子",
+    });
+    expect(screen.getByText("当前孩子")).toBeInTheDocument();
+
+    await user.click(ruleSelect);
+    await user.click(await screen.findByTitle("禾禾"));
+
+    expect(getRule).toHaveBeenCalledWith("mock-token", "child-2");
+  }, 15000);
+
+  it("switches child from the math settings tab", async () => {
+    withTwoChildren();
+
+    const user = userEvent.setup();
+    render(<ParentDashboard />);
+
+    await screen.findByText("家长端总览");
+    await user.click(screen.getByRole("tab", { name: "算术设置" }));
+
+    const mathSelect = await screen.findByRole("combobox", {
+      name: "选择算术设置所属孩子",
+    });
+    expect(getMathSettings).toHaveBeenCalledWith("mock-token", "child-1");
+
+    await user.click(mathSelect);
+    await user.click(await screen.findByTitle("禾禾"));
+
+    expect(getMathSettings).toHaveBeenCalledWith("mock-token", "child-2");
+  }, 15000);
+
+  it("switches child from the pinyin settings tab", async () => {
+    withTwoChildren();
+
+    const user = userEvent.setup();
+    render(<ParentDashboard />);
+
+    await screen.findByText("家长端总览");
+    await user.click(screen.getByRole("tab", { name: "拼音设置" }));
+
+    const pinyinSelect = await screen.findByRole("combobox", {
+      name: "选择拼音设置所属孩子",
+    });
+    expect(getPinyinSettings).toHaveBeenCalledWith("mock-token", "child-1");
+
+    await user.click(pinyinSelect);
+    await user.click(await screen.findByTitle("禾禾"));
+
+    expect(getPinyinSettings).toHaveBeenCalledWith("mock-token", "child-2");
+  }, 15000);
+
+  it("hints how to add a child when none exists", async () => {
+    childrenState.list = [];
+
+    render(<ParentDashboard />);
+    await screen.findByText("家长端总览");
+
+    await userEvent.setup().click(screen.getByRole("tab", { name: "学习规则" }));
+
+    expect(
+      await screen.findByText("还没有孩子档案，请先到「孩子管理」创建"),
+    ).toBeInTheDocument();
   }, 15000);
 });

@@ -100,6 +100,41 @@ function buildEmptyStats(): OverviewStats {
   };
 }
 
+function buildEmptyChildHint(children: Child[]): string {
+  return children.length === 0
+    ? "还没有孩子档案，请先到「孩子管理」创建"
+    : "请先在上方选择孩子";
+}
+
+function ChildScopeSelect({
+  childId,
+  children,
+  onSwitch,
+  label,
+}: {
+  childId: string | null;
+  children: Child[];
+  onSwitch: (childId: string) => void;
+  label: string;
+}) {
+  return (
+    <Space>
+      <Typography.Text type="secondary">当前孩子</Typography.Text>
+      <Select
+        aria-label={label}
+        style={{ width: 220 }}
+        placeholder="请选择孩子"
+        value={childId ?? undefined}
+        options={children.map((item) => ({
+          label: item.nickname || item.name,
+          value: item.id,
+        }))}
+        onChange={onSwitch}
+      />
+    </Space>
+  );
+}
+
 export default function ParentDashboard() {
   const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = useState(true);
@@ -868,6 +903,7 @@ export default function ParentDashboard() {
                 extra={
                   <Space>
                     <Select
+                      aria-label="选择学习内容所属孩子"
                       style={{ width: 220 }}
                       placeholder="请选择孩子"
                       value={selectedChildId ?? undefined}
@@ -993,9 +1029,19 @@ export default function ParentDashboard() {
             key: "rules",
             label: "学习规则",
             children: (
-              <Card title="学习规则设置">
+              <Card
+                title="学习规则设置"
+                extra={
+                  <ChildScopeSelect
+                    label="选择规则所属孩子"
+                    childId={selectedChildId}
+                    children={children}
+                    onSwitch={onChildSwitch}
+                  />
+                }
+              >
                 {!selectedChild ? (
-                  <Empty description="请先选择孩子" />
+                  <Empty description={buildEmptyChildHint(children)} />
                 ) : (
                   <Form
                     form={ruleForm}
@@ -1054,9 +1100,19 @@ export default function ParentDashboard() {
             key: "math",
             label: "算术设置",
             children: (
-              <Card title="算术设置">
+              <Card
+                title="算术设置"
+                extra={
+                  <ChildScopeSelect
+                    label="选择算术设置所属孩子"
+                    childId={selectedChildId}
+                    children={children}
+                    onSwitch={onChildSwitch}
+                  />
+                }
+              >
                 {!selectedChild ? (
-                  <Empty description="请先选择孩子" />
+                  <Empty description={buildEmptyChildHint(children)} />
                 ) : (
                   <Form
                     form={mathForm}
@@ -1115,9 +1171,19 @@ export default function ParentDashboard() {
             key: "pinyin",
             label: "拼音设置",
             children: (
-              <Card title="拼音设置">
+              <Card
+                title="拼音设置"
+                extra={
+                  <ChildScopeSelect
+                    label="选择拼音设置所属孩子"
+                    childId={selectedChildId}
+                    children={children}
+                    onSwitch={onChildSwitch}
+                  />
+                }
+              >
                 {!selectedChild ? (
-                  <Empty description="请先选择孩子" />
+                  <Empty description={buildEmptyChildHint(children)} />
                 ) : (
                   <Form
                     form={pinyinForm}
