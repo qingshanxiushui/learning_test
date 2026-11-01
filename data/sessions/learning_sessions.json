@@ -568,5 +568,310 @@
     "updated_at": "2026-10-30T05:29:08Z",
     "deleted_at": null,
     "is_deleted": 0
+  },
+  {
+    "id": "1599b7a2-4b6b-448c-8c56-627b2f84ab2f",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "character"
+    ],
+    "total_questions": 10,
+    "completed_questions": 10,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "completed",
+    "started_at": "2026-10-30T13:14:40Z",
+    "finished_at": "2026-10-30T13:17:22Z",
+    "created_at": "2026-10-30T13:14:40Z",
+    "updated_at": "2026-10-30T13:17:22Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "42df3fa9-fcde-46a7-987c-d40769fa823a",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "math"
+    ],
+    "total_questions": 10,
+    "completed_questions": 1,
+    "answered_questions": 1,
+    "correct_questions": 1,
+    "accuracy_rate": 100.0,
+    "session_status": "in_progress",
+    "started_at": "2026-10-30T13:17:39Z",
+    "finished_at": null,
+    "created_at": "2026-10-30T13:17:39Z",
+    "updated_at": "2026-10-30T13:18:52Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "d0dba538-bcd6-4aaf-9ee6-d86af001ab0b",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "math",
+      "character"
+    ],
+    "total_questions": 10,
+    "completed_questions": 0,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "in_progress",
+    "started_at": "2026-10-30T13:23:14Z",
+    "finished_at": null,
+    "created_at": "2026-10-30T13:23:14Z",
+    "updated_at": "2026-10-30T13:23:14Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "172b616c-edeb-4150-a8fa-f9a03ccf5b29",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "math"
+    ],
+    "total_questions": 10,
+    "completed_questions": 10,
+    "answered_questions": 10,
+    "correct_questions": 10,
+    "accuracy_rate": 100.0,
+    "session_status": "completed",
+    "started_at": "2026-10-30T13:24:19Z",
+    "finished_at": "2026-10-30T13:37:29Z",
+    "created_at": "2026-10-30T13:24:19Z",
+    "updated_at": "2026-10-30T13:37:29Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "93535400-97fa-4978-8eab-be2ff6642def",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "pinyin"
+    ],
+    "total_questions": 10,
+    "completed_questions": 10,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "completed",
+    "started_at": "2026-10-30T13:38:05Z",
+    "finished_at": "2026-10-30T13:44:00Z",
+    "created_at": "2026-10-30T13:38:05Z",
+    "updated_at": "2026-10-30T13:44:00Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "518aa2e5-c3fb-4b89-8b6c-8aaf17e91495",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "math"
+    ],
+    "total_questions": 10,
+    "completed_questions": 10,
+    "answered_questions": 10,
+    "correct_questions": 9,
+    "accuracy_rate": 90.0,
+    "session_status": "completed",
+    "started_at": "2026-10-30T13:48:22Z",
+    "finished_at": "2026-10-30T14:07:51Z",
+    "created_at": "2026-10-30T13:48:22Z",
+    "updated_at": "2026-10-30T14:07:51Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "9752f29e-fc85-47c5-9c45-fe10b8562754",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "idiom"
+    ],
+    "total_questions": 10,
+    "completed_questions": 10,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "completed",
+    "started_at": "2026-10-30T14:08:36Z",
+    "finished_at": "2026-10-30T14:14:49Z",
+    "created_at": "2026-10-30T14:08:36Z",
+    "updated_at": "2026-10-30T14:14:49Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "6feaec8a-3a4c-4fa4-ac0a-b7b3c44cf7fe",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "idiom"
+    ],
+    "total_questions": 10,
+    "completed_questions": 10,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "completed",
+    "started_at": "2026-10-30T14:15:27Z",
+    "finished_at": "2026-10-30T14:22:42Z",
+    "created_at": "2026-10-30T14:15:27Z",
+    "updated_at": "2026-10-30T14:22:42Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "599ca963-6b64-46ee-87d1-71b8a02bd00b",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "englishWord"
+    ],
+    "total_questions": 10,
+    "completed_questions": 10,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "completed",
+    "started_at": "2026-10-30T14:26:55Z",
+    "finished_at": "2026-10-30T14:30:49Z",
+    "created_at": "2026-10-30T14:26:55Z",
+    "updated_at": "2026-10-30T14:30:49Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "7ba37b43-4f40-4ff6-a5e2-0c3e8ed40d26",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "classic"
+    ],
+    "total_questions": 10,
+    "completed_questions": 10,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "completed",
+    "started_at": "2026-10-30T14:32:53Z",
+    "finished_at": "2026-10-30T14:39:22Z",
+    "created_at": "2026-10-30T14:32:53Z",
+    "updated_at": "2026-10-30T14:39:22Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "ae5b1953-a28a-459c-8c13-bef46a965675",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "classic"
+    ],
+    "total_questions": 10,
+    "completed_questions": 10,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "completed",
+    "started_at": "2026-10-30T14:39:27Z",
+    "finished_at": "2026-10-30T14:44:50Z",
+    "created_at": "2026-10-30T14:39:27Z",
+    "updated_at": "2026-10-30T14:44:50Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "48c23ca7-3fc5-4700-9ebf-011dc47d5ad5",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "classic"
+    ],
+    "total_questions": 10,
+    "completed_questions": 10,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "completed",
+    "started_at": "2026-10-30T14:44:56Z",
+    "finished_at": "2026-10-30T14:47:00Z",
+    "created_at": "2026-10-30T14:44:56Z",
+    "updated_at": "2026-10-30T14:47:00Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "8f90427f-bf4b-46a2-a49f-ced743de54f5",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "poem"
+    ],
+    "total_questions": 10,
+    "completed_questions": 9,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "in_progress",
+    "started_at": "2026-10-30T14:47:06Z",
+    "finished_at": null,
+    "created_at": "2026-10-30T14:47:06Z",
+    "updated_at": "2026-10-30T14:56:23Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "148f74bc-a76d-406a-8c9a-9295ebffa40e",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "character"
+    ],
+    "total_questions": 10,
+    "completed_questions": 10,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "completed",
+    "started_at": "2026-11-01T13:31:44Z",
+    "finished_at": "2026-11-01T13:32:08Z",
+    "created_at": "2026-11-01T13:31:44Z",
+    "updated_at": "2026-11-01T13:32:08Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "946e9324-5435-4d5a-b4aa-f90124768bab",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "poem"
+    ],
+    "total_questions": 10,
+    "completed_questions": 0,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "in_progress",
+    "started_at": "2026-11-01T13:32:16Z",
+    "finished_at": null,
+    "created_at": "2026-11-01T13:32:16Z",
+    "updated_at": "2026-11-01T13:32:16Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "08316b5a-e6b8-4b40-a50f-03bd57be49bf",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "idiom"
+    ],
+    "total_questions": 10,
+    "completed_questions": 0,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "in_progress",
+    "started_at": "2026-11-01T13:32:40Z",
+    "finished_at": null,
+    "created_at": "2026-11-01T13:32:40Z",
+    "updated_at": "2026-11-01T13:32:40Z",
+    "deleted_at": null,
+    "is_deleted": 0
   }
 ]
