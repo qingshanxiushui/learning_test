@@ -611,3 +611,213 @@ describe("ChildLearning", () => {
     expect(screen.getByText("bó")).toBeInTheDocument();
   });
 });
+
+type SpeechStub = {
+  utterances: Array<Record<string, unknown>>;
+  speak: ReturnType<typeof vi.fn>;
+  cancel: ReturnType<typeof vi.fn>;
+};
+
+function installSpeechStub(): SpeechStub {
+  const utterances: Array<Record<string, unknown>> = [];
+  const voices = [
+    { lang: "zh-CN", name: "中文" },
+    { lang: "en-US", name: "English" },
+  ] as unknown as SpeechSynthesisVoice[];
+  let speaking = false;
+
+  const speak = vi.fn((utterance: Record<string, unknown>) => {
+    utterances.push(utterance);
+    speaking = true;
+  });
+  const cancel = vi.fn(() => {
+    speaking = false;
+  });
+
+  Object.defineProperty(window, "speechSynthesis", {
+    configurable: true,
+    writable: true,
+    value: {
+      get speaking() {
+        return speaking;
+      },
+      pending: false,
+      speak,
+      cancel,
+      getVoices: vi.fn(() => voices),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    },
+  });
+  Object.defineProperty(window, "SpeechSynthesisUtterance", {
+    configurable: true,
+    writable: true,
+    value: class {
+      text: string;
+      lang = "";
+      voice: SpeechSynthesisVoice | null = null;
+      onend: (() => void) | null = null;
+      onerror: (() => void) | null = null;
+      constructor(text: string) {
+        this.text = text;
+      }
+    },
+  });
+
+  return { utterances, speak, cancel };
+}
+
+function mockCardSession(question: {
+  id: string;
+  contentType: string;
+  questionType: string;
+  stem: string;
+}) {
+  vi.mocked(startSession).mockResolvedValueOnce({
+    session: {
+      id: `${question.id}-session`,
+      child_id: "child-1",
+      selected_content_types: [question.contentType],
+      total_questions: 1,
+      completed_questions: 0,
+      answered_questions: 0,
+      correct_questions: 0,
+      accuracy_rate: 0,
+      session_status: "in_progress",
+      started_at: "2026-08-20T10:00:00Z",
+      finished_at: null,
+    },
+    questions: [
+      {
+        id: question.id,
+        question_order: 1,
+        content_type: question.contentType,
+        question_type: question.questionType,
+        question_stem: question.stem,
+        question_options: [],
+      },
+    ],
+  } as never);
+}
+
+describe("ChildLearning read aloud", () => {
+  beforeEach(() => localStorage.setItem("parent_demo_token", "mock-token"));
+  afterEach(() => {
+    localStorage.clear();
+    vi.clearAllMocks();
+    Reflect.deleteProperty(window, "speechSynthesis");
+    Reflect.deleteProperty(window, "SpeechSynthesisUtterance");
+  });
+
+  it("reads the cleaned card text and stops on a second click", async () => {
+    const stub = installSpeechStub();
+    mockCardSession({
+      id: "poem-1",
+      contentType: "poem",
+      questionType: "poem_card",
+      stem: "《静夜思》唐·李白\n床前明月光",
+    });
+    const user = userEvent.setup();
+    render(<ChildLearning />);
+
+    await screen.findByText(/准备好了吗.*雨点/);
+    await user.click(screen.getByRole("button", { name: "开始学习" }));
+
+    await user.click(await screen.findByText("朗读"));
+    expect(stub.speak).toHaveBeenCalledTimes(1);
+    expect(stub.utterances[0]).toMatchObject({
+      text: "静夜思 唐 李白 床前明月光",
+      lang: "zh-CN",
+    });
+
+    await user.click(screen.getByText("停止朗读"));
+    expect(stub.cancel).toHaveBeenCalled();
+    expect(screen.getByText("朗读")).toBeInTheDocument();
+  });
+
+  it("reads an english word card with the english voice", async () => {
+    const stub = installSpeechStub();
+    mockCardSession({
+      id: "word-1",
+      contentType: "englishWord",
+      questionType: "english_word_card",
+      stem: "apple",
+    });
+    const user = userEvent.setup();
+    render(<ChildLearning />);
+
+    await screen.findByText(/准备好了吗.*雨点/);
+    await user.click(screen.getByRole("button", { name: "开始学习" }));
+
+    await user.click(await screen.findByText("朗读"));
+    expect(stub.utterances[0]).toMatchObject({
+      text: "apple",
+      lang: "en-US",
+    });
+  });
+
+  it("shows the read button on all five readable card types", async () => {
+    installSpeechStub();
+    const cases = [
+      { id: "c-1", contentType: "character", questionType: "character_card", stem: "根" },
+      { id: "c-2", contentType: "classic", questionType: "classic_card", stem: "知之为知之\n不知为不知" },
+      { id: "c-3", contentType: "poem", questionType: "poem_card", stem: "《咏鹅》唐·骆宾王\n鹅鹅鹅" },
+      { id: "c-4", contentType: "idiom", questionType: "idiom_card", stem: "地大物博" },
+      { id: "c-5", contentType: "englishWord", questionType: "english_word_card", stem: "apple" },
+    ];
+    const user = userEvent.setup();
+
+    for (const item of cases) {
+      mockCardSession(item);
+      const view = render(<ChildLearning />);
+      await screen.findByText(/准备好了吗.*雨点/);
+      await user.click(screen.getByRole("button", { name: "开始学习" }));
+      expect(await screen.findByText("朗读")).toBeInTheDocument();
+      view.unmount();
+    }
+  });
+
+  it("hides the read button for math and pinyin cards", async () => {
+    installSpeechStub();
+    const cases = [
+      { id: "m-1", contentType: "math", questionType: "math_arithmetic", stem: "3 + 5 = ?" },
+      { id: "p-1", contentType: "pinyin", questionType: "pinyin_card", stem: "b" },
+    ];
+    const user = userEvent.setup();
+
+    for (const item of cases) {
+      mockCardSession(item);
+      const view = render(<ChildLearning />);
+      await screen.findByText(/准备好了吗.*雨点/);
+      await user.click(screen.getByRole("button", { name: "开始学习" }));
+      await screen.findByText(item.stem);
+      expect(screen.queryByText("朗读")).not.toBeInTheDocument();
+      view.unmount();
+    }
+  });
+
+  it("disables the read button when no matching voice is available", async () => {
+    const stub = installSpeechStub();
+    const synth = window.speechSynthesis as unknown as {
+      getVoices: ReturnType<typeof vi.fn>;
+    };
+    synth.getVoices.mockReturnValue([
+      { lang: "ja-JP", name: "日本語" } as unknown as SpeechSynthesisVoice,
+    ]);
+    mockCardSession({
+      id: "idiom-1",
+      contentType: "idiom",
+      questionType: "idiom_card",
+      stem: "地大物博",
+    });
+    const user = userEvent.setup();
+    render(<ChildLearning />);
+
+    await screen.findByText(/准备好了吗.*雨点/);
+    await user.click(screen.getByRole("button", { name: "开始学习" }));
+
+    const button = await screen.findByText("朗读");
+    expect(button.closest("button")).toBeDisabled();
+    expect(stub.speak).not.toHaveBeenCalled();
+  });
+});

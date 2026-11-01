@@ -11,6 +11,7 @@ import {
   Spin,
   Typography,
 } from "antd";
+import { SoundOutlined } from "@ant-design/icons";
 import { login } from "@/api/auth";
 import { ApiError } from "@/api/client";
 import { listChildren } from "@/api/children";
@@ -21,6 +22,13 @@ import {
   submitAnswer,
 } from "@/api/learning";
 import { getRule } from "@/api/rules";
+import {
+  getSpeechLanguage,
+  pickVoice,
+  READABLE_CARD_QUESTION_TYPES,
+  speechSynthesisSupported,
+  toReadText,
+} from "@/features/child/speech";
 import type {
   AnswerFeedback,
   Child,
@@ -102,6 +110,8 @@ export default function ChildLearning() {
   const [error, setError] = useState("");
   const [questionStartedAt, setQuestionStartedAt] = useState(Date.now());
   const [loginForm] = Form.useForm();
+  const [isReading, setIsReading] = useState(false);
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
 
   function handleRequestError(reason: unknown, fallback: string) {
     if (reason instanceof ApiError && reason.status === 401) {
@@ -162,6 +172,29 @@ export default function ChildLearning() {
       });
   }, [childId, token]);
 
+  // 加载浏览器可用语音；Chrome 首次 getVoices 可能为空，需在 voiceschanged 后刷新。
+  useEffect(() => {
+    if (!speechSynthesisSupported()) return;
+    const synth = window.speechSynthesis;
+    const update = () => setVoices(synth.getVoices());
+    update();
+    synth.addEventListener("voiceschanged", update);
+    return () => synth.removeEventListener("voiceschanged", update);
+  }, []);
+
+  // 切换题目时停止朗读。
+  useEffect(() => {
+    stopReading();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questionIndex]);
+
+  // 卸载组件时停止朗读。
+  useEffect(() => {
+    return () => {
+      if (speechSynthesisSupported()) window.speechSynthesis.cancel();
+    };
+  }, []);
+
   async function handleLogin(values: {
     account_name: string;
     password: string;
@@ -185,6 +218,33 @@ export default function ChildLearning() {
         ? current.filter((item) => item !== type)
         : [...current, type],
     );
+  }
+
+  function stopReading() {
+    if (speechSynthesisSupported()) window.speechSynthesis.cancel();
+    setIsReading(false);
+  }
+
+  function handleToggleRead() {
+    const question = questions[questionIndex];
+    if (!question || !speechSynthesisSupported()) return;
+    const synth = window.speechSynthesis;
+    if (synth.speaking || synth.pending) {
+      synth.cancel();
+      setIsReading(false);
+      return;
+    }
+    const lang = getSpeechLanguage(question.content_type);
+    const utterance = new window.SpeechSynthesisUtterance(
+      toReadText(question.question_stem, question.content_type),
+    );
+    utterance.lang = lang;
+    const voice = pickVoice(voices, lang);
+    if (voice) utterance.voice = voice;
+    utterance.onend = () => setIsReading(false);
+    utterance.onerror = () => setIsReading(false);
+    synth.speak(utterance);
+    setIsReading(true);
   }
 
   async function handleStart() {
@@ -227,6 +287,7 @@ export default function ChildLearning() {
 
   async function handleContinue() {
     if (!session) return;
+    stopReading();
     if (questionIndex < questions.length - 1) {
       setQuestionIndex((current) => current + 1);
       setSelectedAnswer("");
@@ -249,6 +310,7 @@ export default function ChildLearning() {
   async function handleCardContinue() {
     const question = questions[questionIndex];
     if (!session || !question) return;
+    stopReading();
     setLoading(true);
     try {
       const response = await markCardViewed(
@@ -282,6 +344,7 @@ export default function ChildLearning() {
   }
 
   function restart() {
+    stopReading();
     setPhase("choose");
     setSession(null);
     setQuestions([]);
@@ -343,6 +406,11 @@ export default function ChildLearning() {
   }
 
   const currentQuestion = questions[questionIndex];
+  const currentReadLang = currentQuestion
+    ? getSpeechLanguage(currentQuestion.content_type)
+    : "zh-CN";
+  const canRead =
+    speechSynthesisSupported() && pickVoice(voices, currentReadLang) !== null;
 
   return (
     <section className="child-experience">
@@ -440,13 +508,28 @@ export default function ChildLearning() {
                   : ""
             }`}
           >
-            <span className="question-kind">
-              {
-                CONTENT_TYPES.find(
-                  (type) => type.value === currentQuestion.content_type,
-                )?.label
-              }
-            </span>
+            <div className="question-head">
+              <span className="question-kind">
+                {
+                  CONTENT_TYPES.find(
+                    (type) => type.value === currentQuestion.content_type,
+                  )?.label
+                }
+              </span>
+              {READABLE_CARD_QUESTION_TYPES.has(
+                currentQuestion.question_type,
+              ) && (
+                <Button
+                  className="read-aloud"
+                  type="text"
+                  icon={<SoundOutlined />}
+                  onClick={handleToggleRead}
+                  disabled={!canRead}
+                >
+                  {isReading ? "停止朗读" : "朗读"}
+                </Button>
+              )}
+            </div>
             <Typography.Title level={2}>
               {currentQuestion.question_pinyin &&
               currentQuestion.question_pinyin.length > 0 ? (

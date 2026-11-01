@@ -224,9 +224,19 @@ input,
   border-radius: 8px;
   box-shadow: 10px 10px 0 #f0b84b;
 }
+.question-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
 .question-kind {
   color: #c64e32;
   font-weight: 800;
+}
+.read-aloud.ant-btn {
+  color: #1f6f68;
+  font-weight: 700;
 }
 .question-panel h2.ant-typography {
   margin: 10px 0 30px;
