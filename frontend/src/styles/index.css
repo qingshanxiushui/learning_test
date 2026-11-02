@@ -1140,6 +1140,10 @@ input,
   .child-selector {
     justify-content: space-between;
   }
+  .child-selector .ant-select {
+    flex: 1;
+    min-width: 0;
+  }
   .type-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
@@ -1181,5 +1185,88 @@ input,
   .answer-option {
     min-height: 64px;
     font-size: 17px;
+  }
+  .parent-shell {
+    padding: 16px 14px 48px;
+  }
+  .parent-hero {
+    padding: 22px 20px;
+    border-radius: 22px;
+  }
+  .parent-hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .parent-hero-actions .ant-select {
+    min-width: 0;
+    width: 100%;
+  }
+  .parent-stat-card .ant-card-body {
+    padding: 16px 14px;
+  }
+  .parent-stat-card .ant-statistic-content {
+    font-size: 24px;
+  }
+  .parent-stat-hint {
+    display: none;
+  }
+  .parent-panel {
+    padding: 14px 12px;
+    border-radius: 20px;
+  }
+  .parent-panel .ant-tabs-nav {
+    margin-bottom: 14px;
+  }
+  .parent-panel .ant-tabs-tab {
+    padding: 8px 0;
+    font-size: 13px;
+  }
+  .parent-panel .ant-tabs-nav-list {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .parent-panel .ant-tabs-nav-list::-webkit-scrollbar {
+    display: none;
+  }
+  .parent-panel .ant-tabs-nav-operations {
+    display: none !important;
+  }
+  .parent-panel .ant-table-thead > tr > th,
+  .parent-panel .ant-table-tbody > tr > td {
+    padding: 10px 12px !important;
+    font-size: 13px;
+  }
+  .parent-panel .ant-card-head {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0 14px;
+  }
+  .parent-panel .ant-card-head-wrapper {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .parent-panel .ant-card-head-title {
+    flex: 1 1 100%;
+    padding: 12px 0 0;
+  }
+  .parent-panel .ant-card-extra {
+    flex: 1 1 100%;
+    margin-inline-start: 0;
+    padding: 0 0 12px;
+  }
+  .parent-panel .ant-card-extra .ant-space {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .parent-panel .ant-card-extra .ant-space-item {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .parent-panel .ant-card-extra .ant-select {
+    width: 100%;
+  }
+  .parent-panel .ant-card-extra .ant-btn {
+    width: 100%;
   }
 }

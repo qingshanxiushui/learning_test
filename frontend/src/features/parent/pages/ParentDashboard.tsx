@@ -831,7 +831,7 @@ export default function ParentDashboard() {
       )}
 
       <Row gutter={[16, 16]}>
-        <Col xs={24} md={12} xl={6}>
+        <Col xs={12} md={12} xl={6}>
           <StatCard
             title="总学习次数"
             value={stats.total_sessions}
@@ -840,7 +840,7 @@ export default function ParentDashboard() {
             hint="累计完成的学习会话"
           />
         </Col>
-        <Col xs={24} md={12} xl={6}>
+        <Col xs={12} md={12} xl={6}>
           <StatCard
             title="最近7天学习"
             value={stats.sessions_last_7_days}
@@ -849,7 +849,7 @@ export default function ParentDashboard() {
             hint="近一周保持的学习节奏"
           />
         </Col>
-        <Col xs={24} md={12} xl={6}>
+        <Col xs={12} md={12} xl={6}>
           <StatCard
             title="平均正确率"
             value={stats.average_accuracy_rate}
@@ -859,7 +859,7 @@ export default function ParentDashboard() {
             hint="越高说明掌握越扎实"
           />
         </Col>
-        <Col xs={24} md={12} xl={6}>
+        <Col xs={12} md={12} xl={6}>
           <StatCard
             title="学习内容总数"
             value={stats.content_count}
@@ -895,6 +895,7 @@ export default function ParentDashboard() {
                     rowKey="id"
                     dataSource={children}
                     pagination={false}
+                    scroll={{ x: "max-content" }}
                     columns={[
                       { title: "姓名", dataIndex: "name" },
                       {
@@ -999,6 +1000,7 @@ export default function ParentDashboard() {
                   <Table
                     rowKey="id"
                     dataSource={contents}
+                    scroll={{ x: "max-content" }}
                     pagination={{
                       current: contentPage,
                       pageSize: contentPageSize,
