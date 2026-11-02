@@ -22,6 +22,12 @@ import {
   message,
   type TableProps,
 } from "antd";
+import {
+  BookOutlined,
+  CalendarOutlined,
+  ReadOutlined,
+  TrophyOutlined,
+} from "@ant-design/icons";
 import StatCard from "@/features/parent/components/StatCard";
 import {
   createChild,
@@ -89,6 +95,26 @@ const PINYIN_CATEGORY_OPTIONS: { label: string; value: PinyinCategory }[] = [
 ];
 
 const CONTENT_PAGE_SIZE_OPTIONS = [10, 20, 50];
+
+const CONTENT_TYPE_TONE: Record<string, string> = {
+  character: "tone-character",
+  classic: "tone-classic",
+  poem: "tone-poem",
+  idiom: "tone-idiom",
+  englishWord: "tone-english",
+  math: "tone-math",
+  pinyin: "tone-pinyin",
+};
+
+const CONTENT_TYPE_LABEL: Record<string, string> = {
+  character: "汉字",
+  classic: "国学",
+  poem: "古诗",
+  idiom: "成语",
+  englishWord: "英语",
+  math: "算术",
+  pinyin: "拼音",
+};
 
 function buildEmptyStats(): OverviewStats {
   return {
@@ -765,30 +791,31 @@ export default function ParentDashboard() {
   return (
     <Space direction="vertical" size={16} className="w-full">
       {contextHolder}
-      <Card>
-        <Space direction="vertical" size={8} className="w-full">
-          <Typography.Title level={5} className="!mb-0">
-            家长端总览
-          </Typography.Title>
-          <Typography.Text type="secondary">
-            管理孩子档案、学习内容、学习规则，跟踪最近学习效果。
-          </Typography.Text>
-          <Space>
-            <Typography.Text type="secondary">
-              当前 token 已登录。
-            </Typography.Text>
-            <Button
-              size="small"
-              onClick={() => {
-                localStorage.removeItem(DEMO_TOKEN_KEY);
-                setToken("");
-              }}
-            >
-              退出登录
-            </Button>
-          </Space>
-        </Space>
-      </Card>
+      <section className="parent-hero">
+        <span className="parent-hero-kicker">家长管理台</span>
+        <Typography.Title level={1}>家长端总览</Typography.Title>
+        <p>管理孩子档案、学习内容、学习规则，跟踪最近学习效果。</p>
+        <div className="parent-hero-actions">
+          <Select
+            placeholder="请选择孩子"
+            value={selectedChildId || undefined}
+            onChange={onChildSwitch}
+            options={children.map((child) => ({
+              value: child.id,
+              label: child.nickname || child.name,
+            }))}
+            aria-label="选择当前孩子"
+          />
+          <Button
+            onClick={() => {
+              localStorage.removeItem(DEMO_TOKEN_KEY);
+              setToken("");
+            }}
+          >
+            退出登录
+          </Button>
+        </div>
+      </section>
 
       {error && (
         <Alert
@@ -805,25 +832,48 @@ export default function ParentDashboard() {
 
       <Row gutter={[16, 16]}>
         <Col xs={24} md={12} xl={6}>
-          <StatCard title="总学习次数" value={stats.total_sessions} />
+          <StatCard
+            title="总学习次数"
+            value={stats.total_sessions}
+            icon={<ReadOutlined />}
+            accent="#24665c"
+            hint="累计完成的学习会话"
+          />
         </Col>
         <Col xs={24} md={12} xl={6}>
-          <StatCard title="最近7天学习" value={stats.sessions_last_7_days} />
+          <StatCard
+            title="最近7天学习"
+            value={stats.sessions_last_7_days}
+            icon={<CalendarOutlined />}
+            accent="#368396"
+            hint="近一周保持的学习节奏"
+          />
         </Col>
         <Col xs={24} md={12} xl={6}>
           <StatCard
             title="平均正确率"
             value={stats.average_accuracy_rate}
             suffix="%"
+            icon={<TrophyOutlined />}
+            accent="#c48f29"
+            hint="越高说明掌握越扎实"
           />
         </Col>
         <Col xs={24} md={12} xl={6}>
-          <StatCard title="学习内容总数" value={stats.content_count} />
+          <StatCard
+            title="学习内容总数"
+            value={stats.content_count}
+            icon={<BookOutlined />}
+            accent="#7e639b"
+            hint="已录入的可用学习内容"
+          />
         </Col>
       </Row>
 
-      <Tabs
-        items={[
+      <div className="parent-panel">
+        <Tabs
+          className="parent-tabs"
+          items={[
           {
             key: "children",
             label: "孩子管理",
@@ -961,9 +1011,51 @@ export default function ParentDashboard() {
                     }}
                     onChange={onContentTableChange}
                     columns={[
-                      { title: "标题", dataIndex: "title", sorter: true },
-                      { title: "类型", dataIndex: "content_type", width: 120 },
-                      { title: "难度", dataIndex: "difficulty", width: 80 },
+                      {
+                        title: "标题",
+                        dataIndex: "title",
+                        sorter: true,
+                        render: (value: string) => (
+                          <span className="content-title">{value}</span>
+                        ),
+                      },
+                      {
+                        title: "类型",
+                        dataIndex: "content_type",
+                        width: 120,
+                        render: (value: string) => (
+                          <span
+                            className={`type-pill ${
+                              CONTENT_TYPE_TONE[value] ?? "tone-character"
+                            }`}
+                          >
+                            {CONTENT_TYPE_LABEL[value] ?? value}
+                          </span>
+                        ),
+                      },
+                      {
+                        title: "难度",
+                        dataIndex: "difficulty",
+                        width: 100,
+                        render: (value: number) => (
+                          <span
+                            className="difficulty-stars"
+                            aria-label={`难度 ${value}`}
+                          >
+                            {[1, 2, 3, 4, 5].map((level) => (
+                              <span
+                                key={level}
+                                className={
+                                  level <= (value ?? 0) ? "star on" : "star"
+                                }
+                                aria-hidden="true"
+                              >
+                                ★
+                              </span>
+                            ))}
+                          </span>
+                        ),
+                      },
                       {
                         title: "答题次数",
                         dataIndex: "learn_count",
@@ -979,9 +1071,21 @@ export default function ParentDashboard() {
                       {
                         title: "错误率",
                         dataIndex: "error_rate",
-                        width: 90,
+                        width: 120,
                         sorter: true,
-                        render: (value: number) => `${value}%`,
+                        render: (value: number) => (
+                          <span className="error-rate">
+                            <span className="error-rate-track">
+                              <span
+                                className="error-rate-fill"
+                                style={{
+                                  width: `${Math.min(100, Math.max(0, value ?? 0))}%`,
+                                }}
+                              />
+                            </span>
+                            <span className="error-rate-value">{value}%</span>
+                          </span>
+                        ),
                       },
                       {
                         title: "启用",
@@ -1228,7 +1332,8 @@ export default function ParentDashboard() {
             ),
           },
         ]}
-      />
+        />
+      </div>
 
       <Modal
         title={childEditing ? "编辑孩子档案" : "新建孩子档案"}

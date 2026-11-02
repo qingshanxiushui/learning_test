@@ -9,14 +9,21 @@ export default function App() {
   const [mode, setMode] = useState<"child" | "parent">("child");
 
   return (
-    <Layout
-      className={`min-h-screen ${mode === "child" ? "child-app" : "bg-slate-50"}`}
-    >
+    <Layout className="min-h-screen bg-transparent">
       <Header className="app-header">
-        <Typography.Title level={4} className="app-brand">
-          拾光学堂
-        </Typography.Title>
+        <div className="app-brand">
+          <span className="app-brand-mark" aria-hidden="true">
+            拾
+          </span>
+          <div className="app-brand-text">
+            <Typography.Title level={4} className="app-brand-title">
+              拾光学堂
+            </Typography.Title>
+            <span className="app-brand-sub">每日拾光 · 快乐积跬步</span>
+          </div>
+        </div>
         <Segmented
+          className="app-mode-switch"
           value={mode}
           onChange={(value) => setMode(value as "child" | "parent")}
           options={[
@@ -25,11 +32,7 @@ export default function App() {
           ]}
         />
       </Header>
-      <Content
-        className={
-          mode === "child" ? "child-content" : "mx-auto w-full max-w-6xl p-6"
-        }
-      >
+      <Content className={mode === "child" ? "child-content" : "parent-shell"}>
         {mode === "child" ? <ChildLearning /> : <ParentDashboard />}
       </Content>
     </Layout>

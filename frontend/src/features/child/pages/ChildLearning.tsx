@@ -85,14 +85,15 @@ const CONTENT_TYPES: Array<{
   value: ContentType;
   label: string;
   mark: string;
+  hint: string;
 }> = [
-  { value: "character", label: "汉字", mark: "字" },
-  { value: "classic", label: "国学", mark: "经" },
-  { value: "poem", label: "古诗", mark: "诗" },
-  { value: "idiom", label: "成语", mark: "言" },
-  { value: "englishWord", label: "英语", mark: "Aa" },
-  { value: "math", label: "算术", mark: "算" },
-  { value: "pinyin", label: "拼音", mark: "拼" },
+  { value: "character", label: "汉字", mark: "字", hint: "常用字与象形启蒙" },
+  { value: "classic", label: "国学", mark: "经", hint: "三字经与弟子规" },
+  { value: "poem", label: "古诗", mark: "诗", hint: "唐诗宋词启蒙" },
+  { value: "idiom", label: "成语", mark: "言", hint: "四字成语故事" },
+  { value: "englishWord", label: "英语", mark: "Aa", hint: "启蒙单词与发音" },
+  { value: "math", label: "算术", mark: "算", hint: "加减法口算练习" },
+  { value: "pinyin", label: "拼音", mark: "拼", hint: "声母韵母与声调" },
 ];
 
 type Phase = "choose" | "learning" | "result";
@@ -243,6 +244,8 @@ export default function ChildLearning() {
       toReadText(question.question_stem, question.content_type),
     );
     utterance.lang = lang;
+    // 固定慢速朗读，方便孩子跟读。
+    utterance.rate = 0.8;
     const voice = pickVoice(voices, lang);
     if (voice) utterance.voice = voice;
     utterance.onend = () => setIsReading(false);
@@ -432,23 +435,36 @@ export default function ChildLearning() {
         <div className="child-choose">
           <div className="child-welcome">
             <div>
-              <span className="child-kicker">今天学一点</span>
+              <span className="child-kicker">今天学一点 · 知识会发光</span>
               <Typography.Title>
                 准备好了吗，
                 {children.find((child) => child.id === childId)?.nickname ||
                   children.find((child) => child.id === childId)?.name}
               </Typography.Title>
+              <p className="child-welcome-sub">
+                选一门今天最感兴趣的课程，或者直接启航综合挑战！
+              </p>
             </div>
-            <Select
-              size="large"
-              value={childId}
-              onChange={setChildId}
-              options={children.map((child) => ({
-                value: child.id,
-                label: child.nickname || child.name,
-              }))}
-              aria-label="选择孩子"
-            />
+            <div className="child-selector">
+              <span className="child-selector-avatar" aria-hidden="true">
+                {(
+                  children.find((child) => child.id === childId)?.nickname ||
+                  children.find((child) => child.id === childId)?.name ||
+                  "小"
+                ).slice(0, 1)}
+              </span>
+              <Select
+                size="large"
+                variant="borderless"
+                value={childId}
+                onChange={setChildId}
+                options={children.map((child) => ({
+                  value: child.id,
+                  label: child.nickname || child.name,
+                }))}
+                aria-label="选择孩子"
+              />
+            </div>
           </div>
 
           <div className="type-grid" aria-label="学习类型">
@@ -465,26 +481,37 @@ export default function ChildLearning() {
                 >
                   <span className="type-mark">{type.mark}</span>
                   <strong>{type.label}</strong>
-                  <span>{selected ? "已选择" : "点我选择"}</span>
+                  <span className="type-tile-sub">{type.hint}</span>
+                  <span className="type-tile-foot">
+                    {selected ? "已选择" : "点我选择"}
+                    <span className="type-check" aria-hidden="true">
+                      ✓
+                    </span>
+                  </span>
                 </button>
               );
             })}
           </div>
 
-          <div className="child-start-row">
-            <span>
-              {selectionAllowed
-                ? "不选也可以直接开始"
-                : "家长已经选好今天的内容"}
+          <div className="child-bottom-bar">
+            <span className="child-hint">
+              <span aria-hidden="true">💡</span>
+              <strong>
+                {selectionAllowed
+                  ? "不选也可以直接开始"
+                  : "家长已经选好今天的内容"}
+              </strong>
             </span>
-            <Button
-              type="primary"
-              size="large"
-              loading={loading}
-              onClick={handleStart}
-            >
-              开始学习
-            </Button>
+            <div className="child-start-row">
+              <Button
+                type="primary"
+                size="large"
+                loading={loading}
+                onClick={handleStart}
+              >
+                开始学习
+              </Button>
+            </div>
           </div>
         </div>
       )}
