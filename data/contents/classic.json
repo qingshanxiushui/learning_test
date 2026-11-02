@@ -234,8 +234,8 @@
     "id": "5a070e3c-8c1e-4b51-8719-9c885b6c8c08",
     "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
     "content_type": "classic",
-    "title": "曰春夏，曰秋冬。此四时， 运不穷。",
-    "content_text": "曰春夏，曰秋冬。此四时， 运不穷。日南北，曰西东。此四方， 应乎中。",
+    "title": "曰春夏，曰秋冬。此四时，运不穷。",
+    "content_text": "曰春夏，曰秋冬。此四时，运不穷。曰南北，曰西东。此四方，应乎中。",
     "pronunciation": null,
     "meaning": null,
     "example": null,
@@ -243,11 +243,11 @@
     "status": "enabled",
     "sort_order": 0,
     "detail": {
-      "sentence_text": "曰春夏，曰秋冬。此四时， 运不穷。",
-      "next_sentence": "日南北，曰西东。此四方， 应乎中。"
+      "sentence_text": "曰春夏，曰秋冬。此四时，运不穷。",
+      "next_sentence": "曰南北，曰西东。此四方，应乎中。"
     },
     "created_at": "2026-10-26T06:08:35Z",
-    "updated_at": "2026-10-26T06:15:28Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },

@@ -610,6 +610,47 @@ describe("ChildLearning", () => {
     expect(screen.getByText("wù")).toBeInTheDocument();
     expect(screen.getByText("bó")).toBeInTheDocument();
   });
+
+  it("shows plain characters when pinyin array does not align with the stem", async () => {
+    // 历史数据里 pypinyin 会把空白并入相邻标点，注音数组比正文短；
+    // 此时宁可只显示正文，也不能把拼音错位贴到别的字上。
+    vi.mocked(startSession).mockResolvedValueOnce({
+      session: {
+        id: "misaligned-session",
+        child_id: "child-1",
+        selected_content_types: ["idiom"],
+        total_questions: 1,
+        completed_questions: 0,
+        answered_questions: 0,
+        correct_questions: 0,
+        accuracy_rate: 0,
+        session_status: "in_progress",
+        started_at: "2026-08-20T10:00:00Z",
+        finished_at: null,
+      },
+      questions: [
+        {
+          id: "misaligned-1",
+          question_order: 1,
+          content_type: "idiom",
+          question_type: "idiom_card",
+          question_stem: "地大物博",
+          question_options: [],
+          question_pinyin: ["dì", "dà", "wù"],
+        },
+      ],
+    });
+    const user = userEvent.setup();
+    const { container } = render(<ChildLearning />);
+
+    await screen.findByText(/准备好了吗.*雨点/);
+    await user.click(screen.getByRole("button", { name: "开始学习" }));
+    await screen.findByText("完成学习");
+
+    expect(container.querySelectorAll(".char-unit")).toHaveLength(0);
+    expect(container.querySelectorAll(".char-pinyin")).toHaveLength(0);
+    expect(container.textContent).toContain("地大物博");
+  });
 });
 
 type SpeechStub = {

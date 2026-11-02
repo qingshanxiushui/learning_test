@@ -37,13 +37,13 @@ export function voiceMatchesLang(voiceLang: string, lang: string): boolean {
 
 /**
  * 由题干清洗出适合朗读的文本：
- * - 去掉《》、· 等装饰符号（转为空格，避免「静夜思唐」连读）；
+ * - 去掉《》、·（含日式间隔号 ・）等装饰符号（转为空格，避免「静夜思唐」连读）；
  * - 换行转为空格作为停顿；
  * - 保留 ，。！？ 等标点作为自然停顿。
  */
 export function toReadText(stem: string, _contentType: ContentType): string {
   return stem
-    .replace(/[《》·]/g, " ")
+    .replace(/[《》·・]/g, " ")
     .replace(/\n+/g, " ")
     .replace(/\s+/g, " ")
     .trim();

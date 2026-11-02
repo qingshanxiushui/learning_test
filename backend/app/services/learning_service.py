@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import random
+import re
 from typing import Any
 
 from pypinyin import Style, pinyin
@@ -46,14 +47,22 @@ def _apply_tone(pinyin: str, tone: int) -> str:
 
 
 def _pinyin_annotation(text: str) -> list[str]:
-    """按字符返回与 `text` 对齐的拼音（带声调）；非汉字符号/换行返回原字符。"""
+    """按字符返回与 `text` 对齐的拼音（带声调）；非汉字符号/换行返回原字符。
+
+    `errors=list` 必须保留：pypinyin 默认会把连续的空白并入相邻的非汉字 token
+    （例如 "， " 会合成一个 token），导致返回列表比字符数短，后续所有拼音整体错位。
+    显式拆成单字符可保证长度严格等于 len(text)。
+    """
     result: list[str] = []
     lines = text.split("\n")
     for index, line in enumerate(lines):
         if index > 0:
             result.append("\n")
-        for item in pinyin(line, style=Style.TONE):
+        for item in pinyin(line, style=Style.TONE, errors=lambda chars: list(chars)):
             result.append(item[0] if item else "")
+    if len(result) != len(text):
+        # 兜底：宁可退回原字符，也不要让拼音整体错位。
+        result = list(text)
     return result
 
 
@@ -551,7 +560,12 @@ class LearningService:
         if dynasty and author:
             header += f"{dynasty}·{author}"
         elif author:
-            header += author
+            # 兼容历史数据：朝代缺失时作者字段里可能形如 "唐・李白"
+            legacy = re.match(r"^([^·・‧•]+)[·・‧•](.+)$", author)
+            if legacy:
+                header += f"{legacy.group(1).strip()}·{legacy.group(2).strip()}"
+            else:
+                header += author
         lines = LearningService._poem_lines(content)
         if lines:
             return f"{header}\n" + "\n".join(lines)

@@ -1441,7 +1441,7 @@
     "content_id": "c5fdd6dd-fbe3-4fe1-8d0e-46d71fad57db",
     "content_type": "poem",
     "question_type": "poem_recite_choice",
-    "question_stem": "请背诵《登鹳雀楼》",
+    "question_stem": "《登鹳雀楼》唐·王之涣\n白日依山尽\n黄河入海流\n欲穷千里目\n更上一层楼",
     "question_options": [
       "《登鹳雀楼》唐・王之涣\n白日依山尽\n黄河入海流\n欲穷千里目\n更上一层楼",
       "《春晓》唐·孟浩然\n春眠不觉晓\n处处闻啼鸟\n夜来风雨声\n花落知多少",
@@ -1464,8 +1464,8 @@
       "sort_order": 0,
       "detail": {
         "poem_title": "登鹳雀楼",
-        "dynasty": "",
-        "author": "唐・王之涣",
+        "dynasty": "唐",
+        "author": "王之涣",
         "poem_lines": [
           "白日依山尽",
           "黄河入海流",
@@ -1474,7 +1474,7 @@
         ]
       },
       "created_at": "2026-10-23T12:24:05Z",
-      "updated_at": "2026-10-23T12:24:05Z",
+      "updated_at": "2026-11-02T02:49:31Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -1489,7 +1489,7 @@
     "content_id": "e53378fe-02bd-4479-822a-3a2d774b020b",
     "content_type": "poem",
     "question_type": "next_line_choice",
-    "question_stem": "“湖光秋月两相和”下一句是什么？",
+    "question_stem": "《望洞庭》唐·刘禹锡\n湖光秋月两相和\n潭面无风镜未磨\n遥望洞庭山水翠\n白银盘里一青螺",
     "question_options": [
       "疑是地上霜",
       "潭面无风镜未磨",
@@ -1537,7 +1537,7 @@
     "content_id": "74a3bcad-52d1-4ca9-b9c4-a75d649abb26",
     "content_type": "poem",
     "question_type": "next_line_choice",
-    "question_stem": "“山外青山楼外楼”下一句是什么？",
+    "question_stem": "《题临安邸》宋·林升\n山外青山楼外楼\n西湖歌舞几时休\n暖风熏得游人醉\n直把杭州作汴州",
     "question_options": [
       "西湖歌舞几时休",
       "疑是地上霜",
@@ -1560,8 +1560,8 @@
       "sort_order": 0,
       "detail": {
         "poem_title": "题临安邸",
-        "dynasty": "",
-        "author": "宋・林升",
+        "dynasty": "宋",
+        "author": "林升",
         "poem_lines": [
           "山外青山楼外楼",
           "西湖歌舞几时休",
@@ -1570,7 +1570,7 @@
         ]
       },
       "created_at": "2026-10-23T12:24:05Z",
-      "updated_at": "2026-10-23T12:24:05Z",
+      "updated_at": "2026-11-02T02:49:31Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -1585,7 +1585,7 @@
     "content_id": "ee9f63cd-4b76-44ce-876e-bb51e99dba8a",
     "content_type": "poem",
     "question_type": "next_line_choice",
-    "question_stem": "“远看山有色”下一句是什么？",
+    "question_stem": "《画》唐·王维\n远看山有色\n近听水无声\n春去花还在\n人来鸟不惊",
     "question_options": [
       "近听水无声",
       "疑是地上霜",
@@ -1633,7 +1633,7 @@
     "content_id": "b0a51e79-891b-4ee5-af12-2df11fa512bc",
     "content_type": "poem",
     "question_type": "poem_recite_choice",
-    "question_stem": "请背诵《舟夜书所见》",
+    "question_stem": "《舟夜书所见》清·查慎行\n月黑见渔灯\n孤光一点萤\n微微风簇浪\n散作满河星",
     "question_options": [
       "《春晓》唐·孟浩然\n春眠不觉晓\n处处闻啼鸟\n夜来风雨声\n花落知多少",
       "《静夜思》唐·李白\n床前明月光\n疑是地上霜\n举头望明月\n低头思故乡",
@@ -1773,7 +1773,7 @@
     "content_id": "5ca288df-f194-4d7d-8040-d9c6232f1e7b",
     "content_type": "poem",
     "question_type": "poem_card",
-    "question_stem": "《遗爱寺》唐・白居易\n弄石临溪坐\n寻花绕寺行\n时时闻鸟语\n处处是泉声",
+    "question_stem": "《遗爱寺》唐·白居易\n弄石临溪坐\n寻花绕寺行\n时时闻鸟语\n处处是泉声",
     "question_options": [],
     "correct_answer": "",
     "answer_explanation": "",
@@ -1792,8 +1792,8 @@
       "sort_order": 0,
       "detail": {
         "poem_title": "遗爱寺",
-        "dynasty": "",
-        "author": "唐・白居易",
+        "dynasty": "唐",
+        "author": "白居易",
         "poem_lines": [
           "弄石临溪坐",
           "寻花绕寺行",
@@ -1802,7 +1802,7 @@
         ]
       },
       "created_at": "2026-10-23T12:24:05Z",
-      "updated_at": "2026-10-23T12:24:05Z",
+      "updated_at": "2026-11-02T02:49:31Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -1865,7 +1865,7 @@
     "content_id": "d3513ac5-0848-4186-a445-7381b1973662",
     "content_type": "poem",
     "question_type": "poem_card",
-    "question_stem": "《画鸡》明·唐寅（唐伯虎）\n头上红冠不用裁\n身雪白走将来\n平生不敢轻言语\n一叫千门万户开",
+    "question_stem": "《画鸡》明·唐寅（唐伯虎）\n头上红冠不用裁\n满身雪白走将来\n平生不敢轻言语\n一叫千门万户开",
     "question_options": [],
     "correct_answer": "",
     "answer_explanation": "",
@@ -1875,7 +1875,7 @@
       "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
       "content_type": "poem",
       "title": "画鸡",
-      "content_text": "头上红冠不用裁，身雪白走将来。平生不敢轻言语，一叫千门万户开。",
+      "content_text": "头上红冠不用裁，满身雪白走将来。平生不敢轻言语，一叫千门万户开。",
       "pronunciation": null,
       "meaning": null,
       "example": null,
@@ -1888,13 +1888,13 @@
         "author": "唐寅（唐伯虎）",
         "poem_lines": [
           "头上红冠不用裁",
-          "身雪白走将来",
+          "满身雪白走将来",
           "平生不敢轻言语",
           "一叫千门万户开"
         ]
       },
       "created_at": "2026-10-23T12:24:05Z",
-      "updated_at": "2026-10-23T12:24:05Z",
+      "updated_at": "2026-11-02T02:49:31Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -2533,7 +2533,7 @@
     "content_id": "03498fe6-255a-4e65-9181-6aa3cdedd4f0",
     "content_type": "poem",
     "question_type": "poem_card",
-    "question_stem": "《小儿垂钓》唐・胡令能\n蓬头稚子学垂纶\n侧坐莓苔草映身\n路人借问遥招手\n怕得鱼惊不应人",
+    "question_stem": "《小儿垂钓》唐·胡令能\n蓬头稚子学垂纶\n侧坐莓苔草映身\n路人借问遥招手\n怕得鱼惊不应人",
     "question_options": [],
     "correct_answer": "",
     "answer_explanation": "",
@@ -2552,8 +2552,8 @@
       "sort_order": 0,
       "detail": {
         "poem_title": "小儿垂钓",
-        "dynasty": "",
-        "author": "唐・胡令能",
+        "dynasty": "唐",
+        "author": "胡令能",
         "poem_lines": [
           "蓬头稚子学垂纶",
           "侧坐莓苔草映身",
@@ -2562,7 +2562,7 @@
         ]
       },
       "created_at": "2026-10-23T12:24:05Z",
-      "updated_at": "2026-10-23T12:24:05Z",
+      "updated_at": "2026-11-02T02:49:31Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -2671,7 +2671,7 @@
     "content_id": "5a070e3c-8c1e-4b51-8719-9c885b6c8c08",
     "content_type": "classic",
     "question_type": "classic_card",
-    "question_stem": "曰春夏，曰秋冬。此四时， 运不穷。\n日南北，曰西东。此四方， 应乎中。",
+    "question_stem": "曰春夏，曰秋冬。此四时，运不穷。\n曰南北，曰西东。此四方，应乎中。",
     "question_options": [],
     "correct_answer": "",
     "answer_explanation": "",
@@ -2680,8 +2680,8 @@
       "id": "5a070e3c-8c1e-4b51-8719-9c885b6c8c08",
       "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
       "content_type": "classic",
-      "title": "曰春夏，曰秋冬。此四时， 运不穷。",
-      "content_text": "曰春夏，曰秋冬。此四时， 运不穷。日南北，曰西东。此四方， 应乎中。",
+      "title": "曰春夏，曰秋冬。此四时，运不穷。",
+      "content_text": "曰春夏，曰秋冬。此四时，运不穷。曰南北，曰西东。此四方，应乎中。",
       "pronunciation": null,
       "meaning": null,
       "example": null,
@@ -2689,11 +2689,11 @@
       "status": "enabled",
       "sort_order": 0,
       "detail": {
-        "sentence_text": "曰春夏，曰秋冬。此四时， 运不穷。",
-        "next_sentence": "日南北，曰西东。此四方， 应乎中。"
+        "sentence_text": "曰春夏，曰秋冬。此四时，运不穷。",
+        "next_sentence": "曰南北，曰西东。此四方，应乎中。"
       },
       "created_at": "2026-10-26T06:08:35Z",
-      "updated_at": "2026-10-26T06:08:35Z",
+      "updated_at": "2026-11-02T02:49:31Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -2732,7 +2732,7 @@
         "next_sentence": "一而十，十而百。百而干，千而万。"
       },
       "created_at": "2026-10-26T06:08:35Z",
-      "updated_at": "2026-10-26T06:08:35Z",
+      "updated_at": "2026-10-26T06:15:28Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -2771,7 +2771,7 @@
         "next_sentence": "窦燕山，有义方。教五子，名俱扬。"
       },
       "created_at": "2026-10-26T06:08:02Z",
-      "updated_at": "2026-10-26T06:08:35Z",
+      "updated_at": "2026-10-26T06:15:28Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -2810,7 +2810,7 @@
         "next_sentence": "融四岁，能让梨。弟于长，宜先知。"
       },
       "created_at": "2026-10-26T06:08:35Z",
-      "updated_at": "2026-10-26T06:08:35Z",
+      "updated_at": "2026-10-26T06:15:28Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -2849,7 +2849,7 @@
         "next_sentence": "子不学，非所宜。幼不学，老何为。"
       },
       "created_at": "2026-10-26T06:08:35Z",
-      "updated_at": "2026-10-26T06:08:35Z",
+      "updated_at": "2026-10-26T06:15:28Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -4708,7 +4708,7 @@
     "content_id": "ddcbc9dc-aec2-4d00-9c07-73d63b5831b0",
     "content_type": "poem",
     "question_type": "poem_card",
-    "question_stem": "《黄鹤楼送孟浩然之广陵》唐・李白\n故人西辞黄鹤楼\n烟花三月下扬州\n孤帆远影碧空尽\n唯见长江天际流",
+    "question_stem": "《黄鹤楼送孟浩然之广陵》唐·李白\n故人西辞黄鹤楼\n烟花三月下扬州\n孤帆远影碧空尽\n唯见长江天际流",
     "question_pinyin": [
       "《",
       "huáng",
@@ -4777,8 +4777,8 @@
       "sort_order": 0,
       "detail": {
         "poem_title": "黄鹤楼送孟浩然之广陵",
-        "dynasty": "",
-        "author": "唐・李白",
+        "dynasty": "唐",
+        "author": "李白",
         "poem_lines": [
           "故人西辞黄鹤楼",
           "烟花三月下扬州",
@@ -4787,7 +4787,7 @@
         ]
       },
       "created_at": "2026-10-23T12:24:05Z",
-      "updated_at": "2026-10-23T12:24:05Z",
+      "updated_at": "2026-11-02T02:49:31Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -4802,7 +4802,7 @@
     "content_id": "919211a0-be6c-42a0-aa06-5de85df8af8d",
     "content_type": "poem",
     "question_type": "poem_card",
-    "question_stem": "《画鸡》明・唐寅 唐伯虎\n头上红冠不用裁\n满身雪白走将来\n平生不敢轻言语\n一叫千门万户开",
+    "question_stem": "《画鸡》明·唐寅 唐伯虎\n头上红冠不用裁\n满身雪白走将来\n平生不敢轻言语\n一叫千门万户开",
     "question_pinyin": [
       "《",
       "huà",
@@ -4877,9 +4877,9 @@
         ]
       },
       "created_at": "2026-10-23T12:24:05Z",
-      "updated_at": "2026-10-23T12:24:05Z",
-      "deleted_at": null,
-      "is_deleted": 0
+      "updated_at": "2026-11-02T02:49:31Z",
+      "deleted_at": "2026-11-02T02:49:31Z",
+      "is_deleted": 1
     },
     "created_at": "2026-10-29T06:11:46Z",
     "updated_at": "2026-10-29T06:11:46Z",
@@ -5467,7 +5467,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "9 - 3 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "9",
+      " ",
+      "-",
+      " ",
+      "3",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "6",
     "answer_explanation": "",
@@ -5481,7 +5491,7 @@
       "operand_b": 3
     },
     "created_at": "2026-10-30T01:46:45Z",
-    "updated_at": "2026-10-30T01:46:45Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -5492,7 +5502,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "7 - 2 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "7",
+      " ",
+      "-",
+      " ",
+      "2",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "5",
     "answer_explanation": "",
@@ -5506,7 +5526,7 @@
       "operand_b": 2
     },
     "created_at": "2026-10-30T01:46:45Z",
-    "updated_at": "2026-10-30T01:46:45Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -5517,7 +5537,19 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "20 - 15 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "2",
+      "0",
+      " ",
+      "-",
+      " ",
+      "1",
+      "5",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "5",
     "answer_explanation": "",
@@ -5531,7 +5563,7 @@
       "operand_b": 15
     },
     "created_at": "2026-10-30T01:46:45Z",
-    "updated_at": "2026-10-30T01:46:45Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -5542,7 +5574,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "7 + 4 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "7",
+      " ",
+      "+",
+      " ",
+      "4",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "11",
     "answer_explanation": "",
@@ -5556,7 +5598,7 @@
       "operand_b": 4
     },
     "created_at": "2026-10-30T01:46:45Z",
-    "updated_at": "2026-10-30T01:46:45Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -5567,7 +5609,18 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "5 + 11 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "5",
+      " ",
+      "+",
+      " ",
+      "1",
+      "1",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "16",
     "answer_explanation": "",
@@ -5581,7 +5634,7 @@
       "operand_b": 11
     },
     "created_at": "2026-10-30T01:46:45Z",
-    "updated_at": "2026-10-30T01:46:45Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -5592,7 +5645,18 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "18 - 4 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "1",
+      "8",
+      " ",
+      "-",
+      " ",
+      "4",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "14",
     "answer_explanation": "",
@@ -5606,7 +5670,7 @@
       "operand_b": 4
     },
     "created_at": "2026-10-30T01:46:45Z",
-    "updated_at": "2026-10-30T01:46:45Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -5617,7 +5681,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "9 - 3 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "9",
+      " ",
+      "-",
+      " ",
+      "3",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "6",
     "answer_explanation": "",
@@ -5631,7 +5705,7 @@
       "operand_b": 3
     },
     "created_at": "2026-10-30T01:46:45Z",
-    "updated_at": "2026-10-30T01:46:45Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -5642,7 +5716,18 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "20 - 7 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "2",
+      "0",
+      " ",
+      "-",
+      " ",
+      "7",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "13",
     "answer_explanation": "",
@@ -5656,7 +5741,7 @@
       "operand_b": 7
     },
     "created_at": "2026-10-30T01:46:45Z",
-    "updated_at": "2026-10-30T01:46:45Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -5667,7 +5752,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "3 - 2 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "3",
+      " ",
+      "-",
+      " ",
+      "2",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "1",
     "answer_explanation": "",
@@ -5681,7 +5776,7 @@
       "operand_b": 2
     },
     "created_at": "2026-10-30T01:46:45Z",
-    "updated_at": "2026-10-30T01:46:45Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -5692,7 +5787,18 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "17 - 3 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "1",
+      "7",
+      " ",
+      "-",
+      " ",
+      "3",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "14",
     "answer_explanation": "",
@@ -5706,7 +5812,7 @@
       "operand_b": 3
     },
     "created_at": "2026-10-30T01:46:45Z",
-    "updated_at": "2026-10-30T01:46:45Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -5717,7 +5823,18 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "14 - 8 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "1",
+      "4",
+      " ",
+      "-",
+      " ",
+      "8",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "6",
     "answer_explanation": "",
@@ -5731,7 +5848,7 @@
       "operand_b": 8
     },
     "created_at": "2026-10-30T05:29:08Z",
-    "updated_at": "2026-10-30T05:29:08Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -5742,7 +5859,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "4 + 1 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "4",
+      " ",
+      "+",
+      " ",
+      "1",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "5",
     "answer_explanation": "",
@@ -5756,7 +5883,7 @@
       "operand_b": 1
     },
     "created_at": "2026-10-30T05:29:08Z",
-    "updated_at": "2026-10-30T05:29:08Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -5767,7 +5894,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "8 + 3 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "8",
+      " ",
+      "+",
+      " ",
+      "3",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "11",
     "answer_explanation": "",
@@ -5781,7 +5918,7 @@
       "operand_b": 3
     },
     "created_at": "2026-10-30T05:29:08Z",
-    "updated_at": "2026-10-30T05:29:08Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -5792,7 +5929,19 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "20 + 19 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "2",
+      "0",
+      " ",
+      "+",
+      " ",
+      "1",
+      "9",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "39",
     "answer_explanation": "",
@@ -5806,7 +5955,7 @@
       "operand_b": 19
     },
     "created_at": "2026-10-30T05:29:08Z",
-    "updated_at": "2026-10-30T05:29:08Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -5817,7 +5966,19 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "17 - 11 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "1",
+      "7",
+      " ",
+      "-",
+      " ",
+      "1",
+      "1",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "6",
     "answer_explanation": "",
@@ -5831,7 +5992,7 @@
       "operand_b": 11
     },
     "created_at": "2026-10-30T05:29:08Z",
-    "updated_at": "2026-10-30T05:29:08Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6232,7 +6393,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "2 + 7 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "2",
+      " ",
+      "+",
+      " ",
+      "7",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "9",
     "answer_explanation": "",
@@ -6246,7 +6417,7 @@
       "operand_b": 7
     },
     "created_at": "2026-10-30T13:17:39Z",
-    "updated_at": "2026-10-30T13:17:39Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6257,7 +6428,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "7 - 6 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "7",
+      " ",
+      "-",
+      " ",
+      "6",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "1",
     "answer_explanation": "",
@@ -6271,7 +6452,7 @@
       "operand_b": 6
     },
     "created_at": "2026-10-30T13:17:39Z",
-    "updated_at": "2026-10-30T13:17:39Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6282,7 +6463,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "6 - 4 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "6",
+      " ",
+      "-",
+      " ",
+      "4",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "2",
     "answer_explanation": "",
@@ -6296,7 +6487,7 @@
       "operand_b": 4
     },
     "created_at": "2026-10-30T13:17:39Z",
-    "updated_at": "2026-10-30T13:17:39Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6307,7 +6498,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "4 + 5 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "4",
+      " ",
+      "+",
+      " ",
+      "5",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "9",
     "answer_explanation": "",
@@ -6321,7 +6522,7 @@
       "operand_b": 5
     },
     "created_at": "2026-10-30T13:17:39Z",
-    "updated_at": "2026-10-30T13:17:39Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6332,7 +6533,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "6 - 3 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "6",
+      " ",
+      "-",
+      " ",
+      "3",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "3",
     "answer_explanation": "",
@@ -6346,7 +6557,7 @@
       "operand_b": 3
     },
     "created_at": "2026-10-30T13:17:39Z",
-    "updated_at": "2026-10-30T13:17:39Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6357,7 +6568,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "0 + 4 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "0",
+      " ",
+      "+",
+      " ",
+      "4",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "4",
     "answer_explanation": "",
@@ -6371,7 +6592,7 @@
       "operand_b": 4
     },
     "created_at": "2026-10-30T13:17:39Z",
-    "updated_at": "2026-10-30T13:17:39Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6382,7 +6603,18 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "10 - 9 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "1",
+      "0",
+      " ",
+      "-",
+      " ",
+      "9",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "1",
     "answer_explanation": "",
@@ -6396,7 +6628,7 @@
       "operand_b": 9
     },
     "created_at": "2026-10-30T13:17:39Z",
-    "updated_at": "2026-10-30T13:17:39Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6407,7 +6639,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "4 - 2 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "4",
+      " ",
+      "-",
+      " ",
+      "2",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "2",
     "answer_explanation": "",
@@ -6421,7 +6663,7 @@
       "operand_b": 2
     },
     "created_at": "2026-10-30T13:17:39Z",
-    "updated_at": "2026-10-30T13:17:39Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6432,7 +6674,18 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "6 + 10 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "6",
+      " ",
+      "+",
+      " ",
+      "1",
+      "0",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "16",
     "answer_explanation": "",
@@ -6446,7 +6699,7 @@
       "operand_b": 10
     },
     "created_at": "2026-10-30T13:17:39Z",
-    "updated_at": "2026-10-30T13:17:39Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6457,7 +6710,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "5 + 2 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "5",
+      " ",
+      "+",
+      " ",
+      "2",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "7",
     "answer_explanation": "",
@@ -6471,7 +6734,7 @@
       "operand_b": 2
     },
     "created_at": "2026-10-30T13:17:39Z",
-    "updated_at": "2026-10-30T13:17:39Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6519,7 +6782,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "1 + 3 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "1",
+      " ",
+      "+",
+      " ",
+      "3",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "4",
     "answer_explanation": "",
@@ -6533,7 +6806,7 @@
       "operand_b": 3
     },
     "created_at": "2026-10-30T13:23:14Z",
-    "updated_at": "2026-10-30T13:23:14Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6544,7 +6817,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "3 - 2 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "3",
+      " ",
+      "-",
+      " ",
+      "2",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "1",
     "answer_explanation": "",
@@ -6558,7 +6841,7 @@
       "operand_b": 2
     },
     "created_at": "2026-10-30T13:23:14Z",
-    "updated_at": "2026-10-30T13:23:14Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6569,7 +6852,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "4 + 5 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "4",
+      " ",
+      "+",
+      " ",
+      "5",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "9",
     "answer_explanation": "",
@@ -6583,7 +6876,7 @@
       "operand_b": 5
     },
     "created_at": "2026-10-30T13:23:14Z",
-    "updated_at": "2026-10-30T13:23:14Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6594,7 +6887,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "7 + 7 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "7",
+      " ",
+      "+",
+      " ",
+      "7",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "14",
     "answer_explanation": "",
@@ -6608,7 +6911,7 @@
       "operand_b": 7
     },
     "created_at": "2026-10-30T13:23:14Z",
-    "updated_at": "2026-10-30T13:23:14Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6693,7 +6996,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "9 - 0 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "9",
+      " ",
+      "-",
+      " ",
+      "0",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "9",
     "answer_explanation": "",
@@ -6707,7 +7020,7 @@
       "operand_b": 0
     },
     "created_at": "2026-10-30T13:23:14Z",
-    "updated_at": "2026-10-30T13:23:14Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6792,7 +7105,18 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "10 + 1 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "1",
+      "0",
+      " ",
+      "+",
+      " ",
+      "1",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "11",
     "answer_explanation": "",
@@ -6806,7 +7130,7 @@
       "operand_b": 1
     },
     "created_at": "2026-10-30T13:24:19Z",
-    "updated_at": "2026-10-30T13:24:19Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6817,7 +7141,18 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "10 - 8 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "1",
+      "0",
+      " ",
+      "-",
+      " ",
+      "8",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "2",
     "answer_explanation": "",
@@ -6831,7 +7166,7 @@
       "operand_b": 8
     },
     "created_at": "2026-10-30T13:24:19Z",
-    "updated_at": "2026-10-30T13:24:19Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6842,7 +7177,18 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "10 - 9 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "1",
+      "0",
+      " ",
+      "-",
+      " ",
+      "9",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "1",
     "answer_explanation": "",
@@ -6856,7 +7202,7 @@
       "operand_b": 9
     },
     "created_at": "2026-10-30T13:24:19Z",
-    "updated_at": "2026-10-30T13:24:19Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6867,7 +7213,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "9 - 6 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "9",
+      " ",
+      "-",
+      " ",
+      "6",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "3",
     "answer_explanation": "",
@@ -6881,7 +7237,7 @@
       "operand_b": 6
     },
     "created_at": "2026-10-30T13:24:19Z",
-    "updated_at": "2026-10-30T13:24:19Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6892,7 +7248,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "5 - 4 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "5",
+      " ",
+      "-",
+      " ",
+      "4",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "1",
     "answer_explanation": "",
@@ -6906,7 +7272,7 @@
       "operand_b": 4
     },
     "created_at": "2026-10-30T13:24:19Z",
-    "updated_at": "2026-10-30T13:24:19Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6917,7 +7283,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "3 - 1 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "3",
+      " ",
+      "-",
+      " ",
+      "1",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "2",
     "answer_explanation": "",
@@ -6931,7 +7307,7 @@
       "operand_b": 1
     },
     "created_at": "2026-10-30T13:24:19Z",
-    "updated_at": "2026-10-30T13:24:19Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6942,7 +7318,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "2 + 7 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "2",
+      " ",
+      "+",
+      " ",
+      "7",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "9",
     "answer_explanation": "",
@@ -6956,7 +7342,7 @@
       "operand_b": 7
     },
     "created_at": "2026-10-30T13:24:19Z",
-    "updated_at": "2026-10-30T13:24:19Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6967,7 +7353,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "9 - 3 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "9",
+      " ",
+      "-",
+      " ",
+      "3",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "6",
     "answer_explanation": "",
@@ -6981,7 +7377,7 @@
       "operand_b": 3
     },
     "created_at": "2026-10-30T13:24:19Z",
-    "updated_at": "2026-10-30T13:24:19Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -6992,7 +7388,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "7 - 0 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "7",
+      " ",
+      "-",
+      " ",
+      "0",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "7",
     "answer_explanation": "",
@@ -7006,7 +7412,7 @@
       "operand_b": 0
     },
     "created_at": "2026-10-30T13:24:19Z",
-    "updated_at": "2026-10-30T13:24:19Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -7017,7 +7423,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "9 - 6 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "9",
+      " ",
+      "-",
+      " ",
+      "6",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "3",
     "answer_explanation": "",
@@ -7031,7 +7447,7 @@
       "operand_b": 6
     },
     "created_at": "2026-10-30T13:24:19Z",
-    "updated_at": "2026-10-30T13:24:19Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -7042,7 +7458,9 @@
     "content_type": "pinyin",
     "question_type": "pinyin_card",
     "question_stem": "j",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "j"
+    ],
     "question_options": [],
     "correct_answer": "",
     "answer_explanation": "",
@@ -7054,7 +7472,7 @@
       "with_tone": true
     },
     "created_at": "2026-10-30T13:38:05Z",
-    "updated_at": "2026-10-30T13:38:58Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T13:38:58Z",
@@ -7067,7 +7485,9 @@
     "content_type": "pinyin",
     "question_type": "pinyin_card",
     "question_stem": "s",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "s"
+    ],
     "question_options": [],
     "correct_answer": "",
     "answer_explanation": "",
@@ -7079,7 +7499,7 @@
       "with_tone": true
     },
     "created_at": "2026-10-30T13:38:05Z",
-    "updated_at": "2026-10-30T13:39:24Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T13:39:24Z",
@@ -7092,7 +7512,9 @@
     "content_type": "pinyin",
     "question_type": "pinyin_card",
     "question_stem": "g",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "g"
+    ],
     "question_options": [],
     "correct_answer": "",
     "answer_explanation": "",
@@ -7104,7 +7526,7 @@
       "with_tone": true
     },
     "created_at": "2026-10-30T13:38:05Z",
-    "updated_at": "2026-10-30T13:39:36Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T13:39:36Z",
@@ -7117,7 +7539,10 @@
     "content_type": "pinyin",
     "question_type": "pinyin_card",
     "question_stem": "zh",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "z",
+      "h"
+    ],
     "question_options": [],
     "correct_answer": "",
     "answer_explanation": "",
@@ -7129,7 +7554,7 @@
       "with_tone": true
     },
     "created_at": "2026-10-30T13:38:05Z",
-    "updated_at": "2026-10-30T13:40:14Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T13:40:14Z",
@@ -7142,7 +7567,9 @@
     "content_type": "pinyin",
     "question_type": "pinyin_card",
     "question_stem": "p",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "p"
+    ],
     "question_options": [],
     "correct_answer": "",
     "answer_explanation": "",
@@ -7154,7 +7581,7 @@
       "with_tone": true
     },
     "created_at": "2026-10-30T13:38:05Z",
-    "updated_at": "2026-10-30T13:40:30Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T13:40:30Z",
@@ -7167,7 +7594,9 @@
     "content_type": "pinyin",
     "question_type": "pinyin_card",
     "question_stem": "t",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "t"
+    ],
     "question_options": [],
     "correct_answer": "",
     "answer_explanation": "",
@@ -7179,7 +7608,7 @@
       "with_tone": true
     },
     "created_at": "2026-10-30T13:38:05Z",
-    "updated_at": "2026-10-30T13:42:03Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T13:42:03Z",
@@ -7192,7 +7621,9 @@
     "content_type": "pinyin",
     "question_type": "pinyin_card",
     "question_stem": "y",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "y"
+    ],
     "question_options": [],
     "correct_answer": "",
     "answer_explanation": "",
@@ -7204,7 +7635,7 @@
       "with_tone": true
     },
     "created_at": "2026-10-30T13:38:05Z",
-    "updated_at": "2026-10-30T13:42:42Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T13:42:42Z",
@@ -7217,7 +7648,9 @@
     "content_type": "pinyin",
     "question_type": "pinyin_card",
     "question_stem": "w",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "w"
+    ],
     "question_options": [],
     "correct_answer": "",
     "answer_explanation": "",
@@ -7229,7 +7662,7 @@
       "with_tone": true
     },
     "created_at": "2026-10-30T13:38:05Z",
-    "updated_at": "2026-10-30T13:43:09Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T13:43:09Z",
@@ -7242,7 +7675,9 @@
     "content_type": "pinyin",
     "question_type": "pinyin_card",
     "question_stem": "x",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "x"
+    ],
     "question_options": [],
     "correct_answer": "",
     "answer_explanation": "",
@@ -7254,7 +7689,7 @@
       "with_tone": true
     },
     "created_at": "2026-10-30T13:38:05Z",
-    "updated_at": "2026-10-30T13:43:36Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T13:43:36Z",
@@ -7267,7 +7702,9 @@
     "content_type": "pinyin",
     "question_type": "pinyin_card",
     "question_stem": "c",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "c"
+    ],
     "question_options": [],
     "correct_answer": "",
     "answer_explanation": "",
@@ -7279,7 +7716,7 @@
       "with_tone": true
     },
     "created_at": "2026-10-30T13:38:05Z",
-    "updated_at": "2026-10-30T13:44:00Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T13:44:00Z",
@@ -7292,7 +7729,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "8 + 2 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "8",
+      " ",
+      "+",
+      " ",
+      "2",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "10",
     "answer_explanation": "",
@@ -7306,7 +7753,7 @@
       "operand_b": 2
     },
     "created_at": "2026-10-30T13:48:22Z",
-    "updated_at": "2026-10-30T13:48:22Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -7317,7 +7764,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "6 + 5 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "6",
+      " ",
+      "+",
+      " ",
+      "5",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "11",
     "answer_explanation": "",
@@ -7331,7 +7788,7 @@
       "operand_b": 5
     },
     "created_at": "2026-10-30T13:48:22Z",
-    "updated_at": "2026-10-30T13:48:22Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -7342,7 +7799,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "9 - 6 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "9",
+      " ",
+      "-",
+      " ",
+      "6",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "3",
     "answer_explanation": "",
@@ -7356,7 +7823,7 @@
       "operand_b": 6
     },
     "created_at": "2026-10-30T13:48:22Z",
-    "updated_at": "2026-10-30T13:48:22Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -7367,7 +7834,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "2 - 0 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "2",
+      " ",
+      "-",
+      " ",
+      "0",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "2",
     "answer_explanation": "",
@@ -7381,7 +7858,7 @@
       "operand_b": 0
     },
     "created_at": "2026-10-30T13:48:22Z",
-    "updated_at": "2026-10-30T13:48:22Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -7392,7 +7869,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "3 + 3 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "3",
+      " ",
+      "+",
+      " ",
+      "3",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "6",
     "answer_explanation": "",
@@ -7406,7 +7893,7 @@
       "operand_b": 3
     },
     "created_at": "2026-10-30T13:48:22Z",
-    "updated_at": "2026-10-30T13:48:22Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -7417,7 +7904,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "4 - 4 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "4",
+      " ",
+      "-",
+      " ",
+      "4",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "0",
     "answer_explanation": "",
@@ -7431,7 +7928,7 @@
       "operand_b": 4
     },
     "created_at": "2026-10-30T13:48:22Z",
-    "updated_at": "2026-10-30T13:48:22Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -7442,7 +7939,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "6 - 4 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "6",
+      " ",
+      "-",
+      " ",
+      "4",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "2",
     "answer_explanation": "",
@@ -7456,7 +7963,7 @@
       "operand_b": 4
     },
     "created_at": "2026-10-30T13:48:22Z",
-    "updated_at": "2026-10-30T13:48:22Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -7467,7 +7974,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "9 + 4 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "9",
+      " ",
+      "+",
+      " ",
+      "4",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "13",
     "answer_explanation": "",
@@ -7481,7 +7998,7 @@
       "operand_b": 4
     },
     "created_at": "2026-10-30T13:48:22Z",
-    "updated_at": "2026-10-30T13:48:22Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -7492,7 +8009,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "9 + 7 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "9",
+      " ",
+      "+",
+      " ",
+      "7",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "16",
     "answer_explanation": "",
@@ -7506,7 +8033,7 @@
       "operand_b": 7
     },
     "created_at": "2026-10-30T13:48:22Z",
-    "updated_at": "2026-10-30T13:48:22Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -7517,7 +8044,17 @@
     "content_type": "math",
     "question_type": "math_arithmetic",
     "question_stem": "4 + 1 = ?",
-    "question_pinyin": [],
+    "question_pinyin": [
+      "4",
+      " ",
+      "+",
+      " ",
+      "1",
+      " ",
+      "=",
+      " ",
+      "?"
+    ],
     "question_options": [],
     "correct_answer": "5",
     "answer_explanation": "",
@@ -7531,7 +8068,7 @@
       "operand_b": 1
     },
     "created_at": "2026-10-30T13:48:22Z",
-    "updated_at": "2026-10-30T13:48:22Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -8383,7 +8920,20 @@
     "question_type": "english_word_card",
     "question_stem": "This is a sofa",
     "question_pinyin": [
-      "This is a sofa"
+      "T",
+      "h",
+      "i",
+      "s",
+      " ",
+      "i",
+      "s",
+      " ",
+      "a",
+      " ",
+      "s",
+      "o",
+      "f",
+      "a"
     ],
     "question_options": [],
     "correct_answer": "",
@@ -8408,7 +8958,7 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:26:55Z",
-    "updated_at": "2026-10-30T14:27:32Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T14:27:32Z",
@@ -8422,7 +8972,17 @@
     "question_type": "english_word_card",
     "question_stem": "What's that",
     "question_pinyin": [
-      "What's that"
+      "W",
+      "h",
+      "a",
+      "t",
+      "'",
+      "s",
+      " ",
+      "t",
+      "h",
+      "a",
+      "t"
     ],
     "question_options": [],
     "correct_answer": "",
@@ -8447,7 +9007,7 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:26:55Z",
-    "updated_at": "2026-10-30T14:27:42Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T14:27:42Z",
@@ -8461,7 +9021,12 @@
     "question_type": "english_word_card",
     "question_stem": "monkey",
     "question_pinyin": [
-      "monkey"
+      "m",
+      "o",
+      "n",
+      "k",
+      "e",
+      "y"
     ],
     "question_options": [],
     "correct_answer": "",
@@ -8486,7 +9051,7 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:26:55Z",
-    "updated_at": "2026-10-30T14:27:54Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T14:27:54Z",
@@ -8500,7 +9065,24 @@
     "question_type": "english_word_card",
     "question_stem": "This is my ubrella",
     "question_pinyin": [
-      "This is my ubrella"
+      "T",
+      "h",
+      "i",
+      "s",
+      " ",
+      "i",
+      "s",
+      " ",
+      "m",
+      "y",
+      " ",
+      "u",
+      "b",
+      "r",
+      "e",
+      "l",
+      "l",
+      "a"
     ],
     "question_options": [],
     "correct_answer": "",
@@ -8525,7 +9107,7 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:26:55Z",
-    "updated_at": "2026-10-30T14:28:36Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T14:28:36Z",
@@ -8539,7 +9121,10 @@
     "question_type": "english_word_card",
     "question_stem": "book",
     "question_pinyin": [
-      "book"
+      "b",
+      "o",
+      "o",
+      "k"
     ],
     "question_options": [],
     "correct_answer": "",
@@ -8564,7 +9149,7 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:26:55Z",
-    "updated_at": "2026-10-30T14:28:43Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T14:28:43Z",
@@ -8578,7 +9163,22 @@
     "question_type": "english_word_card",
     "question_stem": "l want some coke",
     "question_pinyin": [
-      "l want some coke"
+      "l",
+      " ",
+      "w",
+      "a",
+      "n",
+      "t",
+      " ",
+      "s",
+      "o",
+      "m",
+      "e",
+      " ",
+      "c",
+      "o",
+      "k",
+      "e"
     ],
     "question_options": [],
     "correct_answer": "",
@@ -8603,7 +9203,7 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:26:55Z",
-    "updated_at": "2026-10-30T14:29:39Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T14:29:39Z",
@@ -8617,7 +9217,10 @@
     "question_type": "english_word_card",
     "question_stem": "sing",
     "question_pinyin": [
-      "sing"
+      "s",
+      "i",
+      "n",
+      "g"
     ],
     "question_options": [],
     "correct_answer": "",
@@ -8642,7 +9245,7 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:26:55Z",
-    "updated_at": "2026-10-30T14:29:54Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T14:29:54Z",
@@ -8656,7 +9259,19 @@
     "question_type": "english_word_card",
     "question_stem": "touch and say",
     "question_pinyin": [
-      "touch and say"
+      "t",
+      "o",
+      "u",
+      "c",
+      "h",
+      " ",
+      "a",
+      "n",
+      "d",
+      " ",
+      "s",
+      "a",
+      "y"
     ],
     "question_options": [],
     "correct_answer": "",
@@ -8681,7 +9296,7 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:26:55Z",
-    "updated_at": "2026-10-30T14:30:15Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T14:30:15Z",
@@ -8695,7 +9310,16 @@
     "question_type": "english_word_card",
     "question_stem": "Easter egg",
     "question_pinyin": [
-      "Easter egg"
+      "E",
+      "a",
+      "s",
+      "t",
+      "e",
+      "r",
+      " ",
+      "e",
+      "g",
+      "g"
     ],
     "question_options": [],
     "correct_answer": "",
@@ -8720,7 +9344,7 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:26:55Z",
-    "updated_at": "2026-10-30T14:30:33Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T14:30:33Z",
@@ -8734,7 +9358,12 @@
     "question_type": "english_word_card",
     "question_stem": "seesaw",
     "question_pinyin": [
-      "seesaw"
+      "s",
+      "e",
+      "e",
+      "s",
+      "a",
+      "w"
     ],
     "question_options": [],
     "correct_answer": "",
@@ -8759,7 +9388,7 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:26:55Z",
-    "updated_at": "2026-10-30T14:30:49Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T14:30:49Z",
@@ -8845,7 +9474,7 @@
     "content_id": "5a070e3c-8c1e-4b51-8719-9c885b6c8c08",
     "content_type": "classic",
     "question_type": "classic_card",
-    "question_stem": "曰春夏，曰秋冬。此四时， 运不穷。\n日南北，曰西东。此四方， 应乎中。",
+    "question_stem": "曰春夏，曰秋冬。此四时，运不穷。\n曰南北，曰西东。此四方，应乎中。",
     "question_pinyin": [
       "yuē",
       "chūn",
@@ -8889,8 +9518,8 @@
       "id": "5a070e3c-8c1e-4b51-8719-9c885b6c8c08",
       "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
       "content_type": "classic",
-      "title": "曰春夏，曰秋冬。此四时， 运不穷。",
-      "content_text": "曰春夏，曰秋冬。此四时， 运不穷。日南北，曰西东。此四方， 应乎中。",
+      "title": "曰春夏，曰秋冬。此四时，运不穷。",
+      "content_text": "曰春夏，曰秋冬。此四时，运不穷。曰南北，曰西东。此四方，应乎中。",
       "pronunciation": null,
       "meaning": null,
       "example": null,
@@ -8898,11 +9527,11 @@
       "status": "enabled",
       "sort_order": 0,
       "detail": {
-        "sentence_text": "曰春夏，曰秋冬。此四时， 运不穷。",
-        "next_sentence": "日南北，曰西东。此四方， 应乎中。"
+        "sentence_text": "曰春夏，曰秋冬。此四时，运不穷。",
+        "next_sentence": "曰南北，曰西东。此四方，应乎中。"
       },
       "created_at": "2026-10-26T06:08:35Z",
-      "updated_at": "2026-10-26T06:15:28Z",
+      "updated_at": "2026-11-02T02:49:31Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -11137,7 +11766,7 @@
     "content_id": "d3513ac5-0848-4186-a445-7381b1973662",
     "content_type": "poem",
     "question_type": "poem_card",
-    "question_stem": "《画鸡》明·唐寅（唐伯虎）\n头上红冠不用裁\n身雪白走将来\n平生不敢轻言语\n一叫千门万户开",
+    "question_stem": "《画鸡》明·唐寅（唐伯虎）\n头上红冠不用裁\n满身雪白走将来\n平生不敢轻言语\n一叫千门万户开",
     "question_pinyin": [
       "《",
       "huà",
@@ -11161,6 +11790,7 @@
       "yòng",
       "cái",
       "\n",
+      "mǎn",
       "shēn",
       "xuě",
       "bái",
@@ -11193,7 +11823,7 @@
       "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
       "content_type": "poem",
       "title": "画鸡",
-      "content_text": "头上红冠不用裁，身雪白走将来。平生不敢轻言语，一叫千门万户开。",
+      "content_text": "头上红冠不用裁，满身雪白走将来。平生不敢轻言语，一叫千门万户开。",
       "pronunciation": null,
       "meaning": null,
       "example": null,
@@ -11206,18 +11836,18 @@
         "author": "唐寅（唐伯虎）",
         "poem_lines": [
           "头上红冠不用裁",
-          "身雪白走将来",
+          "满身雪白走将来",
           "平生不敢轻言语",
           "一叫千门万户开"
         ]
       },
       "created_at": "2026-10-23T12:24:05Z",
-      "updated_at": "2026-10-23T12:24:05Z",
+      "updated_at": "2026-11-02T02:49:31Z",
       "deleted_at": null,
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:47:06Z",
-    "updated_at": "2026-10-30T14:51:20Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0,
     "viewed_at": "2026-10-30T14:51:20Z",
@@ -11393,7 +12023,7 @@
     "content_id": "03498fe6-255a-4e65-9181-6aa3cdedd4f0",
     "content_type": "poem",
     "question_type": "poem_card",
-    "question_stem": "《小儿垂钓》唐・胡令能\n蓬头稚子学垂纶\n侧坐莓苔草映身\n路人借问遥招手\n怕得鱼惊不应人",
+    "question_stem": "《小儿垂钓》唐·胡令能\n蓬头稚子学垂纶\n侧坐莓苔草映身\n路人借问遥招手\n怕得鱼惊不应人",
     "question_pinyin": [
       "《",
       "xiǎo",
@@ -11457,8 +12087,8 @@
       "sort_order": 0,
       "detail": {
         "poem_title": "小儿垂钓",
-        "dynasty": "",
-        "author": "唐・胡令能",
+        "dynasty": "唐",
+        "author": "胡令能",
         "poem_lines": [
           "蓬头稚子学垂纶",
           "侧坐莓苔草映身",
@@ -11467,7 +12097,7 @@
         ]
       },
       "created_at": "2026-10-23T12:24:05Z",
-      "updated_at": "2026-10-23T12:24:05Z",
+      "updated_at": "2026-11-02T02:49:31Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -11645,7 +12275,7 @@
     "content_id": "88b8dea2-8e8e-443c-98eb-c665b5b5e340",
     "content_type": "poem",
     "question_type": "poem_card",
-    "question_stem": "《江雪》唐・柳宗元\n千山鸟飞绝\n万径人踪灭\n孤舟蓑笠翁\n独钓寒江雪",
+    "question_stem": "《江雪》唐·柳宗元\n千山鸟飞绝\n万径人踪灭\n孤舟蓑笠翁\n独钓寒江雪",
     "question_pinyin": [
       "《",
       "jiāng",
@@ -11699,8 +12329,8 @@
       "sort_order": 0,
       "detail": {
         "poem_title": "江雪",
-        "dynasty": "",
-        "author": "唐・柳宗元",
+        "dynasty": "唐",
+        "author": "柳宗元",
         "poem_lines": [
           "千山鸟飞绝",
           "万径人踪灭",
@@ -11709,7 +12339,7 @@
         ]
       },
       "created_at": "2026-10-23T12:24:05Z",
-      "updated_at": "2026-10-23T12:24:05Z",
+      "updated_at": "2026-11-02T02:49:31Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -12430,7 +13060,7 @@
     "content_id": "c1bb5d9e-5ed8-4d4a-bd40-350ac60cad3a",
     "content_type": "poem",
     "question_type": "poem_card",
-    "question_stem": "《夏日绝句》宋・李清照\n生当作人杰\n死亦为鬼雄\n至今思项羽\n不肯过江东",
+    "question_stem": "《夏日绝句》宋·李清照\n生当作人杰\n死亦为鬼雄\n至今思项羽\n不肯过江东",
     "question_pinyin": [
       "《",
       "xià",
@@ -12486,8 +13116,8 @@
       "sort_order": 0,
       "detail": {
         "poem_title": "夏日绝句",
-        "dynasty": "",
-        "author": "宋・李清照",
+        "dynasty": "宋",
+        "author": "李清照",
         "poem_lines": [
           "生当作人杰",
           "死亦为鬼雄",
@@ -12496,7 +13126,7 @@
         ]
       },
       "created_at": "2026-10-23T12:24:05Z",
-      "updated_at": "2026-10-23T12:24:05Z",
+      "updated_at": "2026-11-02T02:49:31Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -12511,7 +13141,7 @@
     "content_id": "919211a0-be6c-42a0-aa06-5de85df8af8d",
     "content_type": "poem",
     "question_type": "poem_card",
-    "question_stem": "《画鸡》明・唐寅 唐伯虎\n头上红冠不用裁\n满身雪白走将来\n平生不敢轻言语\n一叫千门万户开",
+    "question_stem": "《画鸡》明·唐寅 唐伯虎\n头上红冠不用裁\n满身雪白走将来\n平生不敢轻言语\n一叫千门万户开",
     "question_pinyin": [
       "《",
       "huà",
@@ -12586,9 +13216,9 @@
         ]
       },
       "created_at": "2026-10-23T12:24:05Z",
-      "updated_at": "2026-10-23T12:24:05Z",
-      "deleted_at": null,
-      "is_deleted": 0
+      "updated_at": "2026-11-02T02:49:31Z",
+      "deleted_at": "2026-11-02T02:49:31Z",
+      "is_deleted": 1
     },
     "created_at": "2026-11-01T13:32:16Z",
     "updated_at": "2026-11-01T13:32:16Z",
@@ -12601,7 +13231,7 @@
     "content_id": "d3513ac5-0848-4186-a445-7381b1973662",
     "content_type": "poem",
     "question_type": "poem_card",
-    "question_stem": "《画鸡》明·唐寅（唐伯虎）\n头上红冠不用裁\n身雪白走将来\n平生不敢轻言语\n一叫千门万户开",
+    "question_stem": "《画鸡》明·唐寅（唐伯虎）\n头上红冠不用裁\n满身雪白走将来\n平生不敢轻言语\n一叫千门万户开",
     "question_pinyin": [
       "《",
       "huà",
@@ -12625,6 +13255,7 @@
       "yòng",
       "cái",
       "\n",
+      "mǎn",
       "shēn",
       "xuě",
       "bái",
@@ -12657,7 +13288,7 @@
       "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
       "content_type": "poem",
       "title": "画鸡",
-      "content_text": "头上红冠不用裁，身雪白走将来。平生不敢轻言语，一叫千门万户开。",
+      "content_text": "头上红冠不用裁，满身雪白走将来。平生不敢轻言语，一叫千门万户开。",
       "pronunciation": null,
       "meaning": null,
       "example": null,
@@ -12670,18 +13301,18 @@
         "author": "唐寅（唐伯虎）",
         "poem_lines": [
           "头上红冠不用裁",
-          "身雪白走将来",
+          "满身雪白走将来",
           "平生不敢轻言语",
           "一叫千门万户开"
         ]
       },
       "created_at": "2026-10-23T12:24:05Z",
-      "updated_at": "2026-10-23T12:24:05Z",
+      "updated_at": "2026-11-02T02:49:31Z",
       "deleted_at": null,
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:32:16Z",
-    "updated_at": "2026-11-01T13:32:16Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -12691,7 +13322,7 @@
     "content_id": "35a539c1-d4eb-49b7-8f26-39e1d479b9ae",
     "content_type": "poem",
     "question_type": "poem_card",
-    "question_stem": "《赠汪伦》唐・李白\n李白乘舟将欲行\n忽闻岸上踏歌声\n桃花潭水深千尺\n不及汪伦送我情",
+    "question_stem": "《赠汪伦》唐·李白\n李白乘舟将欲行\n忽闻岸上踏歌声\n桃花潭水深千尺\n不及汪伦送我情",
     "question_pinyin": [
       "《",
       "zèng",
@@ -12753,8 +13384,8 @@
       "sort_order": 0,
       "detail": {
         "poem_title": "赠汪伦",
-        "dynasty": "",
-        "author": "唐・李白",
+        "dynasty": "唐",
+        "author": "李白",
         "poem_lines": [
           "李白乘舟将欲行",
           "忽闻岸上踏歌声",
@@ -12763,7 +13394,7 @@
         ]
       },
       "created_at": "2026-10-23T12:24:05Z",
-      "updated_at": "2026-10-23T12:24:05Z",
+      "updated_at": "2026-11-02T02:49:31Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -12778,7 +13409,7 @@
     "content_id": "a48cc45b-d0bc-4213-9eb8-026cf97bf581",
     "content_type": "poem",
     "question_type": "poem_card",
-    "question_stem": "《所见》清・袁枚\n牧童骑黄牛\n歌声振林樾\n意欲捕鸣蝉\n忽然闭口立",
+    "question_stem": "《所见》清·袁枚\n牧童骑黄牛\n歌声振林樾\n意欲捕鸣蝉\n忽然闭口立",
     "question_pinyin": [
       "《",
       "suǒ",
@@ -12831,8 +13462,8 @@
       "sort_order": 0,
       "detail": {
         "poem_title": "所见",
-        "dynasty": "",
-        "author": "清・袁枚",
+        "dynasty": "清",
+        "author": "袁枚",
         "poem_lines": [
           "牧童骑黄牛",
           "歌声振林樾",
@@ -12841,7 +13472,7 @@
         ]
       },
       "created_at": "2026-10-23T12:24:05Z",
-      "updated_at": "2026-10-23T12:24:05Z",
+      "updated_at": "2026-11-02T02:49:31Z",
       "deleted_at": null,
       "is_deleted": 0
     },
@@ -12938,7 +13569,7 @@
     "content_id": "5ca288df-f194-4d7d-8040-d9c6232f1e7b",
     "content_type": "poem",
     "question_type": "poem_card",
-    "question_stem": "《遗爱寺》唐・白居易\n弄石临溪坐\n寻花绕寺行\n时时闻鸟语\n处处是泉声",
+    "question_stem": "《遗爱寺》唐·白居易\n弄石临溪坐\n寻花绕寺行\n时时闻鸟语\n处处是泉声",
     "question_pinyin": [
       "《",
       "yí",
@@ -12993,8 +13624,8 @@
       "sort_order": 0,
       "detail": {
         "poem_title": "遗爱寺",
-        "dynasty": "",
-        "author": "唐・白居易",
+        "dynasty": "唐",
+        "author": "白居易",
         "poem_lines": [
           "弄石临溪坐",
           "寻花绕寺行",
@@ -13003,7 +13634,7 @@
         ]
       },
       "created_at": "2026-10-23T12:24:05Z",
-      "updated_at": "2026-10-23T12:24:05Z",
+      "updated_at": "2026-11-02T02:49:31Z",
       "deleted_at": null,
       "is_deleted": 0
     },

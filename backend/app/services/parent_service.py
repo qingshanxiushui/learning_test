@@ -632,7 +632,7 @@ class ParentService:
                 current = header
                 body_lines = []
             elif current is not None:
-                body_lines.append(line)
+                body_lines.append(ParentService._strip_inner_space(line))
 
         flush()
         return poems
@@ -646,17 +646,29 @@ class ParentService:
         attribution = match.group(2).strip()
         dynasty = ""
         author = ""
-        if "·" in attribution:
-            dynasty, author = attribution.split("·", 1)
-            dynasty = dynasty.strip()
-            author = author.strip()
+        # 分隔符可能是中点 U+00B7、片假名中点 U+30FB、注音点 U+2027 或项目符号，
+        # 只匹配 U+00B7 会让朝代为空、作者吞掉整个署名。
+        separator = re.search(r"[·・‧•]", attribution)
+        if separator:
+            dynasty = ParentService._strip_inner_space(attribution[: separator.start()])
+            author = ParentService._strip_inner_space(attribution[separator.end() :])
         elif attribution:
-            author = attribution
+            author = ParentService._strip_inner_space(attribution)
         return {"title": title, "dynasty": dynasty, "author": author}
 
     @staticmethod
+    def _strip_inner_space(text: str) -> str:
+        """去掉行首尾及行内空白（含全角空格）。
+
+        行内空白会让 pypinyin 把空白并入相邻标点 token，导致注音整体错位，
+        因此中文内容（古诗、国学）在入库时统一去掉空白。
+        """
+        return re.sub(r"[ \t\u3000]+", "", text)
+
+    @staticmethod
     def _split_poem_lines(body: str) -> list[str]:
-        return [part for part in re.split(r"[，。！？；、,.!?;:：\n]+", body) if part.strip()]
+        body = ParentService._strip_inner_space(body)
+        return [part for part in re.split(r"[，。！？；、,.!?;:：\n]+", body) if part]
 
     @staticmethod
     def _extract_idioms(content_text: str) -> list[str]:
@@ -671,7 +683,11 @@ class ParentService:
 
     @staticmethod
     def _extract_classic_groups(content_text: str) -> list[dict[str, str]]:
-        lines = [line.strip() for line in content_text.splitlines() if line.strip()]
+        lines = [
+            line
+            for line in (ParentService._strip_inner_space(raw) for raw in content_text.splitlines())
+            if line
+        ]
         groups: list[dict[str, str]] = []
         for i in range(0, len(lines), 2):
             groups.append(

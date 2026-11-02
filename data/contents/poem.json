@@ -566,7 +566,7 @@
     "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
     "content_type": "poem",
     "title": "画鸡",
-    "content_text": "头上红冠不用裁，身雪白走将来。平生不敢轻言语，一叫千门万户开。",
+    "content_text": "头上红冠不用裁，满身雪白走将来。平生不敢轻言语，一叫千门万户开。",
     "pronunciation": null,
     "meaning": null,
     "example": null,
@@ -579,13 +579,13 @@
       "author": "唐寅（唐伯虎）",
       "poem_lines": [
         "头上红冠不用裁",
-        "身雪白走将来",
+        "满身雪白走将来",
         "平生不敢轻言语",
         "一叫千门万户开"
       ]
     },
     "created_at": "2026-10-23T12:24:05Z",
-    "updated_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -603,8 +603,8 @@
     "sort_order": 0,
     "detail": {
       "poem_title": "咏柳",
-      "dynasty": "",
-      "author": "唐・贺知章",
+      "dynasty": "唐",
+      "author": "贺知章",
       "poem_lines": [
         "碧玉妆成一树高",
         "万条垂下绿丝绦",
@@ -613,7 +613,7 @@
       ]
     },
     "created_at": "2026-10-23T12:24:05Z",
-    "updated_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -631,8 +631,8 @@
     "sort_order": 0,
     "detail": {
       "poem_title": "黄鹤楼送孟浩然之广陵",
-      "dynasty": "",
-      "author": "唐・李白",
+      "dynasty": "唐",
+      "author": "李白",
       "poem_lines": [
         "故人西辞黄鹤楼",
         "烟花三月下扬州",
@@ -641,7 +641,7 @@
       ]
     },
     "created_at": "2026-10-23T12:24:05Z",
-    "updated_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -659,8 +659,8 @@
     "sort_order": 0,
     "detail": {
       "poem_title": "遗爱寺",
-      "dynasty": "",
-      "author": "唐・白居易",
+      "dynasty": "唐",
+      "author": "白居易",
       "poem_lines": [
         "弄石临溪坐",
         "寻花绕寺行",
@@ -669,7 +669,7 @@
       ]
     },
     "created_at": "2026-10-23T12:24:05Z",
-    "updated_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -687,8 +687,8 @@
     "sort_order": 0,
     "detail": {
       "poem_title": "小儿垂钓",
-      "dynasty": "",
-      "author": "唐・胡令能",
+      "dynasty": "唐",
+      "author": "胡令能",
       "poem_lines": [
         "蓬头稚子学垂纶",
         "侧坐莓苔草映身",
@@ -697,7 +697,7 @@
       ]
     },
     "created_at": "2026-10-23T12:24:05Z",
-    "updated_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -715,8 +715,8 @@
     "sort_order": 0,
     "detail": {
       "poem_title": "登乐游原",
-      "dynasty": "",
-      "author": "唐・李商隐",
+      "dynasty": "唐",
+      "author": "李商隐",
       "poem_lines": [
         "向晚意不适",
         "驱车登古原",
@@ -725,7 +725,7 @@
       ]
     },
     "created_at": "2026-10-23T12:24:05Z",
-    "updated_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -743,8 +743,8 @@
     "sort_order": 0,
     "detail": {
       "poem_title": "赠汪伦",
-      "dynasty": "",
-      "author": "唐・李白",
+      "dynasty": "唐",
+      "author": "李白",
       "poem_lines": [
         "李白乘舟将欲行",
         "忽闻岸上踏歌声",
@@ -753,7 +753,7 @@
       ]
     },
     "created_at": "2026-10-23T12:24:05Z",
-    "updated_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -771,8 +771,8 @@
     "sort_order": 0,
     "detail": {
       "poem_title": "题临安邸",
-      "dynasty": "",
-      "author": "宋・林升",
+      "dynasty": "宋",
+      "author": "林升",
       "poem_lines": [
         "山外青山楼外楼",
         "西湖歌舞几时休",
@@ -781,7 +781,7 @@
       ]
     },
     "created_at": "2026-10-23T12:24:05Z",
-    "updated_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -809,9 +809,9 @@
       ]
     },
     "created_at": "2026-10-23T12:24:05Z",
-    "updated_at": "2026-10-23T12:24:05Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-02T02:49:31Z",
+    "deleted_at": "2026-11-02T02:49:31Z",
+    "is_deleted": 1
   },
   {
     "id": "a48cc45b-d0bc-4213-9eb8-026cf97bf581",
@@ -827,8 +827,8 @@
     "sort_order": 0,
     "detail": {
       "poem_title": "所见",
-      "dynasty": "",
-      "author": "清・袁枚",
+      "dynasty": "清",
+      "author": "袁枚",
       "poem_lines": [
         "牧童骑黄牛",
         "歌声振林樾",
@@ -837,7 +837,7 @@
       ]
     },
     "created_at": "2026-10-23T12:24:05Z",
-    "updated_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -855,8 +855,8 @@
     "sort_order": 0,
     "detail": {
       "poem_title": "夏日绝句",
-      "dynasty": "",
-      "author": "宋・李清照",
+      "dynasty": "宋",
+      "author": "李清照",
       "poem_lines": [
         "生当作人杰",
         "死亦为鬼雄",
@@ -865,7 +865,7 @@
       ]
     },
     "created_at": "2026-10-23T12:24:05Z",
-    "updated_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -883,8 +883,8 @@
     "sort_order": 0,
     "detail": {
       "poem_title": "登鹳雀楼",
-      "dynasty": "",
-      "author": "唐・王之涣",
+      "dynasty": "唐",
+      "author": "王之涣",
       "poem_lines": [
         "白日依山尽",
         "黄河入海流",
@@ -893,7 +893,7 @@
       ]
     },
     "created_at": "2026-10-23T12:24:05Z",
-    "updated_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   },
@@ -911,8 +911,8 @@
     "sort_order": 0,
     "detail": {
       "poem_title": "江雪",
-      "dynasty": "",
-      "author": "唐・柳宗元",
+      "dynasty": "唐",
+      "author": "柳宗元",
       "poem_lines": [
         "千山鸟飞绝",
         "万径人踪灭",
@@ -921,7 +921,7 @@
       ]
     },
     "created_at": "2026-10-23T12:24:05Z",
-    "updated_at": "2026-10-23T12:24:05Z",
+    "updated_at": "2026-11-02T02:49:31Z",
     "deleted_at": null,
     "is_deleted": 0
   }

@@ -52,10 +52,14 @@ const CARD_QUESTION_TYPES = new Set([
 const MULTILINE_CARD_QUESTION_TYPES = new Set(["poem_card", "classic_card"]);
 
 function AnnotatedText({ text, pinyin }: { text: string; pinyin: string[] }) {
+  const chars = Array.from(text);
+  // 后端返回的拼音必须与字符数严格一一对应，否则整体错位；
+  // 长度不一致时宁可不显示拼音，也不显示错误拼音。
+  const aligned = pinyin.length === chars.length ? pinyin : null;
   return (
     <span className="annotated-text">
-      {Array.from(text).map((char, index) => {
-        const py = pinyin[index];
+      {chars.map((char, index) => {
+        const py = aligned?.[index];
         if (char === "\n") {
           return <br key={index} />;
         }
