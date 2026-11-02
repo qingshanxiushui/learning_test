@@ -46,6 +46,53 @@ def test_pinyin_annotation_keeps_characters_in_place_after_space() -> None:
     assert annotated[16] == "。"
 
 
+def test_math_and_pinyin_cards_never_carry_pinyin_annotation() -> None:
+    """算术与拼音卡片按设计不标注拼音，question_pinyin 必须为空数组。"""
+    client = TestClient(app)
+    client.post(
+        "/api/v1/parents",
+        json={"account_name": "no_pinyin_parent", "display_name": "Parent", "password": "123456"},
+    )
+    headers = {
+        "Authorization": "Bearer "
+        + client.post(
+            "/api/v1/auth/login",
+            json={"account_name": "no_pinyin_parent", "password": "123456"},
+        ).json()["data"]["access_token"]
+    }
+    child_id = client.post(
+        "/api/v1/children",
+        headers=headers,
+        json={"name": "小算", "age": 6},
+    ).json()["data"]["id"]
+    client.put(
+        f"/api/v1/children/{child_id}/pinyin-settings",
+        headers=headers,
+        json={"categories": ["initial"], "with_tone": False, "status": 1},
+    )
+    client.put(
+        f"/api/v1/children/{child_id}/rules",
+        headers=headers,
+        json={
+            "question_count": 4,
+            "default_content_types": ["math", "pinyin"],
+            "allow_child_select_types": True,
+            "status": 1,
+        },
+    )
+    started = client.post(
+        f"/api/v1/children/{child_id}/sessions",
+        headers=headers,
+        json={"selected_content_types": ["math", "pinyin"]},
+    )
+    assert started.status_code == 201
+    questions = started.json()["data"]["questions"]
+    assert questions
+    for question in questions:
+        assert question["question_type"] in ("math_arithmetic", "pinyin_card")
+        assert question["question_pinyin"] == []
+
+
 def test_annotation_parent_reports_aligned_pinyin_for_spaced_classic() -> None:
     client = TestClient(app)
     client.post(
