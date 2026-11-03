@@ -800,11 +800,36 @@ describe("ChildLearning read aloud", () => {
   it("shows the read button on all five readable card types", async () => {
     installSpeechStub();
     const cases = [
-      { id: "c-1", contentType: "character", questionType: "character_card", stem: "根" },
-      { id: "c-2", contentType: "classic", questionType: "classic_card", stem: "知之为知之\n不知为不知" },
-      { id: "c-3", contentType: "poem", questionType: "poem_card", stem: "《咏鹅》唐·骆宾王\n鹅鹅鹅" },
-      { id: "c-4", contentType: "idiom", questionType: "idiom_card", stem: "地大物博" },
-      { id: "c-5", contentType: "englishWord", questionType: "english_word_card", stem: "apple" },
+      {
+        id: "c-1",
+        contentType: "character",
+        questionType: "character_card",
+        stem: "根",
+      },
+      {
+        id: "c-2",
+        contentType: "classic",
+        questionType: "classic_card",
+        stem: "知之为知之\n不知为不知",
+      },
+      {
+        id: "c-3",
+        contentType: "poem",
+        questionType: "poem_card",
+        stem: "《咏鹅》唐·骆宾王\n鹅鹅鹅",
+      },
+      {
+        id: "c-4",
+        contentType: "idiom",
+        questionType: "idiom_card",
+        stem: "地大物博",
+      },
+      {
+        id: "c-5",
+        contentType: "englishWord",
+        questionType: "english_word_card",
+        stem: "apple",
+      },
     ];
     const user = userEvent.setup();
 
@@ -821,8 +846,18 @@ describe("ChildLearning read aloud", () => {
   it("hides the read button for math and pinyin cards", async () => {
     installSpeechStub();
     const cases = [
-      { id: "m-1", contentType: "math", questionType: "math_arithmetic", stem: "3 + 5 = ?" },
-      { id: "p-1", contentType: "pinyin", questionType: "pinyin_card", stem: "b" },
+      {
+        id: "m-1",
+        contentType: "math",
+        questionType: "math_arithmetic",
+        stem: "3 + 5 = ?",
+      },
+      {
+        id: "p-1",
+        contentType: "pinyin",
+        questionType: "pinyin_card",
+        stem: "b",
+      },
     ];
     const user = userEvent.setup();
 
@@ -837,7 +872,7 @@ describe("ChildLearning read aloud", () => {
     }
   });
 
-  it("disables the read button when no matching voice is available", async () => {
+  it("falls back to lang-only speech when no matching voice is available", async () => {
     const stub = installSpeechStub();
     const synth = window.speechSynthesis as unknown as {
       getVoices: ReturnType<typeof vi.fn>;
@@ -858,7 +893,14 @@ describe("ChildLearning read aloud", () => {
     await user.click(screen.getByRole("button", { name: "开始学习" }));
 
     const button = await screen.findByText("朗读");
-    expect(button.closest("button")).toBeDisabled();
-    expect(stub.speak).not.toHaveBeenCalled();
+    expect(button.closest("button")).not.toBeDisabled();
+    await user.click(button);
+
+    expect(stub.speak).toHaveBeenCalledTimes(1);
+    expect(stub.utterances[0]).toMatchObject({
+      text: "地大物博",
+      lang: "zh-CN",
+      voice: null,
+    });
   });
 });

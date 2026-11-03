@@ -6,6 +6,7 @@ import {
   Form,
   Input,
   InputNumber,
+  message,
   Progress,
   Select,
   Spin,
@@ -117,6 +118,7 @@ export default function ChildLearning() {
   const [loginForm] = Form.useForm();
   const [isReading, setIsReading] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [messageApi, contextHolder] = message.useMessage();
 
   function handleRequestError(reason: unknown, fallback: string) {
     if (reason instanceof ApiError && reason.status === 401) {
@@ -245,11 +247,14 @@ export default function ChildLearning() {
     );
     utterance.lang = lang;
     // 固定慢速朗读，方便孩子跟读。
-    utterance.rate = 0.8;
+    utterance.rate = 0.3;
     const voice = pickVoice(voices, lang);
     if (voice) utterance.voice = voice;
     utterance.onend = () => setIsReading(false);
-    utterance.onerror = () => setIsReading(false);
+    utterance.onerror = () => {
+      setIsReading(false);
+      messageApi.error("朗读失败：可能未安装该语言的语音包，或网络不可用。");
+    };
     synth.speak(utterance);
     setIsReading(true);
   }
@@ -413,14 +418,13 @@ export default function ChildLearning() {
   }
 
   const currentQuestion = questions[questionIndex];
-  const currentReadLang = currentQuestion
-    ? getSpeechLanguage(currentQuestion.content_type)
-    : "zh-CN";
-  const canRead =
-    speechSynthesisSupported() && pickVoice(voices, currentReadLang) !== null;
+  // 只要浏览器支持 Web Speech API 就允许点击；
+  // 找不到匹配语音时仍以 utterance.lang 兜底（如 Chrome 云语音），不再禁用按钮。
+  const canRead = speechSynthesisSupported();
 
   return (
     <section className="child-experience">
+      {contextHolder}
       {error && (
         <Alert
           className="child-alert"
