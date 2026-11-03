@@ -493,13 +493,13 @@ erDiagram
 
 由于当前技术架构使用 JSON 文件存储，逻辑表在物理层不会一一对应真实数据库表，而会映射为 JSON 数据集合。推荐映射如下：
 
-- `parent_user` -> `data/parent_users.json`
-- `child_profile` -> `data/children.json`
-- `learning_rule` -> `data/learning_rules.json`
-- `learning_content` + `learning_content_detail` -> `data/contents/*.json`
-- `learning_session` -> `data/sessions/learning_sessions.json`
-- `session_question` -> `data/sessions/session_questions.json`
-- `answer_record` -> `data/sessions/answer_records.json`
+- `parent_user` -> `backend/data/parent_users.json`
+- `child_profile` -> `backend/data/children.json`
+- `learning_rule` -> `backend/data/learning_rules.json`
+- `learning_content` + `learning_content_detail` -> `backend/data/contents/*.json`
+- `learning_session` -> `backend/data/sessions/learning_sessions.json`
+- `session_question` -> `backend/data/sessions/session_questions.json`
+- `answer_record` -> `backend/data/sessions/answer_records.json`
 
 ## 11. 结论
 

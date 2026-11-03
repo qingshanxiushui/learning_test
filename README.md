@@ -103,6 +103,23 @@ MANAGEMENT_USER_ID=parent_admin
 - 健康检查: http://127.0.0.1:8000/health
 - OpenAPI 文档: http://127.0.0.1:8000/docs
 
+#### 数据目录
+
+业务数据默认存放在 `backend/data/`，由 `backend/app/core/config.py` 中的 `settings.data_dir` 决定。如需改到其他位置，优先用环境变量覆盖，而不是改代码：
+
+```env
+# backend/.env
+DATA_DIR=D:/some/other/data
+```
+
+优先级：真实环境变量 > `backend/.env` > 代码默认值。
+
+#### 关于 `--reload`
+
+`--reload` 依赖 `watchfiles`。`requirements.txt` 已包含该依赖；若未安装，uvicorn 会退化为 `StatReload`，在 Windows 上修改 `app/core/*.py` 后可能出现「reloader 卡在 `Reloading...`、旧进程继续响应 `/health` 但所有 `/api/v1/*` 返回 404」的现象。
+
+排查方式：确认启动日志里是 `Started reloader process [...] using WatchFiles`。若显示 `using StatReload`，执行 `pip install -r requirements.txt` 后重启。日常使用也可以直接去掉 `--reload`。
+
 ### 2. 启动前端
 
 新开终端进入前端目录并安装依赖：

@@ -252,12 +252,12 @@ def test_poem_card_stem_aligns_with_pinyin() -> None:
 
 
 def test_shipped_poem_and_classic_data_is_renderable() -> None:
-    """真实的 data/contents/*.json 必须满足：注音与正文等长、中文内容无行内空白、标题不重复。"""
-    repo_root = Path(__file__).resolve().parents[2]
+    """真实的 backend/data/contents/*.json 必须满足：注音与正文等长、中文内容无行内空白、标题不重复。"""
+    # 仓库内置数据固定在 backend/data，与 DATA_DIR 无关（conftest 会把 DATA_DIR 指向临时目录）。
+    shipped_data_dir = Path(__file__).resolve().parents[1] / "data"
     for file_name, content_type in (("poem.json", "poem"), ("classic.json", "classic")):
-        path = repo_root / "data" / "contents" / file_name
-        if not path.exists():
-            continue
+        path = shipped_data_dir / "contents" / file_name
+        assert path.exists(), f"内置数据缺失: {path}"
         records = [
             record
             for record in json.loads(path.read_text(encoding="utf-8"))

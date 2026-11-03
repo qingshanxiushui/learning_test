@@ -19,7 +19,7 @@
 ## 3. 目录结构约定
 
 ```text
-data/
+backend/data/
   parent_users.json
   children.json
   learning_rules.json
@@ -30,27 +30,31 @@ data/
     classic.json
     poem.json
     idiom.json
-    english_word.json
+    englishWord.json
   sessions/
     learning_sessions.json
     session_questions.json
     answer_records.json
 ```
 
+数据根目录由 `backend/app/core/config.py` 的 `settings.data_dir` 决定，默认值为
+`backend/data`（即 `Path(__file__).resolve().parents[2] / "data"`）。可用环境变量
+`DATA_DIR` 覆盖，优先级为：真实环境变量 > `backend/.env` > 代码默认值。
+
 ## 4. 文件映射关系
 
-| 逻辑实体                | JSON 文件                              | 说明                           |
-| ----------------------- | -------------------------------------- | ------------------------------ |
-| parent_user             | `data/parent_users.json`               | 家长账户集合                   |
-| child_profile           | `data/children.json`                   | 孩子档案集合                   |
-| learning_rule           | `data/learning_rules.json`             | 学习规则集合                   |
-| math_settings           | `data/math_settings.json`              | 算术设置集合（每孩子一条）     |
-| pinyin_settings         | `data/pinyin_settings.json`            | 拼音设置集合（每孩子一条）     |
-| learning_content        | `data/contents/*.json`                 | 按内容类型拆分主数据           |
-| learning_content_detail | `data/contents/*.json`                 | 与主数据合并存储在同一条记录中 |
-| learning_session        | `data/sessions/learning_sessions.json` | 学习会话摘要                   |
-| session_question        | `data/sessions/session_questions.json` | 会话题目快照                   |
-| answer_record           | `data/sessions/answer_records.json`    | 作答明细                       |
+| 逻辑实体                | JSON 文件                                    | 说明                           |
+| ----------------------- | -------------------------------------------- | ------------------------------ |
+| parent_user             | `backend/data/parent_users.json`             | 家长账户集合                   |
+| child_profile           | `backend/data/children.json`                 | 孩子档案集合                   |
+| learning_rule           | `backend/data/learning_rules.json`           | 学习规则集合                   |
+| math_settings           | `backend/data/math_settings.json`            | 算术设置集合（每孩子一条）     |
+| pinyin_settings         | `backend/data/pinyin_settings.json`          | 拼音设置集合（每孩子一条）     |
+| learning_content        | `backend/data/contents/*.json`               | 按内容类型拆分主数据           |
+| learning_content_detail | `backend/data/contents/*.json`               | 与主数据合并存储在同一条记录中 |
+| learning_session        | `backend/data/sessions/learning_sessions.json` | 学习会话摘要                 |
+| session_question        | `backend/data/sessions/session_questions.json` | 会话题目快照                 |
+| answer_record           | `backend/data/sessions/answer_records.json`  | 作答明细                       |
 
 ## 5. JSON 记录结构建议
 
