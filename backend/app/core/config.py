@@ -33,7 +33,7 @@ class Settings:
     api_prefix: str = "/api/v1"
     token_expire_seconds: int = 7200
     secret_key: str = os.getenv("APP_SECRET_KEY", "dev-secret-key")
-    data_dir: Path = Path(os.getenv("DATA_DIR", Path(__file__).resolve().parents[3] / "data"))
+    data_dir: Path = Path(os.getenv("DATA_DIR", Path(__file__).resolve().parents[2] / "data"))
     management_account_name: str = os.getenv("MANAGEMENT_ACCOUNT_NAME", "admin")
     management_password: str = os.getenv("MANAGEMENT_PASSWORD", "dqshuchen")
     management_display_name: str = os.getenv("MANAGEMENT_DISPLAY_NAME", "Administrator")
