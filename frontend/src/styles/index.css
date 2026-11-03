@@ -19,7 +19,8 @@
   --line: #ede7dc;
   --line-soft: #f2ece1;
   --shadow-soft:
-    0 8px 24px -4px rgba(28, 49, 52, 0.06), 0 2px 6px -1px rgba(28, 49, 52, 0.04);
+    0 8px 24px -4px rgba(28, 49, 52, 0.06),
+    0 2px 6px -1px rgba(28, 49, 52, 0.04);
   --shadow-hover:
     0 20px 32px -8px rgba(28, 49, 52, 0.12),
     0 6px 12px -2px rgba(28, 49, 52, 0.06);
@@ -82,7 +83,11 @@ input,
   place-items: center;
   border-radius: 14px;
   color: #fff;
-  font: 700 20px/1 "STKaiti", "KaiTi", "Noto Serif SC", serif;
+  font:
+    700 20px/1 "STKaiti",
+    "KaiTi",
+    "Noto Serif SC",
+    serif;
   background: linear-gradient(135deg, #2a796d 0%, #205e54 100%);
   box-shadow: 0 6px 16px rgba(36, 102, 92, 0.28);
 }
@@ -399,7 +404,11 @@ input,
   display: grid;
   place-items: center;
   border-radius: 50%;
-  font: 700 36px/1 "STKaiti", "KaiTi", "Noto Serif SC", serif;
+  font:
+    700 36px/1 "STKaiti",
+    "KaiTi",
+    "Noto Serif SC",
+    serif;
   transition: transform 280ms var(--ease-bounce);
 }
 
@@ -585,6 +594,14 @@ input,
   margin: 40px 0;
   text-align: center;
   font-size: clamp(34px, 8vw, 58px);
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.question-panel.is-english-word-card h2.ant-typography {
+  margin: 40px 0;
+  text-align: center;
+  font-size: clamp(28px, 6vw, 52px);
   line-height: 1.4;
   white-space: nowrap;
 }

@@ -540,7 +540,9 @@ export default function ChildLearning() {
                 ? "is-multiline-card"
                 : currentQuestion.question_type === "idiom_card"
                   ? "is-idiom-card"
-                  : ""
+                  : currentQuestion.question_type === "english_word_card"
+                    ? "is-english-word-card"
+                    : ""
             }`}
           >
             <div className="question-head">
