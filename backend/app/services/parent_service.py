@@ -8,6 +8,7 @@ import unicodedata
 from app.core.config import settings
 from app.models import (
     CARD_QUESTION_TYPES,
+    CONTENT_FILE_TYPES,
     CharacterBatchCreate,
     Child,
     ChildCreate,
@@ -39,13 +40,7 @@ from app.repositories.json_store import JsonStore
 
 # 新建孩子时自动生成的默认学习规则与默认设置（对齐 PRD 10.1.3「首版默认规则建议」）
 DEFAULT_QUESTION_COUNT = 5
-DEFAULT_CONTENT_TYPES: tuple[ContentType, ...] = (
-    "character",
-    "classic",
-    "poem",
-    "idiom",
-    "englishWord",
-)
+DEFAULT_CONTENT_TYPES: tuple[ContentType, ...] = CONTENT_FILE_TYPES
 DEFAULT_MATH_MIN_VALUE = 0
 DEFAULT_MATH_MAX_VALUE = 20
 DEFAULT_MATH_OPERATORS: tuple[MathOperator, ...] = ("add", "subtract")
@@ -203,6 +198,8 @@ class ParentService:
         return False
 
     def _content_file(self, content_type: str) -> str:
+        if content_type not in CONTENT_FILE_TYPES:
+            raise ValueError(f"content type has no content file: {content_type}")
         return f"contents/{content_type}.json"
 
     def list_contents(
@@ -216,7 +213,9 @@ class ParentService:
         keyword: str | None,
     ) -> tuple[list[Content], int]:
         self.assert_child_owned(parent_id, child_id)
-        types = [content_type] if content_type else ["character", "classic", "poem", "idiom", "englishWord"]
+        types = [content_type] if content_type else list(CONTENT_FILE_TYPES)
+        # math / pinyin 是虚拟类型，没有内容条目；作为筛选条件时返回空列表而不是报错
+        types = [t for t in types if t in CONTENT_FILE_TYPES]
         out: list[dict[str, Any]] = []
         for t in types:
             for r in self._active(self.store.read_list(self._content_file(t))):
@@ -258,7 +257,8 @@ class ParentService:
         sort_order: str = "asc",
     ) -> tuple[list[dict[str, Any]], int]:
         self.assert_child_owned(parent_id, child_id)
-        types = [content_type] if content_type else ["character", "classic", "poem", "idiom", "englishWord"]
+        types = [content_type] if content_type else list(CONTENT_FILE_TYPES)
+        types = [t for t in types if t in CONTENT_FILE_TYPES]
         out: list[dict[str, Any]] = []
         for t in types:
             for r in self._active(self.store.read_list(self._content_file(t))):
@@ -727,7 +727,7 @@ class ParentService:
 
     def get_content(self, parent_id: str, child_id: str, content_id: str) -> Content | None:
         self.assert_child_owned(parent_id, child_id)
-        for t in ["character", "classic", "poem", "idiom", "englishWord"]:
+        for t in CONTENT_FILE_TYPES:
             rows = self._active(self.store.read_list(self._content_file(t)))
             for r in rows:
                 if r.get("id") == content_id and r.get("child_id") == child_id:
@@ -736,7 +736,7 @@ class ParentService:
 
     def update_content(self, parent_id: str, child_id: str, content_id: str, payload: ContentUpdate) -> Content | None:
         self.assert_child_owned(parent_id, child_id)
-        for t in ["character", "classic", "poem", "idiom", "englishWord"]:
+        for t in CONTENT_FILE_TYPES:
             rel = self._content_file(t)
             rows = self.store.read_list(rel)
             changed = False
@@ -759,7 +759,7 @@ class ParentService:
 
     def delete_content(self, parent_id: str, child_id: str, content_id: str) -> bool:
         self.assert_child_owned(parent_id, child_id)
-        for t in ["character", "classic", "poem", "idiom", "englishWord"]:
+        for t in CONTENT_FILE_TYPES:
             rel = self._content_file(t)
             rows = self.store.read_list(rel)
             for r in rows:
@@ -775,7 +775,7 @@ class ParentService:
         self, parent_id: str, child_id: str, content_id: str, payload: ContentStatusUpdate
     ) -> Content | None:
         self.assert_child_owned(parent_id, child_id)
-        for t in ["character", "classic", "poem", "idiom", "englishWord"]:
+        for t in CONTENT_FILE_TYPES:
             rel = self._content_file(t)
             rows = self.store.read_list(rel)
             for r in rows:

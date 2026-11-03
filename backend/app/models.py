@@ -8,6 +8,12 @@ from pydantic import BaseModel, Field
 
 
 ContentType = Literal["character", "classic", "poem", "idiom", "englishWord", "math", "pinyin"]
+
+# 有实体内容条目、落 contents/<type>.json 的类型。
+# math / pinyin 是「虚拟类型」：题目由 math_settings / pinyin_settings 即时生成，
+# 没有内容条目，也不应有对应的 contents/*.json 文件。
+CONTENT_FILE_TYPES: tuple[str, ...] = ("character", "classic", "poem", "idiom", "englishWord")
+VIRTUAL_CONTENT_TYPES: tuple[str, ...] = ("math", "pinyin")
 ContentStatus = Literal["enabled", "disabled"]
 SessionStatus = Literal["in_progress", "completed", "abandoned"]
 UserStatus = Literal["active", "disabled"]

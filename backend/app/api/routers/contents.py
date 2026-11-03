@@ -46,6 +46,8 @@ def create_content(child_id: str, payload: ContentCreate, current=Depends(get_cu
         item = service.create_content(current["user_id"], child_id, payload)
     except LookupError:
         raise HTTPException(status_code=404, detail={"code": 40402, "message": "child not found"})
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail={"code": 42201, "message": str(exc)})
     return ApiResponse(data=item.model_dump(exclude={"is_deleted", "deleted_at"}))
 
 

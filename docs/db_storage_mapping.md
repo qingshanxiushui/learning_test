@@ -121,6 +121,7 @@ backend/data/
 
 - 每个内容类型单独一个文件。
 - 主表字段和扩展字段建议合并存储为单条 JSON 记录，避免 JSON 场景下额外维护 detail 文件的一致性成本。
+- 只有 `character`、`classic`、`poem`、`idiom`、`englishWord` 五类有实体内容条目；`math`、`pinyin` 是虚拟类型，不落 `contents/*.json`，题目由 `math_settings` / `pinyin_settings` 即时生成。
 
 ```json
 [
