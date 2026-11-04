@@ -1,7 +1,7 @@
 import type { ApiResponse } from "@/types/api";
 
-const API_BASE =
-  import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000/api/v1";
+// 托管模式下前端与后端同源，使用相对路径；开发模式由 Vite 代理 /api 到后端。
+const API_BASE = import.meta.env.VITE_API_BASE ?? "/api/v1";
 
 type RequestOptions = {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";

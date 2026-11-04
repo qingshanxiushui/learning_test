@@ -1935,9 +1935,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T13:07:14Z",
-    "updated_at": "2026-10-23T13:07:14Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "fa9df782-96eb-414e-8f1e-c1053291e962",
@@ -1969,9 +1969,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T13:07:14Z",
-    "updated_at": "2026-10-23T13:07:14Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "9046fb73-baa2-486d-a488-785c149629db",
@@ -2003,9 +2003,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T13:07:14Z",
-    "updated_at": "2026-10-23T13:07:14Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "98947904-92b9-4f8f-bf7d-3064b14ff172",
@@ -2037,9 +2037,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T13:07:14Z",
-    "updated_at": "2026-10-23T13:07:14Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "43aa5eb8-e012-45db-afc5-59e7958900d3",
@@ -2071,9 +2071,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-23T13:07:14Z",
-    "updated_at": "2026-10-23T13:07:14Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "5a804d8a-c96e-4a74-a6a0-e863856c95ab",
@@ -2285,9 +2285,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-26T03:12:51Z",
-    "updated_at": "2026-10-26T03:12:52Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-26T03:12:52Z",
     "view_duration_ms": 890
   },
@@ -2321,9 +2321,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-26T03:12:51Z",
-    "updated_at": "2026-10-26T03:12:53Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-26T03:12:53Z",
     "view_duration_ms": 907
   },
@@ -2357,9 +2357,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-26T03:12:51Z",
-    "updated_at": "2026-10-26T03:12:53Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-26T03:12:53Z",
     "view_duration_ms": 160
   },
@@ -2393,9 +2393,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-26T03:12:51Z",
-    "updated_at": "2026-10-26T03:12:53Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-26T03:12:53Z",
     "view_duration_ms": 172
   },
@@ -2429,9 +2429,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-26T03:12:51Z",
-    "updated_at": "2026-10-26T03:12:54Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-26T03:12:54Z",
     "view_duration_ms": 482
   },
@@ -4090,9 +4090,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-29T06:11:31Z",
-    "updated_at": "2026-10-29T06:11:33Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-29T06:11:33Z",
     "view_duration_ms": 1763
   },
@@ -4129,9 +4129,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-29T06:11:31Z",
-    "updated_at": "2026-10-29T06:11:34Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-29T06:11:34Z",
     "view_duration_ms": 1380
   },
@@ -4168,9 +4168,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-29T06:11:31Z",
-    "updated_at": "2026-10-29T06:11:34Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-29T06:11:34Z",
     "view_duration_ms": 286
   },
@@ -4207,9 +4207,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-29T06:11:31Z",
-    "updated_at": "2026-10-29T06:11:35Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-29T06:11:35Z",
     "view_duration_ms": 384
   },
@@ -4246,9 +4246,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-29T06:11:31Z",
-    "updated_at": "2026-10-29T06:11:36Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-29T06:11:36Z",
     "view_duration_ms": 785
   },
@@ -5080,9 +5080,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-29T06:11:57Z",
-    "updated_at": "2026-10-29T06:11:59Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-29T06:11:59Z",
     "view_duration_ms": 1921
   },
@@ -5122,9 +5122,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-29T06:11:57Z",
-    "updated_at": "2026-10-29T06:12:00Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-29T06:12:00Z",
     "view_duration_ms": 526
   },
@@ -5164,9 +5164,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-29T06:11:57Z",
-    "updated_at": "2026-10-29T06:12:01Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-29T06:12:01Z",
     "view_duration_ms": 515
   },
@@ -5206,9 +5206,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-29T06:11:57Z",
-    "updated_at": "2026-10-29T06:11:57Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "20f433bf-91ba-4bf8-8293-b19dd884a998",
@@ -5246,9 +5246,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-29T06:11:57Z",
-    "updated_at": "2026-10-29T06:11:57Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "6d98a8e5-208c-42e6-9057-304772b9f485",
@@ -5286,9 +5286,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-29T06:20:37Z",
-    "updated_at": "2026-10-29T06:20:42Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-29T06:20:42Z",
     "view_duration_ms": 4833
   },
@@ -5328,9 +5328,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-29T06:20:37Z",
-    "updated_at": "2026-10-29T06:20:42Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-29T06:20:42Z",
     "view_duration_ms": 166
   },
@@ -5370,9 +5370,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-29T06:20:37Z",
-    "updated_at": "2026-10-29T06:20:43Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-29T06:20:43Z",
     "view_duration_ms": 323
   },
@@ -5412,9 +5412,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-29T06:20:37Z",
-    "updated_at": "2026-10-29T06:20:43Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-29T06:20:43Z",
     "view_duration_ms": 435
   },
@@ -5454,9 +5454,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-29T06:20:37Z",
-    "updated_at": "2026-10-29T06:20:43Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-29T06:20:43Z",
     "view_duration_ms": 456
   },
@@ -5868,9 +5868,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T13:14:40Z",
-    "updated_at": "2026-10-30T13:15:13Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T13:15:13Z",
     "view_duration_ms": 32899
   },
@@ -5907,9 +5907,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T13:14:40Z",
-    "updated_at": "2026-10-30T13:15:28Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T13:15:28Z",
     "view_duration_ms": 14799
   },
@@ -5946,9 +5946,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T13:14:40Z",
-    "updated_at": "2026-10-30T13:15:51Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T13:15:51Z",
     "view_duration_ms": 23210
   },
@@ -5985,9 +5985,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T13:14:40Z",
-    "updated_at": "2026-10-30T13:16:03Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T13:16:03Z",
     "view_duration_ms": 11457
   },
@@ -6024,9 +6024,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T13:14:40Z",
-    "updated_at": "2026-10-30T13:16:20Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T13:16:20Z",
     "view_duration_ms": 17511
   },
@@ -6063,9 +6063,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T13:14:40Z",
-    "updated_at": "2026-10-30T13:16:25Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T13:16:25Z",
     "view_duration_ms": 4818
   },
@@ -6102,9 +6102,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T13:14:40Z",
-    "updated_at": "2026-10-30T13:16:42Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T13:16:42Z",
     "view_duration_ms": 16293
   },
@@ -6141,9 +6141,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T13:14:40Z",
-    "updated_at": "2026-10-30T13:17:01Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T13:17:01Z",
     "view_duration_ms": 18832
   },
@@ -6180,9 +6180,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T13:14:40Z",
-    "updated_at": "2026-10-30T13:17:12Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T13:17:12Z",
     "view_duration_ms": 11387
   },
@@ -6219,9 +6219,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T13:14:40Z",
-    "updated_at": "2026-10-30T13:17:22Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T13:17:22Z",
     "view_duration_ms": 10095
   },
@@ -6508,9 +6508,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T13:23:14Z",
-    "updated_at": "2026-10-30T13:23:14Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1
   },
   {
     "id": "b7ca5de3-2255-4f3b-bc2f-0949c0b08486",
@@ -6645,9 +6645,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T13:23:14Z",
-    "updated_at": "2026-10-30T13:23:14Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1
   },
   {
     "id": "6fc1e0ec-0024-44ea-a1a3-5c7f85c7fe2b",
@@ -6682,9 +6682,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T13:23:14Z",
-    "updated_at": "2026-10-30T13:23:14Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1
   },
   {
     "id": "7f192e42-1aa0-4278-941a-b00391219117",
@@ -6744,9 +6744,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T13:23:14Z",
-    "updated_at": "2026-10-30T13:23:14Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1
   },
   {
     "id": "b66e96af-74d9-437f-bc92-0cba474cf209",
@@ -6781,9 +6781,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T13:23:14Z",
-    "updated_at": "2026-10-30T13:23:14Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1
   },
   {
     "id": "a2ab7d55-ec88-4ca3-8e70-e11c43a1d9ac",
@@ -7571,9 +7571,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:08:36Z",
-    "updated_at": "2026-10-30T14:10:05Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:10:05Z",
     "view_duration_ms": 88816
   },
@@ -7613,9 +7613,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:08:36Z",
-    "updated_at": "2026-10-30T14:10:32Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:10:32Z",
     "view_duration_ms": 27272
   },
@@ -7655,9 +7655,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:08:36Z",
-    "updated_at": "2026-10-30T14:11:07Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:11:07Z",
     "view_duration_ms": 34593
   },
@@ -7697,9 +7697,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:08:36Z",
-    "updated_at": "2026-10-30T14:11:42Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:11:42Z",
     "view_duration_ms": 34455
   },
@@ -7739,9 +7739,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:08:36Z",
-    "updated_at": "2026-10-30T14:12:40Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:12:40Z",
     "view_duration_ms": 58294
   },
@@ -7781,9 +7781,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:08:36Z",
-    "updated_at": "2026-10-30T14:12:54Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:12:54Z",
     "view_duration_ms": 13488
   },
@@ -7823,9 +7823,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:08:36Z",
-    "updated_at": "2026-10-30T14:13:10Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:13:10Z",
     "view_duration_ms": 15957
   },
@@ -7865,9 +7865,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:08:36Z",
-    "updated_at": "2026-10-30T14:14:03Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:14:03Z",
     "view_duration_ms": 53588
   },
@@ -7907,9 +7907,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:08:36Z",
-    "updated_at": "2026-10-30T14:14:25Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:14:25Z",
     "view_duration_ms": 21616
   },
@@ -7949,9 +7949,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:08:36Z",
-    "updated_at": "2026-10-30T14:14:49Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:14:49Z",
     "view_duration_ms": 24433
   },
@@ -7991,9 +7991,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:15:27Z",
-    "updated_at": "2026-10-30T14:16:04Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:16:04Z",
     "view_duration_ms": 36856
   },
@@ -8033,9 +8033,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:15:27Z",
-    "updated_at": "2026-10-30T14:17:06Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:17:06Z",
     "view_duration_ms": 61430
   },
@@ -8075,9 +8075,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:15:27Z",
-    "updated_at": "2026-10-30T14:17:41Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:17:41Z",
     "view_duration_ms": 34762
   },
@@ -8117,9 +8117,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:15:27Z",
-    "updated_at": "2026-10-30T14:18:00Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:18:00Z",
     "view_duration_ms": 19080
   },
@@ -8159,9 +8159,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:15:27Z",
-    "updated_at": "2026-10-30T14:19:06Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:19:06Z",
     "view_duration_ms": 66032
   },
@@ -8201,9 +8201,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:15:27Z",
-    "updated_at": "2026-10-30T14:19:55Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:19:55Z",
     "view_duration_ms": 48994
   },
@@ -8243,9 +8243,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:15:27Z",
-    "updated_at": "2026-10-30T14:20:09Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:20:09Z",
     "view_duration_ms": 14103
   },
@@ -8285,9 +8285,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:15:27Z",
-    "updated_at": "2026-10-30T14:20:44Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:20:44Z",
     "view_duration_ms": 34940
   },
@@ -8327,9 +8327,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:15:27Z",
-    "updated_at": "2026-10-30T14:22:12Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:22:12Z",
     "view_duration_ms": 88173
   },
@@ -8369,9 +8369,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-10-30T14:15:27Z",
-    "updated_at": "2026-10-30T14:22:42Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-10-30T14:22:42Z",
     "view_duration_ms": 29729
   },
@@ -11924,9 +11924,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:31:44Z",
-    "updated_at": "2026-11-01T13:31:52Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-01T13:31:52Z",
     "view_duration_ms": 7604
   },
@@ -11963,9 +11963,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:31:44Z",
-    "updated_at": "2026-11-01T13:31:54Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-01T13:31:54Z",
     "view_duration_ms": 2246
   },
@@ -12002,9 +12002,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:31:44Z",
-    "updated_at": "2026-11-01T13:31:56Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-01T13:31:56Z",
     "view_duration_ms": 1604
   },
@@ -12041,9 +12041,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:31:44Z",
-    "updated_at": "2026-11-01T13:31:58Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-01T13:31:58Z",
     "view_duration_ms": 1549
   },
@@ -12080,9 +12080,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:31:44Z",
-    "updated_at": "2026-11-01T13:31:59Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-01T13:31:59Z",
     "view_duration_ms": 1451
   },
@@ -12119,9 +12119,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:31:44Z",
-    "updated_at": "2026-11-01T13:32:00Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-01T13:32:00Z",
     "view_duration_ms": 1426
   },
@@ -12158,9 +12158,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:31:44Z",
-    "updated_at": "2026-11-01T13:32:02Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-01T13:32:02Z",
     "view_duration_ms": 1710
   },
@@ -12197,9 +12197,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:31:44Z",
-    "updated_at": "2026-11-01T13:32:05Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-01T13:32:05Z",
     "view_duration_ms": 2383
   },
@@ -12236,9 +12236,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:31:44Z",
-    "updated_at": "2026-11-01T13:32:07Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-01T13:32:07Z",
     "view_duration_ms": 2006
   },
@@ -12275,9 +12275,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:31:44Z",
-    "updated_at": "2026-11-01T13:32:08Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-01T13:32:08Z",
     "view_duration_ms": 1595
   },
@@ -13142,9 +13142,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:32:40Z",
-    "updated_at": "2026-11-01T13:32:40Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "e211aabb-f7af-41d5-8e4e-0060f8f8b86d",
@@ -13182,9 +13182,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:32:40Z",
-    "updated_at": "2026-11-01T13:32:40Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "0ad42e52-ac79-4c43-aa6c-b1bc7413b6f9",
@@ -13222,9 +13222,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:32:40Z",
-    "updated_at": "2026-11-01T13:32:40Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "5db2eb7a-4ef9-4923-87cd-dea2884c5431",
@@ -13262,9 +13262,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:32:40Z",
-    "updated_at": "2026-11-01T13:32:40Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "168382c8-b2d2-46fb-ad6c-5ca03f755d86",
@@ -13302,9 +13302,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:32:40Z",
-    "updated_at": "2026-11-01T13:32:40Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "7ebbe04f-186e-46a6-9951-3ba79a10c8a1",
@@ -13342,9 +13342,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:32:40Z",
-    "updated_at": "2026-11-01T13:32:40Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "071ea399-ff29-4248-8c47-f05a1379a320",
@@ -13382,9 +13382,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:32:40Z",
-    "updated_at": "2026-11-01T13:32:40Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "4564873a-ea78-4187-97f2-03b2c6c596ff",
@@ -13422,9 +13422,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:32:40Z",
-    "updated_at": "2026-11-01T13:32:40Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "50bb198c-c21c-482a-852f-b92d131a9305",
@@ -13462,9 +13462,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:32:40Z",
-    "updated_at": "2026-11-01T13:32:40Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "82fb146a-6c03-4941-b7fa-bff9e5f60463",
@@ -13502,9 +13502,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-01T13:32:40Z",
-    "updated_at": "2026-11-01T13:32:40Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "327026a8-2ee3-403c-b220-375cb3b1638e",
@@ -13539,9 +13539,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-02T11:32:29Z",
-    "updated_at": "2026-11-02T11:33:24Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-02T11:33:24Z",
     "view_duration_ms": 54798
   },
@@ -13578,9 +13578,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-02T11:32:29Z",
-    "updated_at": "2026-11-02T11:33:54Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-02T11:33:54Z",
     "view_duration_ms": 29807
   },
@@ -13617,9 +13617,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-02T11:32:29Z",
-    "updated_at": "2026-11-02T11:34:06Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-02T11:34:06Z",
     "view_duration_ms": 11350
   },
@@ -13656,9 +13656,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-02T11:32:29Z",
-    "updated_at": "2026-11-02T11:34:34Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-02T11:34:34Z",
     "view_duration_ms": 28509
   },
@@ -13695,9 +13695,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-02T11:32:29Z",
-    "updated_at": "2026-11-02T11:34:50Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-02T11:34:50Z",
     "view_duration_ms": 15355
   },
@@ -13734,9 +13734,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-02T11:32:29Z",
-    "updated_at": "2026-11-02T11:35:10Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-02T11:35:10Z",
     "view_duration_ms": 19811
   },
@@ -13773,9 +13773,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-02T11:32:29Z",
-    "updated_at": "2026-11-02T11:35:24Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-02T11:35:24Z",
     "view_duration_ms": 14680
   },
@@ -13812,9 +13812,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-02T11:32:29Z",
-    "updated_at": "2026-11-02T11:35:30Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-02T11:35:30Z",
     "view_duration_ms": 5226
   },
@@ -13851,9 +13851,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-02T11:32:29Z",
-    "updated_at": "2026-11-02T11:35:34Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-02T11:35:34Z",
     "view_duration_ms": 4105
   },
@@ -13890,9 +13890,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-02T11:32:29Z",
-    "updated_at": "2026-11-02T11:35:49Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:19Z",
+    "deleted_at": "2026-11-03T12:11:19Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-02T11:35:49Z",
     "view_duration_ms": 14808
   },
@@ -14741,9 +14741,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-02T11:37:52Z",
-    "updated_at": "2026-11-02T11:38:13Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-02T11:38:13Z",
     "view_duration_ms": 20448
   },
@@ -14783,9 +14783,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-02T11:37:52Z",
-    "updated_at": "2026-11-02T11:38:39Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-02T11:38:39Z",
     "view_duration_ms": 26463
   },
@@ -14825,9 +14825,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-02T11:37:52Z",
-    "updated_at": "2026-11-02T11:39:06Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-02T11:39:06Z",
     "view_duration_ms": 26487
   },
@@ -14867,9 +14867,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-02T11:37:52Z",
-    "updated_at": "2026-11-02T11:40:23Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-02T11:40:23Z",
     "view_duration_ms": 77074
   },
@@ -14909,9 +14909,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-02T11:37:52Z",
-    "updated_at": "2026-11-02T11:41:22Z",
-    "deleted_at": null,
-    "is_deleted": 0,
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1,
     "viewed_at": "2026-11-02T11:41:22Z",
     "view_duration_ms": 58802
   },
@@ -16364,9 +16364,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-03T01:43:11Z",
-    "updated_at": "2026-11-03T01:43:11Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "fb7e5dc6-2800-4226-93c5-79913ad5f758",
@@ -16404,9 +16404,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-03T01:43:11Z",
-    "updated_at": "2026-11-03T01:43:11Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "6b9438ca-96ae-456c-9614-35fb1bbd9b43",
@@ -16444,9 +16444,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-03T01:43:11Z",
-    "updated_at": "2026-11-03T01:43:11Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "10c0ef5d-dc97-4932-8546-fa81c84c22a8",
@@ -16484,9 +16484,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-03T01:43:11Z",
-    "updated_at": "2026-11-03T01:43:11Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "b8149b78-f1e2-4ce0-b61a-0434a646add6",
@@ -16524,9 +16524,9 @@
       "is_deleted": 0
     },
     "created_at": "2026-11-03T01:43:11Z",
-    "updated_at": "2026-11-03T01:43:11Z",
-    "deleted_at": null,
-    "is_deleted": 0
+    "updated_at": "2026-11-03T12:11:38Z",
+    "deleted_at": "2026-11-03T12:11:38Z",
+    "is_deleted": 1
   },
   {
     "id": "ea37662f-772d-4484-824c-2cee4f1884a5",
@@ -16762,6 +16762,1064 @@
     },
     "created_at": "2026-11-03T01:58:15Z",
     "updated_at": "2026-11-03T01:58:15Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "a598b834-902c-4764-be67-f373d1e0cc8c",
+    "session_id": "f39524f2-051b-48d3-a72b-76e4236c00f8",
+    "content_id": "a64a1334-a6f4-4e8f-afb7-f68d35184b70",
+    "content_type": "englishWord",
+    "question_type": "english_word_card",
+    "question_stem": "ballon",
+    "question_pinyin": [
+      "b",
+      "a",
+      "l",
+      "l",
+      "o",
+      "n"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 1,
+    "content_snapshot": {
+      "id": "a64a1334-a6f4-4e8f-afb7-f68d35184b70",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "englishWord",
+      "title": "ballon",
+      "content_text": "ballon",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-23T09:49:43Z",
+      "updated_at": "2026-10-23T09:49:43Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T07:23:01Z",
+    "updated_at": "2026-11-03T07:23:02Z",
+    "deleted_at": null,
+    "is_deleted": 0,
+    "viewed_at": "2026-11-03T07:23:02Z",
+    "view_duration_ms": 1123
+  },
+  {
+    "id": "9721ee0d-e7c4-4a75-9fb3-d855a4968a3b",
+    "session_id": "f39524f2-051b-48d3-a72b-76e4236c00f8",
+    "content_id": "285d4a39-a344-4e80-af5f-fb60b6d56e0d",
+    "content_type": "englishWord",
+    "question_type": "english_word_card",
+    "question_stem": "hat",
+    "question_pinyin": [
+      "h",
+      "a",
+      "t"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 2,
+    "content_snapshot": {
+      "id": "285d4a39-a344-4e80-af5f-fb60b6d56e0d",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "englishWord",
+      "title": "hat",
+      "content_text": "hat",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-23T09:49:43Z",
+      "updated_at": "2026-10-23T09:49:43Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T07:23:01Z",
+    "updated_at": "2026-11-03T07:23:03Z",
+    "deleted_at": null,
+    "is_deleted": 0,
+    "viewed_at": "2026-11-03T07:23:03Z",
+    "view_duration_ms": 459
+  },
+  {
+    "id": "28a89311-f05d-4465-8e0c-b3c59423788a",
+    "session_id": "f39524f2-051b-48d3-a72b-76e4236c00f8",
+    "content_id": "a65eb5de-3d07-47ba-bcb3-22803b6801aa",
+    "content_type": "englishWord",
+    "question_type": "english_word_card",
+    "question_stem": "christmas tree",
+    "question_pinyin": [
+      "c",
+      "h",
+      "r",
+      "i",
+      "s",
+      "t",
+      "m",
+      "a",
+      "s",
+      " ",
+      "t",
+      "r",
+      "e",
+      "e"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 3,
+    "content_snapshot": {
+      "id": "a65eb5de-3d07-47ba-bcb3-22803b6801aa",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "englishWord",
+      "title": "christmas tree",
+      "content_text": "christmas tree",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-23T09:49:43Z",
+      "updated_at": "2026-10-23T09:49:43Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T07:23:01Z",
+    "updated_at": "2026-11-03T07:23:03Z",
+    "deleted_at": null,
+    "is_deleted": 0,
+    "viewed_at": "2026-11-03T07:23:03Z",
+    "view_duration_ms": 380
+  },
+  {
+    "id": "abfd2f55-dda7-400b-8e14-a306fcb9f704",
+    "session_id": "f39524f2-051b-48d3-a72b-76e4236c00f8",
+    "content_id": "7f3da318-6a11-45c2-8ccb-be13a594cbc2",
+    "content_type": "englishWord",
+    "question_type": "english_word_card",
+    "question_stem": "This is my hat",
+    "question_pinyin": [
+      "T",
+      "h",
+      "i",
+      "s",
+      " ",
+      "i",
+      "s",
+      " ",
+      "m",
+      "y",
+      " ",
+      "h",
+      "a",
+      "t"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 4,
+    "content_snapshot": {
+      "id": "7f3da318-6a11-45c2-8ccb-be13a594cbc2",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "englishWord",
+      "title": "This is my hat",
+      "content_text": "This is my hat",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-23T09:49:43Z",
+      "updated_at": "2026-10-23T09:49:43Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T07:23:01Z",
+    "updated_at": "2026-11-03T07:23:04Z",
+    "deleted_at": null,
+    "is_deleted": 0,
+    "viewed_at": "2026-11-03T07:23:04Z",
+    "view_duration_ms": 1267
+  },
+  {
+    "id": "0982cf94-d50f-4c31-9c17-7b73b306eeaf",
+    "session_id": "f39524f2-051b-48d3-a72b-76e4236c00f8",
+    "content_id": "a72772bf-f6ea-4a79-bb4d-8cab8f11c20c",
+    "content_type": "englishWord",
+    "question_type": "english_word_card",
+    "question_stem": "eraser",
+    "question_pinyin": [
+      "e",
+      "r",
+      "a",
+      "s",
+      "e",
+      "r"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 5,
+    "content_snapshot": {
+      "id": "a72772bf-f6ea-4a79-bb4d-8cab8f11c20c",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "englishWord",
+      "title": "eraser",
+      "content_text": "eraser",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-23T09:49:43Z",
+      "updated_at": "2026-10-23T09:49:43Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T07:23:01Z",
+    "updated_at": "2026-11-03T07:23:05Z",
+    "deleted_at": null,
+    "is_deleted": 0,
+    "viewed_at": "2026-11-03T07:23:05Z",
+    "view_duration_ms": 556
+  },
+  {
+    "id": "e211ac2c-27a6-4f38-88e0-4e3740f974dd",
+    "session_id": "a969b621-f5bd-43ba-ac39-5e5c0768f78b",
+    "content_id": "285d4a39-a344-4e80-af5f-fb60b6d56e0d",
+    "content_type": "englishWord",
+    "question_type": "english_word_card",
+    "question_stem": "hat",
+    "question_pinyin": [
+      "h",
+      "a",
+      "t"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 1,
+    "content_snapshot": {
+      "id": "285d4a39-a344-4e80-af5f-fb60b6d56e0d",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "englishWord",
+      "title": "hat",
+      "content_text": "hat",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-23T09:49:43Z",
+      "updated_at": "2026-10-23T09:49:43Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T12:07:08Z",
+    "updated_at": "2026-11-03T12:07:08Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "6bfaaee7-6635-4f0e-9c32-48fa20f2f2c0",
+    "session_id": "a969b621-f5bd-43ba-ac39-5e5c0768f78b",
+    "content_id": "e4df273d-bfd1-4854-9e0c-f2f3c256fa99",
+    "content_type": "englishWord",
+    "question_type": "english_word_card",
+    "question_stem": "go to the park",
+    "question_pinyin": [
+      "g",
+      "o",
+      " ",
+      "t",
+      "o",
+      " ",
+      "t",
+      "h",
+      "e",
+      " ",
+      "p",
+      "a",
+      "r",
+      "k"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 2,
+    "content_snapshot": {
+      "id": "e4df273d-bfd1-4854-9e0c-f2f3c256fa99",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "englishWord",
+      "title": "go to the park",
+      "content_text": "go to the park",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-23T09:49:43Z",
+      "updated_at": "2026-10-23T09:49:43Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T12:07:08Z",
+    "updated_at": "2026-11-03T12:07:08Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "8305f1df-319f-451d-b3c8-4141c172ea6c",
+    "session_id": "a969b621-f5bd-43ba-ac39-5e5c0768f78b",
+    "content_id": "2a30054e-c7a7-4345-9f4b-3632f0e106f0",
+    "content_type": "englishWord",
+    "question_type": "english_word_card",
+    "question_stem": "cloudy",
+    "question_pinyin": [
+      "c",
+      "l",
+      "o",
+      "u",
+      "d",
+      "y"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 3,
+    "content_snapshot": {
+      "id": "2a30054e-c7a7-4345-9f4b-3632f0e106f0",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "englishWord",
+      "title": "cloudy",
+      "content_text": "cloudy",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-23T09:49:43Z",
+      "updated_at": "2026-10-23T09:49:43Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T12:07:08Z",
+    "updated_at": "2026-11-03T12:07:08Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "02280094-1844-4f4a-b18e-599d866b282d",
+    "session_id": "a969b621-f5bd-43ba-ac39-5e5c0768f78b",
+    "content_id": "298e9a59-063b-4ef1-b267-3472e756250c",
+    "content_type": "englishWord",
+    "question_type": "english_word_card",
+    "question_stem": "juice",
+    "question_pinyin": [
+      "j",
+      "u",
+      "i",
+      "c",
+      "e"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 4,
+    "content_snapshot": {
+      "id": "298e9a59-063b-4ef1-b267-3472e756250c",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "englishWord",
+      "title": "juice",
+      "content_text": "juice",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-23T09:49:43Z",
+      "updated_at": "2026-10-23T09:49:43Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T12:07:08Z",
+    "updated_at": "2026-11-03T12:07:08Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "5ebe7ea0-e7b4-4790-9a13-8806bcfb362f",
+    "session_id": "a969b621-f5bd-43ba-ac39-5e5c0768f78b",
+    "content_id": "e513e58b-6753-4fa6-9f93-9ef93a334d82",
+    "content_type": "englishWord",
+    "question_type": "english_word_card",
+    "question_stem": "santa claus",
+    "question_pinyin": [
+      "s",
+      "a",
+      "n",
+      "t",
+      "a",
+      " ",
+      "c",
+      "l",
+      "a",
+      "u",
+      "s"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 5,
+    "content_snapshot": {
+      "id": "e513e58b-6753-4fa6-9f93-9ef93a334d82",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "englishWord",
+      "title": "santa claus",
+      "content_text": "santa claus",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-23T09:49:43Z",
+      "updated_at": "2026-10-23T09:49:43Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T12:07:08Z",
+    "updated_at": "2026-11-03T12:07:08Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "77e67215-e087-4382-9b5a-d624d5377921",
+    "session_id": "cd334af1-b7e4-4196-aa69-784e457c1442",
+    "content_id": "1520da46-a856-4b66-a664-cc5b9995420b",
+    "content_type": "classic",
+    "question_type": "classic_card",
+    "question_stem": "弟子规，圣人训。首孝悌，次谨信。\n泛爱众，而亲仁。有余力，则学文。",
+    "question_pinyin": [
+      "dì",
+      "zǐ",
+      "guī",
+      "，",
+      "shèng",
+      "rén",
+      "xùn",
+      "。",
+      "shǒu",
+      "xiào",
+      "tì",
+      "，",
+      "cì",
+      "jǐn",
+      "xìn",
+      "。",
+      "\n",
+      "fàn",
+      "ài",
+      "zhòng",
+      "，",
+      "ér",
+      "qīn",
+      "rén",
+      "。",
+      "yǒu",
+      "yú",
+      "lì",
+      "，",
+      "zé",
+      "xué",
+      "wén",
+      "。"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 1,
+    "content_snapshot": {
+      "id": "1520da46-a856-4b66-a664-cc5b9995420b",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "classic",
+      "title": "弟子规，圣人训。首孝悌，次谨信。",
+      "content_text": "弟子规，圣人训。首孝悌，次谨信。泛爱众，而亲仁。有余力，则学文。",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {
+        "sentence_text": "弟子规，圣人训。首孝悌，次谨信。",
+        "next_sentence": "泛爱众，而亲仁。有余力，则学文。"
+      },
+      "created_at": "2026-10-26T06:15:40Z",
+      "updated_at": "2026-10-26T06:15:40Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T12:07:57Z",
+    "updated_at": "2026-11-03T12:07:57Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "158e9616-a96d-4b55-a939-9ed329defdd7",
+    "session_id": "cd334af1-b7e4-4196-aa69-784e457c1442",
+    "content_id": "fb612cfb-5b58-4280-8ec7-ec653f751e8e",
+    "content_type": "classic",
+    "question_type": "classic_card",
+    "question_stem": "玉不琢，不成器。人不学，不知义。\n为人子，方少时。亲师友，习礼仪。",
+    "question_pinyin": [
+      "yù",
+      "bù",
+      "zuó",
+      "，",
+      "bù",
+      "chéng",
+      "qì",
+      "。",
+      "rén",
+      "bù",
+      "xué",
+      "，",
+      "bù",
+      "zhī",
+      "yì",
+      "。",
+      "\n",
+      "wéi",
+      "rén",
+      "zi",
+      "，",
+      "fāng",
+      "shǎo",
+      "shí",
+      "。",
+      "qīn",
+      "shī",
+      "yǒu",
+      "，",
+      "xí",
+      "lǐ",
+      "yí",
+      "。"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 2,
+    "content_snapshot": {
+      "id": "fb612cfb-5b58-4280-8ec7-ec653f751e8e",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "classic",
+      "title": "玉不琢，不成器。人不学，不知义。",
+      "content_text": "玉不琢，不成器。人不学，不知义。为人子，方少时。亲师友，习礼仪。",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {
+        "sentence_text": "玉不琢，不成器。人不学，不知义。",
+        "next_sentence": "为人子，方少时。亲师友，习礼仪。"
+      },
+      "created_at": "2026-10-26T06:08:35Z",
+      "updated_at": "2026-10-26T06:15:28Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T12:07:57Z",
+    "updated_at": "2026-11-03T12:07:57Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "cd1a6645-1825-469b-9fec-a16a927379ae",
+    "session_id": "cd334af1-b7e4-4196-aa69-784e457c1442",
+    "content_id": "735a2f27-1c57-4e32-9475-d674352c36e4",
+    "content_type": "classic",
+    "question_type": "classic_card",
+    "question_stem": "三才者，天地人。三光者，日月星。\n三纲者，君臣义。父子亲，夫妇顺。",
+    "question_pinyin": [
+      "sān",
+      "cái",
+      "zhě",
+      "，",
+      "tiān",
+      "dì",
+      "rén",
+      "。",
+      "sān",
+      "guāng",
+      "zhě",
+      "，",
+      "rì",
+      "yuè",
+      "xīng",
+      "。",
+      "\n",
+      "sān",
+      "gāng",
+      "zhě",
+      "，",
+      "jūn",
+      "chén",
+      "yì",
+      "。",
+      "fù",
+      "zǐ",
+      "qīn",
+      "，",
+      "fū",
+      "fù",
+      "shùn",
+      "。"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 3,
+    "content_snapshot": {
+      "id": "735a2f27-1c57-4e32-9475-d674352c36e4",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "classic",
+      "title": "三才者，天地人。三光者，日月星。",
+      "content_text": "三才者，天地人。三光者，日月星。三纲者，君臣义。父子亲，夫妇顺。",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {
+        "sentence_text": "三才者，天地人。三光者，日月星。",
+        "next_sentence": "三纲者，君臣义。父子亲，夫妇顺。"
+      },
+      "created_at": "2026-10-26T06:08:35Z",
+      "updated_at": "2026-10-26T06:15:28Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T12:07:57Z",
+    "updated_at": "2026-11-03T12:07:57Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "9950eec7-bedd-4021-9ce2-f1dc30f93b6c",
+    "session_id": "cd334af1-b7e4-4196-aa69-784e457c1442",
+    "content_id": "3069a644-c5c6-4b8d-ab97-728f1560ed0b",
+    "content_type": "classic",
+    "question_type": "classic_card",
+    "question_stem": "父母呼，应勿缓。父母命，行勿懒。\n父母教，须敬听。父母责，须顺承。",
+    "question_pinyin": [
+      "fù",
+      "mǔ",
+      "hū",
+      "，",
+      "yīng",
+      "wù",
+      "huǎn",
+      "。",
+      "fù",
+      "mǔ",
+      "mìng",
+      "，",
+      "xíng",
+      "wù",
+      "lǎn",
+      "。",
+      "\n",
+      "fù",
+      "mǔ",
+      "jiào",
+      "，",
+      "xū",
+      "jìng",
+      "tīng",
+      "。",
+      "fù",
+      "mǔ",
+      "zé",
+      "，",
+      "xū",
+      "shùn",
+      "chéng",
+      "。"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 4,
+    "content_snapshot": {
+      "id": "3069a644-c5c6-4b8d-ab97-728f1560ed0b",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "classic",
+      "title": "父母呼，应勿缓。父母命，行勿懒。",
+      "content_text": "父母呼，应勿缓。父母命，行勿懒。父母教，须敬听。父母责，须顺承。",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {
+        "sentence_text": "父母呼，应勿缓。父母命，行勿懒。",
+        "next_sentence": "父母教，须敬听。父母责，须顺承。"
+      },
+      "created_at": "2026-10-26T06:15:55Z",
+      "updated_at": "2026-10-26T06:15:55Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T12:07:57Z",
+    "updated_at": "2026-11-03T12:07:57Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "0ae849c8-cc9d-4204-b6db-d98afba66cfd",
+    "session_id": "cd334af1-b7e4-4196-aa69-784e457c1442",
+    "content_id": "d4e9b63f-a1ff-4b56-8df3-d6c37d4fd0b8",
+    "content_type": "classic",
+    "question_type": "classic_card",
+    "question_stem": "香九龄，能温席。孝于亲，所当执。\n融四岁，能让梨。弟于长，宜先知。",
+    "question_pinyin": [
+      "xiāng",
+      "jiǔ",
+      "líng",
+      "，",
+      "néng",
+      "wēn",
+      "xí",
+      "。",
+      "xiào",
+      "yú",
+      "qīn",
+      "，",
+      "suǒ",
+      "dāng",
+      "zhí",
+      "。",
+      "\n",
+      "róng",
+      "sì",
+      "suì",
+      "，",
+      "néng",
+      "ràng",
+      "lí",
+      "。",
+      "dì",
+      "yú",
+      "zhǎng",
+      "，",
+      "yí",
+      "xiān",
+      "zhī",
+      "。"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 5,
+    "content_snapshot": {
+      "id": "d4e9b63f-a1ff-4b56-8df3-d6c37d4fd0b8",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "classic",
+      "title": "香九龄，能温席。孝于亲，所当执。",
+      "content_text": "香九龄，能温席。孝于亲，所当执。融四岁，能让梨。弟于长，宜先知。",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {
+        "sentence_text": "香九龄，能温席。孝于亲，所当执。",
+        "next_sentence": "融四岁，能让梨。弟于长，宜先知。"
+      },
+      "created_at": "2026-10-26T06:08:35Z",
+      "updated_at": "2026-10-26T06:15:28Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T12:07:57Z",
+    "updated_at": "2026-11-03T12:07:57Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "78697f4e-aed8-4811-9088-65b52c044d05",
+    "session_id": "28496b5f-a1bb-44f5-929e-40df1bdf3cb8",
+    "content_id": "9cff7968-438f-4198-812c-d058ba72abf4",
+    "content_type": "englishWord",
+    "question_type": "english_word_card",
+    "question_stem": "I found one",
+    "question_pinyin": [
+      "I",
+      " ",
+      "f",
+      "o",
+      "u",
+      "n",
+      "d",
+      " ",
+      "o",
+      "n",
+      "e"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 1,
+    "content_snapshot": {
+      "id": "9cff7968-438f-4198-812c-d058ba72abf4",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "englishWord",
+      "title": "I found one",
+      "content_text": "I found one",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-23T09:49:43Z",
+      "updated_at": "2026-10-23T09:49:43Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T12:11:52Z",
+    "updated_at": "2026-11-03T12:11:52Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "4d0f940b-566a-4b07-b251-fe8b4e59bfc1",
+    "session_id": "28496b5f-a1bb-44f5-929e-40df1bdf3cb8",
+    "content_id": "ecc41e70-2528-42ed-b586-e46f9954e877",
+    "content_type": "englishWord",
+    "question_type": "english_word_card",
+    "question_stem": "gift card",
+    "question_pinyin": [
+      "g",
+      "i",
+      "f",
+      "t",
+      " ",
+      "c",
+      "a",
+      "r",
+      "d"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 2,
+    "content_snapshot": {
+      "id": "ecc41e70-2528-42ed-b586-e46f9954e877",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "englishWord",
+      "title": "gift card",
+      "content_text": "gift card",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-23T09:49:43Z",
+      "updated_at": "2026-10-23T09:49:43Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T12:11:52Z",
+    "updated_at": "2026-11-03T12:11:52Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "4b348145-ce70-4dd2-a2c6-a18e08fa7205",
+    "session_id": "28496b5f-a1bb-44f5-929e-40df1bdf3cb8",
+    "content_id": "cf48c458-add3-4d5c-82ea-caf95e193fb1",
+    "content_type": "englishWord",
+    "question_type": "english_word_card",
+    "question_stem": "Where is the bed",
+    "question_pinyin": [
+      "W",
+      "h",
+      "e",
+      "r",
+      "e",
+      " ",
+      "i",
+      "s",
+      " ",
+      "t",
+      "h",
+      "e",
+      " ",
+      "b",
+      "e",
+      "d"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 3,
+    "content_snapshot": {
+      "id": "cf48c458-add3-4d5c-82ea-caf95e193fb1",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "englishWord",
+      "title": "Where is the bed",
+      "content_text": "Where is the bed",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-23T09:49:43Z",
+      "updated_at": "2026-10-23T09:49:43Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T12:11:52Z",
+    "updated_at": "2026-11-03T12:11:52Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "fb0f3719-6fdc-42ef-a406-abccc15a5dc2",
+    "session_id": "28496b5f-a1bb-44f5-929e-40df1bdf3cb8",
+    "content_id": "d3f65fcc-b710-4ca4-97a1-e9e36532a16b",
+    "content_type": "englishWord",
+    "question_type": "english_word_card",
+    "question_stem": "roll the ball",
+    "question_pinyin": [
+      "r",
+      "o",
+      "l",
+      "l",
+      " ",
+      "t",
+      "h",
+      "e",
+      " ",
+      "b",
+      "a",
+      "l",
+      "l"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 4,
+    "content_snapshot": {
+      "id": "d3f65fcc-b710-4ca4-97a1-e9e36532a16b",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "englishWord",
+      "title": "roll the ball",
+      "content_text": "roll the ball",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-23T09:49:43Z",
+      "updated_at": "2026-10-23T09:49:43Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T12:11:52Z",
+    "updated_at": "2026-11-03T12:11:52Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "3540b963-5700-46fe-abf0-3109cfed0409",
+    "session_id": "28496b5f-a1bb-44f5-929e-40df1bdf3cb8",
+    "content_id": "ee21d65b-bf21-42de-877d-8cc5c85cf741",
+    "content_type": "englishWord",
+    "question_type": "english_word_card",
+    "question_stem": "Look at my pencil",
+    "question_pinyin": [
+      "L",
+      "o",
+      "o",
+      "k",
+      " ",
+      "a",
+      "t",
+      " ",
+      "m",
+      "y",
+      " ",
+      "p",
+      "e",
+      "n",
+      "c",
+      "i",
+      "l"
+    ],
+    "question_options": [],
+    "correct_answer": "",
+    "answer_explanation": "",
+    "question_order": 5,
+    "content_snapshot": {
+      "id": "ee21d65b-bf21-42de-877d-8cc5c85cf741",
+      "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+      "content_type": "englishWord",
+      "title": "Look at my pencil",
+      "content_text": "Look at my pencil",
+      "pronunciation": null,
+      "meaning": null,
+      "example": null,
+      "difficulty": 1,
+      "status": "enabled",
+      "sort_order": 0,
+      "detail": {},
+      "created_at": "2026-10-23T09:49:43Z",
+      "updated_at": "2026-10-23T09:49:43Z",
+      "deleted_at": null,
+      "is_deleted": 0
+    },
+    "created_at": "2026-11-03T12:11:52Z",
+    "updated_at": "2026-11-03T12:11:52Z",
     "deleted_at": null,
     "is_deleted": 0
   }
