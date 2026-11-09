@@ -14,6 +14,7 @@ import {
   Row,
   Select,
   Skeleton,
+  Slider,
   Space,
   Switch,
   Table,
@@ -52,6 +53,7 @@ import {
 import { getPinyinSettings, updatePinyinSettings } from "@/api/pinyin";
 import { createRule, getRule, updateRule } from "@/api/rules";
 import { getMathSettings, updateMathSettings } from "@/api/math";
+import { getReadingSettings, updateReadingSettings } from "@/api/reading";
 import { login } from "@/api/auth";
 import type {
   Child,
@@ -61,6 +63,7 @@ import type {
   MathOperator,
   OverviewStats,
   PinyinCategory,
+  ReadingSettings,
   RulePayload,
 } from "@/types/api";
 
@@ -199,6 +202,7 @@ export default function ParentDashboard() {
   const [ruleForm] = Form.useForm();
   const [mathForm] = Form.useForm();
   const [pinyinForm] = Form.useForm();
+  const [readingForm] = Form.useForm();
   const [loginForm] = Form.useForm();
   const selectedContentType = Form.useWatch("content_type", contentForm);
   const isBatchCreate =
@@ -356,6 +360,56 @@ export default function ParentDashboard() {
     messageApi.success("拼音设置已保存");
   }
 
+  async function loadReadingSettings(activeToken: string, childId: string) {
+    try {
+      const settings = await getReadingSettings(activeToken, childId);
+      readingForm.setFieldsValue(
+        settings
+          ? {
+              character_rate: settings.character_rate,
+              classic_rate: settings.classic_rate,
+              poem_rate: settings.poem_rate,
+              idiom_rate: settings.idiom_rate,
+              english_rate: settings.english_rate,
+              status: settings.status === 1,
+            }
+          : {
+              character_rate: 0.8,
+              classic_rate: 0.8,
+              poem_rate: 0.8,
+              idiom_rate: 0.8,
+              english_rate: 0.8,
+              status: true,
+            },
+      );
+    } catch {
+      readingForm.setFieldsValue({
+        character_rate: 0.8,
+        classic_rate: 0.8,
+        poem_rate: 0.8,
+        idiom_rate: 0.8,
+        english_rate: 0.8,
+        status: true,
+      });
+    }
+  }
+
+  async function submitReadingSettings() {
+    if (!token || !selectedChildId) {
+      return;
+    }
+    const values = await readingForm.validateFields();
+    await updateReadingSettings(token, selectedChildId, {
+      character_rate: values.character_rate,
+      classic_rate: values.classic_rate,
+      poem_rate: values.poem_rate,
+      idiom_rate: values.idiom_rate,
+      english_rate: values.english_rate,
+      status: values.status ? 1 : 0,
+    });
+    messageApi.success("朗读设置已保存");
+  }
+
   useEffect(() => {
     let mounted = true;
     async function fetchData() {
@@ -381,6 +435,7 @@ export default function ParentDashboard() {
             loadRule(token, selectedChildId),
             loadMathSettings(token, selectedChildId),
             loadPinyinSettings(token, selectedChildId),
+            loadReadingSettings(token, selectedChildId),
           ]);
         }
       } catch {
@@ -745,6 +800,7 @@ export default function ParentDashboard() {
       loadRule(token, nextChildId),
       loadMathSettings(token, nextChildId),
       loadPinyinSettings(token, nextChildId),
+      loadReadingSettings(token, nextChildId),
       loadChildrenAndStats(token, nextChildId),
     ]);
   }
@@ -874,466 +930,599 @@ export default function ParentDashboard() {
         <Tabs
           className="parent-tabs"
           items={[
-          {
-            key: "children",
-            label: "孩子管理",
-            children: (
-              <Card
-                title="孩子档案 CRUD"
-                extra={
-                  <Button type="primary" onClick={openCreateChildModal}>
-                    新建孩子
-                  </Button>
-                }
-              >
-                {loading ? (
-                  <Skeleton active paragraph={{ rows: 4 }} />
-                ) : children.length === 0 ? (
-                  <Empty description="暂无孩子档案" />
-                ) : (
-                  <Table
-                    rowKey="id"
-                    dataSource={children}
-                    pagination={false}
-                    scroll={{ x: "max-content" }}
-                    columns={[
-                      { title: "姓名", dataIndex: "name" },
-                      {
-                        title: "昵称",
-                        dataIndex: "nickname",
-                        render: (v) => v || "-",
-                      },
-                      { title: "年龄", dataIndex: "age", width: 90 },
-                      {
-                        title: "学段",
-                        dataIndex: "grade_level",
-                        render: (v) => v || "-",
-                      },
-                      { title: "状态", dataIndex: "status", width: 100 },
-                      {
-                        title: "操作",
-                        key: "actions",
-                        width: 220,
-                        render: (_, record) => (
-                          <Space>
-                            <Button
-                              size="small"
-                              onClick={() => onChildSwitch(record.id)}
-                            >
-                              选择
-                            </Button>
-                            <Button
-                              size="small"
-                              onClick={() => openEditChildModal(record)}
-                            >
-                              编辑
-                            </Button>
-                            <Popconfirm
-                              title="确认删除该孩子档案？"
-                              onConfirm={() => handleDeleteChild(record)}
-                            >
-                              <Button size="small" danger>
-                                删除
-                              </Button>
-                            </Popconfirm>
-                          </Space>
-                        ),
-                      },
-                    ]}
-                  />
-                )}
-              </Card>
-            ),
-          },
-          {
-            key: "contents",
-            label: "学习内容管理",
-            children: (
-              <Card
-                title="学习内容 CRUD"
-                extra={
-                  <Space>
-                    <Select
-                      aria-label="选择学习内容所属孩子"
-                      style={{ width: 220 }}
-                      placeholder="请选择孩子"
-                      value={selectedChildId ?? undefined}
-                      options={children.map((item) => ({
-                        label: item.name,
-                        value: item.id,
-                      }))}
-                      onChange={onChildSwitch}
-                    />
-                    <Select
-                      aria-label="按学习类型过滤"
-                      style={{ width: 140 }}
-                      placeholder="全部类型"
-                      value={contentTypeFilter}
-                      allowClear
-                      options={CONTENT_TYPE_OPTIONS}
-                      onChange={onContentTypeFilterChange}
-                    />
-                    <Button
-                      type="primary"
-                      disabled={!selectedChildId}
-                      onClick={openCreateContentModal}
-                    >
-                      新建内容
+            {
+              key: "children",
+              label: "孩子管理",
+              children: (
+                <Card
+                  title="孩子档案 CRUD"
+                  extra={
+                    <Button type="primary" onClick={openCreateChildModal}>
+                      新建孩子
                     </Button>
-                    <Popconfirm
-                      title="确认清除所选类型的统计？"
-                      onConfirm={handleClearStats}
-                    >
-                      <Button
-                        danger
-                        disabled={!selectedChildId || !contentTypeFilter}
-                      >
-                        清除统计
-                      </Button>
-                    </Popconfirm>
-                  </Space>
-                }
-              >
-                {!selectedChildId ? (
-                  <Empty description="请先创建并选择孩子" />
-                ) : (
-                  <Table
-                    rowKey="id"
-                    dataSource={contents}
-                    scroll={{ x: "max-content" }}
-                    pagination={{
-                      current: contentPage,
-                      pageSize: contentPageSize,
-                      total: contentTotal,
-                      showSizeChanger: true,
-                      pageSizeOptions: CONTENT_PAGE_SIZE_OPTIONS,
-                      showTotal: (total, range) =>
-                        `第 ${range[0]}-${range[1]} 条 / 共 ${total} 条`,
-                      onChange: onContentPaginationChange,
-                    }}
-                    onChange={onContentTableChange}
-                    columns={[
-                      {
-                        title: "标题",
-                        dataIndex: "title",
-                        sorter: true,
-                        render: (value: string) => (
-                          <span className="content-title">{value}</span>
-                        ),
-                      },
-                      {
-                        title: "类型",
-                        dataIndex: "content_type",
-                        width: 120,
-                        render: (value: string) => (
-                          <span
-                            className={`type-pill ${
-                              CONTENT_TYPE_TONE[value] ?? "tone-character"
-                            }`}
-                          >
-                            {CONTENT_TYPE_LABEL[value] ?? value}
-                          </span>
-                        ),
-                      },
-                      {
-                        title: "难度",
-                        dataIndex: "difficulty",
-                        width: 100,
-                        render: (value: number) => (
-                          <span
-                            className="difficulty-stars"
-                            aria-label={`难度 ${value}`}
-                          >
-                            {[1, 2, 3, 4, 5].map((level) => (
-                              <span
-                                key={level}
-                                className={
-                                  level <= (value ?? 0) ? "star on" : "star"
-                                }
-                                aria-hidden="true"
+                  }
+                >
+                  {loading ? (
+                    <Skeleton active paragraph={{ rows: 4 }} />
+                  ) : children.length === 0 ? (
+                    <Empty description="暂无孩子档案" />
+                  ) : (
+                    <Table
+                      rowKey="id"
+                      dataSource={children}
+                      pagination={false}
+                      scroll={{ x: "max-content" }}
+                      columns={[
+                        { title: "姓名", dataIndex: "name" },
+                        {
+                          title: "昵称",
+                          dataIndex: "nickname",
+                          render: (v) => v || "-",
+                        },
+                        { title: "年龄", dataIndex: "age", width: 90 },
+                        {
+                          title: "学段",
+                          dataIndex: "grade_level",
+                          render: (v) => v || "-",
+                        },
+                        { title: "状态", dataIndex: "status", width: 100 },
+                        {
+                          title: "操作",
+                          key: "actions",
+                          width: 220,
+                          render: (_, record) => (
+                            <Space>
+                              <Button
+                                size="small"
+                                onClick={() => onChildSwitch(record.id)}
                               >
-                                ★
-                              </span>
-                            ))}
-                          </span>
-                        ),
-                      },
-                      {
-                        title: "答题次数",
-                        dataIndex: "learn_count",
-                        width: 100,
-                        sorter: true,
-                      },
-                      {
-                        title: "错误次数",
-                        dataIndex: "error_count",
-                        width: 100,
-                        sorter: true,
-                      },
-                      {
-                        title: "错误率",
-                        dataIndex: "error_rate",
-                        width: 120,
-                        sorter: true,
-                        render: (value: number) => (
-                          <span className="error-rate">
-                            <span className="error-rate-track">
-                              <span
-                                className="error-rate-fill"
-                                style={{
-                                  width: `${Math.min(100, Math.max(0, value ?? 0))}%`,
-                                }}
-                              />
-                            </span>
-                            <span className="error-rate-value">{value}%</span>
-                          </span>
-                        ),
-                      },
-                      {
-                        title: "启用",
-                        dataIndex: "status",
-                        width: 90,
-                        render: (_, row) => (
-                          <Switch
-                            checked={row.status === "enabled"}
-                            onChange={(checked) =>
-                              handleToggleContentStatus(row, checked)
-                            }
-                          />
-                        ),
-                      },
-                      {
-                        title: "操作",
-                        key: "actions",
-                        width: 180,
-                        render: (_, record) => (
-                          <Space>
-                            <Button
-                              size="small"
-                              onClick={() => openEditContentModal(record)}
-                            >
-                              编辑
-                            </Button>
-                            <Popconfirm
-                              title="确认删除该内容？"
-                              onConfirm={() => handleDeleteContent(record)}
-                            >
-                              <Button size="small" danger>
-                                删除
+                                选择
                               </Button>
-                            </Popconfirm>
-                          </Space>
-                        ),
-                      },
-                    ]}
-                  />
-                )}
-              </Card>
-            ),
-          },
-          {
-            key: "rules",
-            label: "学习规则",
-            children: (
-              <Card
-                title="学习规则设置"
-                extra={
-                  <ChildScopeSelect
-                    label="选择规则所属孩子"
-                    childId={selectedChildId}
-                    children={children}
-                    onSwitch={onChildSwitch}
-                  />
-                }
-              >
-                {!selectedChild ? (
-                  <Empty description={buildEmptyChildHint(children)} />
-                ) : (
-                  <Form
-                    form={ruleForm}
-                    layout="vertical"
-                    onFinish={submitRuleForm}
-                  >
-                    <Row gutter={16}>
-                      <Col xs={24} md={8}>
-                        <Form.Item
-                          label="每轮题量"
-                          name="question_count"
-                          rules={[{ required: true, message: "请输入题量" }]}
-                        >
-                          <InputNumber min={1} max={20} className="w-full" />
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} md={8}>
-                        <Form.Item
-                          label="规则启用"
-                          name="status"
-                          valuePropName="checked"
-                        >
-                          <Switch />
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} md={8}>
-                        <Form.Item
-                          label="允许孩子选类型"
-                          name="allow_child_select_types"
-                          valuePropName="checked"
-                        >
-                          <Switch />
-                        </Form.Item>
-                      </Col>
-                    </Row>
-
-                    <Form.Item
-                      label="默认内容类型"
-                      name="default_content_types"
-                      rules={[
-                        { required: true, message: "请选择至少一个类型" },
+                              <Button
+                                size="small"
+                                onClick={() => openEditChildModal(record)}
+                              >
+                                编辑
+                              </Button>
+                              <Popconfirm
+                                title="确认删除该孩子档案？"
+                                onConfirm={() => handleDeleteChild(record)}
+                              >
+                                <Button size="small" danger>
+                                  删除
+                                </Button>
+                              </Popconfirm>
+                            </Space>
+                          ),
+                        },
                       ]}
-                    >
-                      <Select mode="multiple" options={LEARNING_TYPE_OPTIONS} />
-                    </Form.Item>
-
-                    <Button htmlType="submit" type="primary">
-                      保存规则
-                    </Button>
-                  </Form>
-                )}
-              </Card>
-            ),
-          },
-          {
-            key: "math",
-            label: "算术设置",
-            children: (
-              <Card
-                title="算术设置"
-                extra={
-                  <ChildScopeSelect
-                    label="选择算术设置所属孩子"
-                    childId={selectedChildId}
-                    children={children}
-                    onSwitch={onChildSwitch}
-                  />
-                }
-              >
-                {!selectedChild ? (
-                  <Empty description={buildEmptyChildHint(children)} />
-                ) : (
-                  <Form
-                    form={mathForm}
-                    layout="vertical"
-                    onFinish={submitMathSettings}
-                  >
-                    <Row gutter={16}>
-                      <Col xs={24} md={8}>
-                        <Form.Item
-                          label="最小值"
-                          name="min_value"
-                          rules={[{ required: true, message: "请输入最小值" }]}
-                        >
-                          <InputNumber min={0} className="w-full" />
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} md={8}>
-                        <Form.Item
-                          label="最大值"
-                          name="max_value"
-                          rules={[{ required: true, message: "请输入最大值" }]}
-                        >
-                          <InputNumber min={1} className="w-full" />
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} md={8}>
-                        <Form.Item
-                          label="启用算术"
-                          name="status"
-                          valuePropName="checked"
-                        >
-                          <Switch />
-                        </Form.Item>
-                      </Col>
-                    </Row>
-
-                    <Form.Item
-                      label="运算符"
-                      name="operators"
-                      rules={[
-                        { required: true, message: "请选择至少一个运算符" },
-                      ]}
-                    >
-                      <Checkbox.Group options={MATH_OPERATOR_OPTIONS} />
-                    </Form.Item>
-
-                    <Button htmlType="submit" type="primary">
-                      保存算术设置
-                    </Button>
-                  </Form>
-                )}
-              </Card>
-            ),
-          },
-          {
-            key: "pinyin",
-            label: "拼音设置",
-            children: (
-              <Card
-                title="拼音设置"
-                extra={
-                  <ChildScopeSelect
-                    label="选择拼音设置所属孩子"
-                    childId={selectedChildId}
-                    children={children}
-                    onSwitch={onChildSwitch}
-                  />
-                }
-              >
-                {!selectedChild ? (
-                  <Empty description={buildEmptyChildHint(children)} />
-                ) : (
-                  <Form
-                    form={pinyinForm}
-                    layout="vertical"
-                    onFinish={submitPinyinSettings}
-                  >
-                    <Form.Item
-                      label="拼音分类"
-                      name="categories"
-                      rules={[
-                        { required: true, message: "请选择至少一个分类" },
-                      ]}
-                    >
+                    />
+                  )}
+                </Card>
+              ),
+            },
+            {
+              key: "contents",
+              label: "学习内容管理",
+              children: (
+                <Card
+                  title="学习内容 CRUD"
+                  extra={
+                    <Space>
                       <Select
-                        mode="multiple"
-                        options={PINYIN_CATEGORY_OPTIONS}
+                        aria-label="选择学习内容所属孩子"
+                        style={{ width: 220 }}
+                        placeholder="请选择孩子"
+                        value={selectedChildId ?? undefined}
+                        options={children.map((item) => ({
+                          label: item.name,
+                          value: item.id,
+                        }))}
+                        onChange={onChildSwitch}
                       />
-                    </Form.Item>
-
-                    <Form.Item
-                      label="是否带声调"
-                      name="with_tone"
-                      valuePropName="checked"
+                      <Select
+                        aria-label="按学习类型过滤"
+                        style={{ width: 140 }}
+                        placeholder="全部类型"
+                        value={contentTypeFilter}
+                        allowClear
+                        options={CONTENT_TYPE_OPTIONS}
+                        onChange={onContentTypeFilterChange}
+                      />
+                      <Button
+                        type="primary"
+                        disabled={!selectedChildId}
+                        onClick={openCreateContentModal}
+                      >
+                        新建内容
+                      </Button>
+                      <Popconfirm
+                        title="确认清除所选类型的统计？"
+                        onConfirm={handleClearStats}
+                      >
+                        <Button
+                          danger
+                          disabled={!selectedChildId || !contentTypeFilter}
+                        >
+                          清除统计
+                        </Button>
+                      </Popconfirm>
+                    </Space>
+                  }
+                >
+                  {!selectedChildId ? (
+                    <Empty description="请先创建并选择孩子" />
+                  ) : (
+                    <Table
+                      rowKey="id"
+                      dataSource={contents}
+                      scroll={{ x: "max-content" }}
+                      pagination={{
+                        current: contentPage,
+                        pageSize: contentPageSize,
+                        total: contentTotal,
+                        showSizeChanger: true,
+                        pageSizeOptions: CONTENT_PAGE_SIZE_OPTIONS,
+                        showTotal: (total, range) =>
+                          `第 ${range[0]}-${range[1]} 条 / 共 ${total} 条`,
+                        onChange: onContentPaginationChange,
+                      }}
+                      onChange={onContentTableChange}
+                      columns={[
+                        {
+                          title: "标题",
+                          dataIndex: "title",
+                          sorter: true,
+                          render: (value: string) => (
+                            <span className="content-title">{value}</span>
+                          ),
+                        },
+                        {
+                          title: "类型",
+                          dataIndex: "content_type",
+                          width: 120,
+                          render: (value: string) => (
+                            <span
+                              className={`type-pill ${
+                                CONTENT_TYPE_TONE[value] ?? "tone-character"
+                              }`}
+                            >
+                              {CONTENT_TYPE_LABEL[value] ?? value}
+                            </span>
+                          ),
+                        },
+                        {
+                          title: "难度",
+                          dataIndex: "difficulty",
+                          width: 100,
+                          render: (value: number) => (
+                            <span
+                              className="difficulty-stars"
+                              aria-label={`难度 ${value}`}
+                            >
+                              {[1, 2, 3, 4, 5].map((level) => (
+                                <span
+                                  key={level}
+                                  className={
+                                    level <= (value ?? 0) ? "star on" : "star"
+                                  }
+                                  aria-hidden="true"
+                                >
+                                  ★
+                                </span>
+                              ))}
+                            </span>
+                          ),
+                        },
+                        {
+                          title: "答题次数",
+                          dataIndex: "learn_count",
+                          width: 100,
+                          sorter: true,
+                        },
+                        {
+                          title: "错误次数",
+                          dataIndex: "error_count",
+                          width: 100,
+                          sorter: true,
+                        },
+                        {
+                          title: "错误率",
+                          dataIndex: "error_rate",
+                          width: 120,
+                          sorter: true,
+                          render: (value: number) => (
+                            <span className="error-rate">
+                              <span className="error-rate-track">
+                                <span
+                                  className="error-rate-fill"
+                                  style={{
+                                    width: `${Math.min(100, Math.max(0, value ?? 0))}%`,
+                                  }}
+                                />
+                              </span>
+                              <span className="error-rate-value">{value}%</span>
+                            </span>
+                          ),
+                        },
+                        {
+                          title: "启用",
+                          dataIndex: "status",
+                          width: 90,
+                          render: (_, row) => (
+                            <Switch
+                              checked={row.status === "enabled"}
+                              onChange={(checked) =>
+                                handleToggleContentStatus(row, checked)
+                              }
+                            />
+                          ),
+                        },
+                        {
+                          title: "操作",
+                          key: "actions",
+                          width: 180,
+                          render: (_, record) => (
+                            <Space>
+                              <Button
+                                size="small"
+                                onClick={() => openEditContentModal(record)}
+                              >
+                                编辑
+                              </Button>
+                              <Popconfirm
+                                title="确认删除该内容？"
+                                onConfirm={() => handleDeleteContent(record)}
+                              >
+                                <Button size="small" danger>
+                                  删除
+                                </Button>
+                              </Popconfirm>
+                            </Space>
+                          ),
+                        },
+                      ]}
+                    />
+                  )}
+                </Card>
+              ),
+            },
+            {
+              key: "rules",
+              label: "学习规则",
+              children: (
+                <Card
+                  title="学习规则设置"
+                  extra={
+                    <ChildScopeSelect
+                      label="选择规则所属孩子"
+                      childId={selectedChildId}
+                      children={children}
+                      onSwitch={onChildSwitch}
+                    />
+                  }
+                >
+                  {!selectedChild ? (
+                    <Empty description={buildEmptyChildHint(children)} />
+                  ) : (
+                    <Form
+                      form={ruleForm}
+                      layout="vertical"
+                      onFinish={submitRuleForm}
                     >
-                      <Switch />
-                    </Form.Item>
+                      <Row gutter={16}>
+                        <Col xs={24} md={8}>
+                          <Form.Item
+                            label="每轮题量"
+                            name="question_count"
+                            rules={[{ required: true, message: "请输入题量" }]}
+                          >
+                            <InputNumber min={1} max={20} className="w-full" />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={24} md={8}>
+                          <Form.Item
+                            label="规则启用"
+                            name="status"
+                            valuePropName="checked"
+                          >
+                            <Switch />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={24} md={8}>
+                          <Form.Item
+                            label="允许孩子选类型"
+                            name="allow_child_select_types"
+                            valuePropName="checked"
+                          >
+                            <Switch />
+                          </Form.Item>
+                        </Col>
+                      </Row>
 
-                    <Form.Item
-                      label="启用拼音"
-                      name="status"
-                      valuePropName="checked"
+                      <Form.Item
+                        label="默认内容类型"
+                        name="default_content_types"
+                        rules={[
+                          { required: true, message: "请选择至少一个类型" },
+                        ]}
+                      >
+                        <Select
+                          mode="multiple"
+                          options={LEARNING_TYPE_OPTIONS}
+                        />
+                      </Form.Item>
+
+                      <Button htmlType="submit" type="primary">
+                        保存规则
+                      </Button>
+                    </Form>
+                  )}
+                </Card>
+              ),
+            },
+            {
+              key: "math",
+              label: "算术设置",
+              children: (
+                <Card
+                  title="算术设置"
+                  extra={
+                    <ChildScopeSelect
+                      label="选择算术设置所属孩子"
+                      childId={selectedChildId}
+                      children={children}
+                      onSwitch={onChildSwitch}
+                    />
+                  }
+                >
+                  {!selectedChild ? (
+                    <Empty description={buildEmptyChildHint(children)} />
+                  ) : (
+                    <Form
+                      form={mathForm}
+                      layout="vertical"
+                      onFinish={submitMathSettings}
                     >
-                      <Switch />
-                    </Form.Item>
+                      <Row gutter={16}>
+                        <Col xs={24} md={8}>
+                          <Form.Item
+                            label="最小值"
+                            name="min_value"
+                            rules={[
+                              { required: true, message: "请输入最小值" },
+                            ]}
+                          >
+                            <InputNumber min={0} className="w-full" />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={24} md={8}>
+                          <Form.Item
+                            label="最大值"
+                            name="max_value"
+                            rules={[
+                              { required: true, message: "请输入最大值" },
+                            ]}
+                          >
+                            <InputNumber min={1} className="w-full" />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={24} md={8}>
+                          <Form.Item
+                            label="启用算术"
+                            name="status"
+                            valuePropName="checked"
+                          >
+                            <Switch />
+                          </Form.Item>
+                        </Col>
+                      </Row>
 
-                    <Button htmlType="submit" type="primary">
-                      保存拼音设置
-                    </Button>
-                  </Form>
-                )}
-              </Card>
-            ),
-          },
-        ]}
+                      <Form.Item
+                        label="运算符"
+                        name="operators"
+                        rules={[
+                          { required: true, message: "请选择至少一个运算符" },
+                        ]}
+                      >
+                        <Checkbox.Group options={MATH_OPERATOR_OPTIONS} />
+                      </Form.Item>
+
+                      <Button htmlType="submit" type="primary">
+                        保存算术设置
+                      </Button>
+                    </Form>
+                  )}
+                </Card>
+              ),
+            },
+            {
+              key: "pinyin",
+              label: "拼音设置",
+              children: (
+                <Card
+                  title="拼音设置"
+                  extra={
+                    <ChildScopeSelect
+                      label="选择拼音设置所属孩子"
+                      childId={selectedChildId}
+                      children={children}
+                      onSwitch={onChildSwitch}
+                    />
+                  }
+                >
+                  {!selectedChild ? (
+                    <Empty description={buildEmptyChildHint(children)} />
+                  ) : (
+                    <Form
+                      form={pinyinForm}
+                      layout="vertical"
+                      onFinish={submitPinyinSettings}
+                    >
+                      <Form.Item
+                        label="拼音分类"
+                        name="categories"
+                        rules={[
+                          { required: true, message: "请选择至少一个分类" },
+                        ]}
+                      >
+                        <Select
+                          mode="multiple"
+                          options={PINYIN_CATEGORY_OPTIONS}
+                        />
+                      </Form.Item>
+
+                      <Form.Item
+                        label="是否带声调"
+                        name="with_tone"
+                        valuePropName="checked"
+                      >
+                        <Switch />
+                      </Form.Item>
+
+                      <Form.Item
+                        label="启用拼音"
+                        name="status"
+                        valuePropName="checked"
+                      >
+                        <Switch />
+                      </Form.Item>
+
+                      <Button htmlType="submit" type="primary">
+                        保存拼音设置
+                      </Button>
+                    </Form>
+                  )}
+                </Card>
+              ),
+            },
+            {
+              key: "reading",
+              label: "朗读设置",
+              children: (
+                <Card
+                  title="朗读设置"
+                  extra={
+                    <ChildScopeSelect
+                      label="选择朗读设置所属孩子"
+                      childId={selectedChildId}
+                      children={children}
+                      onSwitch={onChildSwitch}
+                    />
+                  }
+                >
+                  {!selectedChild ? (
+                    <Empty description={buildEmptyChildHint(children)} />
+                  ) : (
+                    <Form
+                      form={readingForm}
+                      layout="vertical"
+                      onFinish={submitReadingSettings}
+                    >
+                      <Typography.Paragraph type="secondary">
+                        为每类卡片分别设置朗读语速：0.5 更慢，1.0
+                        正常，越大越快。
+                      </Typography.Paragraph>
+                      <Row gutter={16}>
+                        <Col xs={24} md={12}>
+                          <Form.Item
+                            label="汉字语速"
+                            name="character_rate"
+                            rules={[
+                              { required: true, message: "请设置汉字语速" },
+                            ]}
+                          >
+                            <Slider
+                              min={0.1}
+                              max={2}
+                              step={0.1}
+                              marks={{ 0.1: "慢", 1: "正常", 2: "快" }}
+                            />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12}>
+                          <Form.Item
+                            label="国学语速"
+                            name="classic_rate"
+                            rules={[
+                              { required: true, message: "请设置国学语速" },
+                            ]}
+                          >
+                            <Slider
+                              min={0.1}
+                              max={2}
+                              step={0.1}
+                              marks={{ 0.1: "慢", 1: "正常", 2: "快" }}
+                            />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12}>
+                          <Form.Item
+                            label="古诗语速"
+                            name="poem_rate"
+                            rules={[
+                              { required: true, message: "请设置古诗语速" },
+                            ]}
+                          >
+                            <Slider
+                              min={0.1}
+                              max={2}
+                              step={0.1}
+                              marks={{ 0.1: "慢", 1: "正常", 2: "快" }}
+                            />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12}>
+                          <Form.Item
+                            label="成语语速"
+                            name="idiom_rate"
+                            rules={[
+                              { required: true, message: "请设置成语语速" },
+                            ]}
+                          >
+                            <Slider
+                              min={0.1}
+                              max={2}
+                              step={0.1}
+                              marks={{ 0.1: "慢", 1: "正常", 2: "快" }}
+                            />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12}>
+                          <Form.Item
+                            label="英语语速"
+                            name="english_rate"
+                            rules={[
+                              { required: true, message: "请设置英语语速" },
+                            ]}
+                          >
+                            <Slider
+                              min={0.1}
+                              max={2}
+                              step={0.1}
+                              marks={{ 0.1: "慢", 1: "正常", 2: "快" }}
+                            />
+                          </Form.Item>
+                        </Col>
+                      </Row>
+
+                      <Form.Item
+                        label="启用朗读"
+                        name="status"
+                        valuePropName="checked"
+                      >
+                        <Switch />
+                      </Form.Item>
+
+                      <Button htmlType="submit" type="primary">
+                        保存朗读设置
+                      </Button>
+                    </Form>
+                  )}
+                </Card>
+              ),
+            },
+          ]}
         />
       </div>
 

@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
+  DEFAULT_READ_RATE,
+  getReadRate,
   getSpeechLanguage,
   pickVoice,
   READABLE_CARD_QUESTION_TYPES,
@@ -7,6 +9,7 @@ import {
   toReadText,
   voiceMatchesLang,
 } from "@/features/child/speech";
+import type { ReadingSettings } from "@/types/api";
 
 function stubVoice(lang: string): SpeechSynthesisVoice {
   return { lang, name: lang } as unknown as SpeechSynthesisVoice;
@@ -19,9 +22,9 @@ function clearSpeechStub() {
 
 describe("speech helpers", () => {
   it("cleans decorative symbols and line breaks from the read text", () => {
-    expect(toReadText("《静夜思》唐·李白\n床前明月光\n疑是地上霜", "poem")).toBe(
-      "静夜思 唐 李白 床前明月光 疑是地上霜",
-    );
+    expect(
+      toReadText("《静夜思》唐·李白\n床前明月光\n疑是地上霜", "poem"),
+    ).toBe("静夜思 唐 李白 床前明月光 疑是地上霜");
     expect(toReadText("根", "character")).toBe("根");
     expect(toReadText("地大物博", "idiom")).toBe("地大物博");
     expect(toReadText("apple", "englishWord")).toBe("apple");
@@ -79,5 +82,28 @@ describe("speech helpers", () => {
     expect(speechSynthesisSupported()).toBe(true);
 
     clearSpeechStub();
+  });
+
+  it("reads the per-type rate from reading settings", () => {
+    const settings: ReadingSettings = {
+      id: "r-1",
+      child_id: "child-1",
+      character_rate: 0.7,
+      classic_rate: 0.6,
+      poem_rate: 0.5,
+      idiom_rate: 0.9,
+      english_rate: 1.1,
+      status: 1,
+      created_at: "2026-11-06T10:00:00Z",
+      updated_at: "2026-11-06T10:00:00Z",
+    };
+    expect(getReadRate("character", settings)).toBe(0.7);
+    expect(getReadRate("classic", settings)).toBe(0.6);
+    expect(getReadRate("poem", settings)).toBe(0.5);
+    expect(getReadRate("idiom", settings)).toBe(0.9);
+    expect(getReadRate("englishWord", settings)).toBe(1.1);
+    // 无设置时回退默认语速；非朗读类型（如 math/pinyin）也回退默认。
+    expect(getReadRate("poem", null)).toBe(DEFAULT_READ_RATE);
+    expect(getReadRate("math", settings)).toBe(DEFAULT_READ_RATE);
   });
 });

@@ -222,6 +222,30 @@ class PinyinSettings(BaseModel):
     is_deleted: int = 0
 
 
+class ReadingSettingsUpsert(BaseModel):
+    character_rate: float = Field(default=0.8, ge=0.1, le=2.0)
+    classic_rate: float = Field(default=0.8, ge=0.1, le=2.0)
+    poem_rate: float = Field(default=0.8, ge=0.1, le=2.0)
+    idiom_rate: float = Field(default=0.8, ge=0.1, le=2.0)
+    english_rate: float = Field(default=0.8, ge=0.1, le=2.0)
+    status: int = Field(default=1, ge=0, le=1)
+
+
+class ReadingSettings(BaseModel):
+    id: str
+    child_id: str
+    character_rate: float
+    classic_rate: float
+    poem_rate: float
+    idiom_rate: float
+    english_rate: float
+    status: int
+    created_at: str
+    updated_at: str
+    deleted_at: str | None = None
+    is_deleted: int = 0
+
+
 class ContentUpdate(ContentCreate):
     pass
 

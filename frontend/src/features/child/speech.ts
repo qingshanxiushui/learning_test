@@ -1,4 +1,4 @@
-import type { ContentType } from "@/types/api";
+import type { ContentType, ReadingSettings } from "@/types/api";
 
 /** 需要展示「朗读」按钮的卡片题型（拼音、算术题型除外）。 */
 export const READABLE_CARD_QUESTION_TYPES: ReadonlySet<string> = new Set([
@@ -57,4 +57,29 @@ export function pickVoice(
   const exact = voices.find((voice) => voice.lang === lang);
   if (exact) return exact;
   return voices.find((voice) => voiceMatchesLang(voice.lang, lang)) ?? null;
+}
+
+/** 默认朗读语速（无设置时使用）。 */
+export const DEFAULT_READ_RATE = 0.8;
+
+/** 按内容类型取朗读语速；设置缺失时回退默认语速。 */
+export function getReadRate(
+  contentType: ContentType,
+  settings: ReadingSettings | null,
+): number {
+  if (!settings) return DEFAULT_READ_RATE;
+  switch (contentType) {
+    case "character":
+      return settings.character_rate;
+    case "classic":
+      return settings.classic_rate;
+    case "poem":
+      return settings.poem_rate;
+    case "idiom":
+      return settings.idiom_rate;
+    case "englishWord":
+      return settings.english_rate;
+    default:
+      return DEFAULT_READ_RATE;
+  }
 }

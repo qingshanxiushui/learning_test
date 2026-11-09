@@ -56,6 +56,28 @@ export type PinyinSettingsPayload = {
   status: number;
 };
 
+export type ReadingSettings = {
+  id: string;
+  child_id: string;
+  character_rate: number;
+  classic_rate: number;
+  poem_rate: number;
+  idiom_rate: number;
+  english_rate: number;
+  status: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ReadingSettingsPayload = {
+  character_rate: number;
+  classic_rate: number;
+  poem_rate: number;
+  idiom_rate: number;
+  english_rate: number;
+  status: number;
+};
+
 export type Child = {
   id: string;
   name: string;

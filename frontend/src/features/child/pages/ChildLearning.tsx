@@ -22,8 +22,10 @@ import {
   startSession,
   submitAnswer,
 } from "@/api/learning";
+import { getReadingSettings } from "@/api/reading";
 import { getRule } from "@/api/rules";
 import {
+  getReadRate,
   getSpeechLanguage,
   pickVoice,
   READABLE_CARD_QUESTION_TYPES,
@@ -35,6 +37,7 @@ import type {
   Child,
   ContentType,
   LearningSession,
+  ReadingSettings,
   SessionQuestion,
   SessionResult,
 } from "@/types/api";
@@ -118,6 +121,9 @@ export default function ChildLearning() {
   const [loginForm] = Form.useForm();
   const [isReading, setIsReading] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [readSettings, setReadSettings] = useState<ReadingSettings | null>(
+    null,
+  );
   const [messageApi, contextHolder] = message.useMessage();
 
   function handleRequestError(reason: unknown, fallback: string) {
@@ -177,6 +183,14 @@ export default function ChildLearning() {
         setSelectionAllowed(true);
         setSelectedTypes([]);
       });
+  }, [childId, token]);
+
+  // 加载朗读设置（每类型语速）。
+  useEffect(() => {
+    if (!token || !childId) return;
+    getReadingSettings(token, childId)
+      .then((settings) => setReadSettings(settings))
+      .catch(() => setReadSettings(null));
   }, [childId, token]);
 
   // 加载浏览器可用语音；Chrome 首次 getVoices 可能为空，需在 voiceschanged 后刷新。
@@ -246,8 +260,7 @@ export default function ChildLearning() {
       toReadText(question.question_stem, question.content_type),
     );
     utterance.lang = lang;
-    // 固定慢速朗读，方便孩子跟读。
-    utterance.rate = 0.3;
+    utterance.rate = getReadRate(question.content_type, readSettings);
     const voice = pickVoice(voices, lang);
     if (voice) utterance.voice = voice;
     utterance.onend = () => setIsReading(false);

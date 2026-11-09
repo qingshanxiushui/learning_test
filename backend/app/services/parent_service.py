@@ -30,6 +30,8 @@ from app.models import (
     PinyinSettings,
     PinyinSettingsUpsert,
     PoemBatchCreate,
+    ReadingSettings,
+    ReadingSettingsUpsert,
     Rule,
     RuleCreate,
     Session,
@@ -46,6 +48,7 @@ DEFAULT_MATH_MAX_VALUE = 20
 DEFAULT_MATH_OPERATORS: tuple[MathOperator, ...] = ("add", "subtract")
 DEFAULT_PINYIN_CATEGORIES: tuple[PinyinCategory, ...] = ("initial",)
 DEFAULT_PINYIN_WITH_TONE = False
+DEFAULT_READ_RATE = 0.8
 
 
 class ParentService:
@@ -138,7 +141,7 @@ class ParentService:
         return Child(**item)
 
     def _init_child_defaults(self, parent_id: str, child_id: str) -> None:
-        """为新孩子生成默认学习规则、算术设置与拼音设置，使孩子端开箱可用。"""
+        """为新孩子生成默认学习规则、算术、拼音与朗读设置，使孩子端开箱可用。"""
         self.upsert_rule(
             parent_id,
             child_id,
@@ -165,6 +168,18 @@ class ParentService:
             PinyinSettingsUpsert(
                 categories=list(DEFAULT_PINYIN_CATEGORIES),
                 with_tone=DEFAULT_PINYIN_WITH_TONE,
+                status=1,
+            ),
+        )
+        self.upsert_reading_settings(
+            parent_id,
+            child_id,
+            ReadingSettingsUpsert(
+                character_rate=DEFAULT_READ_RATE,
+                classic_rate=DEFAULT_READ_RATE,
+                poem_rate=DEFAULT_READ_RATE,
+                idiom_rate=DEFAULT_READ_RATE,
+                english_rate=DEFAULT_READ_RATE,
                 status=1,
             ),
         )
@@ -897,6 +912,42 @@ class ParentService:
         rows.append(item)
         self.store.write_list("pinyin_settings.json", rows)
         return PinyinSettings(**item)
+
+    def get_reading_settings(self, parent_id: str, child_id: str) -> ReadingSettings | None:
+        self.assert_child_owned(parent_id, child_id)
+        rows = self._active(self.store.read_list("read_settings.json"))
+        for r in rows:
+            if r.get("child_id") == child_id:
+                return ReadingSettings(**r)
+        return None
+
+    def upsert_reading_settings(
+        self, parent_id: str, child_id: str, payload: ReadingSettingsUpsert
+    ) -> ReadingSettings:
+        self.assert_child_owned(parent_id, child_id)
+        rows = self.store.read_list("read_settings.json")
+        for r in rows:
+            if r.get("child_id") == child_id and r.get("is_deleted", 0) == 0:
+                r.update(payload.model_dump())
+                r["updated_at"] = now_iso()
+                self.store.write_list("read_settings.json", rows)
+                return ReadingSettings(**r)
+        now = now_iso()
+        item = ReadingSettings(
+            id=new_id(),
+            child_id=child_id,
+            character_rate=payload.character_rate,
+            classic_rate=payload.classic_rate,
+            poem_rate=payload.poem_rate,
+            idiom_rate=payload.idiom_rate,
+            english_rate=payload.english_rate,
+            status=payload.status,
+            created_at=now,
+            updated_at=now,
+        ).model_dump()
+        rows.append(item)
+        self.store.write_list("read_settings.json", rows)
+        return ReadingSettings(**item)
 
     def list_sessions(
         self, parent_id: str, child_id: str, page: int, page_size: int, session_status: str | None
