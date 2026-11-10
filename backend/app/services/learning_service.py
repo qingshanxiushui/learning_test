@@ -66,6 +66,122 @@ def _pinyin_annotation(text: str) -> list[str]:
     return result
 
 
+MATH_SYMBOLS: dict[str, str] = {"add": "+", "subtract": "-", "multiply": "×", "divide": "÷"}
+# 家长启用的运算符在本范围内无合法组合时的回退顺序（除法仅在约束商与除数时恒可行）
+_MATH_FALLBACK_ORDER = ("divide", "multiply", "add", "subtract")
+# 「含 0 或 1」的算式视为平凡题（如 3 + 0、5 × 1），生成时优先排除，只有无解时才退回
+_TRIVIAL_FLOOR = 2
+# 除法优先把被除数压到合理量级，但若收紧后可选组合过少，就放宽，避免题目退化成固定一道
+_DIVIDE_MIN_COMBOS = 6
+# 同一次会话内的去重尝试次数上限，超过后允许重复题面
+_MATH_UNIQUE_ATTEMPTS = 24
+
+
+def _divide_windows(
+    divisor_floor: int,
+    min_value: int,
+    max_value: int,
+    dividend_cap: int | None,
+    quotient_floor: int,
+) -> list[tuple[int, int, int]]:
+    """除法窗口：外层为除数 b，内层为商 q（被除数 a = b × q ≤ dividend_cap）。"""
+    windows: list[tuple[int, int, int]] = []
+    for divisor in range(max(1, divisor_floor), max_value + 1):
+        quotient_hi = max_value if dividend_cap is None else min(max_value, dividend_cap // divisor)
+        if quotient_floor <= quotient_hi:
+            windows.append((divisor, quotient_floor, quotient_hi))
+    return windows
+
+
+def _math_windows(
+    operator: str, min_value: int, max_value: int, strict: bool = False
+) -> list[tuple[int, int, int]]:
+    """枚举「(外层取值, 内层下界, 内层上界)」窗口，用于在合法组合上按权重均匀采样。
+
+    加减乘的外层是操作数 a、内层是 b；除法的外层是除数 b、内层是商。
+    strict 为真时排除操作数与结果中出现的 0/1，只保留非平凡的组合。
+    空列表表示该运算在当前取值范围内没有满足约束的组合。
+    """
+    windows: list[tuple[int, int, int]] = []
+    outer_floor = max(min_value, _TRIVIAL_FLOOR) if strict else min_value
+    inner_floor = max(min_value, _TRIVIAL_FLOOR) if strict else min_value
+    if operator in ("add", "subtract"):
+        for a in range(outer_floor, max_value + 1):
+            if operator == "add":
+                inner_lo = max(inner_floor, min_value - a)
+                inner_hi = min(max_value, max_value - a)
+            else:
+                inner_lo = max(inner_floor, a - max_value)
+                inner_hi = min(max_value, a - min_value)
+                if strict:
+                    inner_hi = min(inner_hi, a - _TRIVIAL_FLOOR)
+            if inner_lo <= inner_hi:
+                windows.append((a, inner_lo, inner_hi))
+        return windows
+    if operator == "multiply":
+        for a in range(outer_floor, max_value + 1):
+            if a <= 0:
+                if min_value <= 0:
+                    windows.append((a, inner_floor, max_value))
+                continue
+            inner_lo = max(inner_floor, -(-min_value // a))
+            inner_hi = min(max_value, max_value // a)
+            if inner_lo <= inner_hi:
+                windows.append((a, inner_lo, inner_hi))
+        return windows
+    # 除法：优先让除数为 1 之外的数，并尽量把被除数限制在「不超过 max_value」的量级
+    quotient_floor = max(inner_floor, 1)  # 商不为 0，避免出现 0 ÷ b
+    divisor_floors = (max(_TRIVIAL_FLOOR, min_value),) if strict else (max(2, min_value), max(1, min_value))
+    for divisor_floor in divisor_floors:
+        fallback: list[tuple[int, int, int]] = []
+        for cap in (max_value, 2 * max_value, 4 * max_value, None):
+            candidates = _divide_windows(divisor_floor, min_value, max_value, cap, quotient_floor)
+            if not candidates:
+                continue
+            # 被除数区间收得越窄，可选题目越少；组合数够多就用这个量级
+            if sum(hi - lo + 1 for _, lo, hi in candidates) >= _DIVIDE_MIN_COMBOS:
+                return candidates
+            fallback = fallback or candidates
+        if fallback:
+            return fallback
+    return []
+
+
+def _resolve_math_triple(operator: str, outer: int, inner: int) -> tuple[int, int, int]:
+    """把窗口取值还原为 (操作数 a, 操作数 b, 结果)。"""
+    if operator == "add":
+        return outer, inner, outer + inner
+    if operator == "subtract":
+        return outer, inner, outer - inner
+    if operator == "multiply":
+        return outer, inner, outer * inner
+    return outer * inner, outer, inner
+
+
+def _pick_math_triple(operator: str, windows: list[tuple[int, int, int]]) -> tuple[int, int, int]:
+    """在窗口上按组合数加权采样，使各操作数分布接近均匀（而不是集中在最小值）。"""
+    weights = [inner_hi - inner_lo + 1 for _, inner_lo, inner_hi in windows]
+    outer, inner_lo, inner_hi = random.choices(windows, weights=weights)[0]
+    return _resolve_math_triple(operator, outer, random.randint(inner_lo, inner_hi))
+
+
+def _sample_math_triple(
+    operator: str, min_value: int, max_value: int
+) -> tuple[str, int, int, int]:
+    """选出 (运算符, a, b, 结果)：先按非平凡组合采样，无解时放宽到含 0/1 的组合。
+
+    返回值第一个元素可能是回退后的运算符（家长启用的运算在当前范围内无解时）。
+    """
+    for strict in (True, False):
+        for candidate in (operator, *_MATH_FALLBACK_ORDER):
+            windows = _math_windows(candidate, min_value, max_value, strict)
+            if windows:
+                a, b, result = _pick_math_triple(candidate, windows)
+                return candidate, a, b, result
+    # 取值范围内构造不出任何合法算式（max_value 已被校验为 ≥ 1，正常不会走到）
+    return operator, min_value, min_value, min_value
+
+
 class LearningError(Exception):
     def __init__(self, status_code: int, code: int, message: str) -> None:
         super().__init__(message)
@@ -156,7 +272,7 @@ class LearningService:
         session_id = new_id()
 
         math_questions = (
-            [self._build_math_question(session_id, math_settings, index, now) for index in range(1, math_count + 1)]
+            self._build_math_questions(session_id, math_settings, math_count, now)
             if math_count > 0
             else []
         )
@@ -443,66 +559,43 @@ class LearningService:
             "is_deleted": 0,
         }
 
+    def _build_math_questions(
+        self, session_id: str, settings: MathSettings, count: int, now: str
+    ) -> list[dict[str, Any]]:
+        """生成 count 道算术题，尽量保证同一次会话内题面不重复。
+
+        去重失败（取值范围太窄，组合数少于题量）或超过尝试上限时允许重复，但始终返回 count 道题。
+        """
+        questions: list[dict[str, Any]] = []
+        seen: set[str] = set()
+        for index in range(1, count + 1):
+            question = self._build_math_question(session_id, settings, index, now)
+            for _ in range(_MATH_UNIQUE_ATTEMPTS):
+                if question["question_stem"] not in seen:
+                    break
+                question = self._build_math_question(session_id, settings, index, now)
+            seen.add(question["question_stem"])
+            questions.append(question)
+        return questions
+
     def _build_math_question(
         self, session_id: str, settings: MathSettings, order: int, now: str
     ) -> dict[str, Any]:
         operator = random.choice(settings.operators)
         min_value = settings.min_value
         max_value = settings.max_value
-        symbols = {"add": "+", "subtract": "-", "multiply": "×", "divide": "÷"}
 
-        # 最小值/最大值同时约束操作数与结果：
-        # 加法/减法先在可行结果范围内取值，再反推操作数，保证操作数与结果都落在范围内；
-        #   加法可行条件：result ≥ 2*min（否则 b = result - a < min）；
-        #   减法可行条件：result ≤ max - min（否则 b = a - result < min）；
-        #   因此二者都要求 max ≥ 2*min，范围过窄时回退为除法（恒可行）。
-        # 乘法在可整除组合中选取，操作数与结果都落在范围内（要求 min² ≤ max）；
-        #   无合法整除组合时同样回退为除法。
-        # 除法先定商与除数，被除数由二者相乘得到（被除数是「已知数」，
-        # 不受范围约束，否则除法只能出 b=1 或商=1 的平凡题）。
-        if operator == "add" and max_value < 2 * min_value:
-            # 范围过窄（max < 2*min），加法无法同时满足操作数与结果约束，回退为除法
-            operator = "divide"
-        if operator == "subtract" and max_value < 2 * min_value:
-            # 范围过窄（max < 2*min），减法无法同时满足操作数与结果约束，回退为除法
-            operator = "divide"
-        if operator == "add":
-            # a + b = result，result ∈ [2*min, max]，a、b ∈ [min, max]
-            result = random.randint(2 * min_value, max_value)
-            a = random.randint(
-                max(min_value, result - max_value), min(max_value, result - min_value)
-            )
-            b = result - a
-        elif operator == "subtract":
-            # a - b = result，result ∈ [min, max-min]，a、b ∈ [min, max]
-            result = random.randint(min_value, max_value - min_value)
-            a = random.randint(result + min_value, max_value)
-            b = a - result
-        elif operator == "multiply":
-            # a × b = result，result ∈ [min, max]，a、b ∈ [min, max]
-            result = random.randint(min_value, max_value)
-            divisors = [
-                d
-                for d in range(max(1, min_value), max_value + 1)
-                if result % d == 0 and min_value <= result // d <= max_value
-            ]
-            if not divisors:
-                # 无合法整除组合（min² > max），回退为除法（恒可行）
-                operator = "divide"
-            else:
-                b = random.choice(divisors)
-                a = result // b
-        if operator == "divide":
-            # a ÷ b = quotient，quotient ∈ [min, max]，b ∈ [max(1, min), max]，
-            # 被除数 a = b × quotient 由二者相乘得到，可能超出 [min, max]。
-            # 若要求被除数也落在范围内，则除法退化为 b=1 或 quotient=1 的平凡题，
-            # 因此除法仅约束商与除数，被除数不设上限。
-            quotient = random.randint(min_value, max_value)
-            b = random.randint(max(1, min_value), max_value)
-            a = b * quotient
-            result = quotient
+        # 最小值/最大值同时约束操作数与结果。
+        # 这里不再「先定结果再反推操作数」——那种写法会让小操作数出现的概率成倍偏高
+        # （结果 r 的可选 a 只有约 H_r 种，导致 a 的边际分布严重左偏）。
+        # 改为先枚举全部满足约束的 (a, b) 组合，再按组合数加权采样，各操作数分布接近均匀。
+        # 加减需要 max ≥ 2*min、乘法需要 min² ≤ max 才有组合；所选运算无解时按
+        # _MATH_FALLBACK_ORDER 依次换别的运算（除法在约束商与除数时恒有解）。
+        # 每个候选运算先尝试排除 0/1 的「非平凡」组合，实在没有再退回全量组合，
+        # 这样 3 + 0、5 × 1 这类题目基本不会出现。
+        operator, a, b, result = _sample_math_triple(operator, min_value, max_value)
 
-        stem = f"{a} {symbols[operator]} {b} = ?"
+        stem = f"{a} {MATH_SYMBOLS[operator]} {b} = ?"
         return {
             "id": new_id(),
             "session_id": session_id,
