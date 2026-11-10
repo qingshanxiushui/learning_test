@@ -18,7 +18,7 @@ import collections
 import random
 
 from app.models import MathSettings
-from app.services.learning_service import LearningService
+from app.services.learning_service import LearningService, math_distinct_stem_count
 
 
 def _settings(min_value: int, max_value: int, operators: list[str]) -> MathSettings:
@@ -197,3 +197,57 @@ def test_divide_dividend_stays_near_max_value() -> None:
     for _, _, b, quotient in rows:
         assert min_value <= b <= max_value
         assert min_value <= quotient <= max_value
+
+
+def test_chosen_operator_is_relaxed_before_switching_operator() -> None:
+    """所选运算在放宽到含 0/1 后仍有解时，不应改用其他运算（否则会产生越界的被除数）。"""
+    svc = LearningService.__new__(LearningService)
+    # [0,3] 加法只有宽松档有解（2 + 1、1 + 1），旧实现会跳过它回退到除法
+    settings = _settings(0, 3, ["add"])
+    for _ in range(200):
+        q = svc._build_math_question("s", settings, 1, "t")
+        assert q["content_snapshot"]["operator"] == "add"
+        a = q["content_snapshot"]["operand_a"]
+        b = q["content_snapshot"]["operand_b"]
+        result = int(q["correct_answer"])
+        assert 0 <= a <= 3 and 0 <= b <= 3 and 0 <= result <= 3
+
+    # 还原：范围足够宽时也不能被回退逻辑影响
+    for min_value, max_value, operator in [(1, 10, "add"), (2, 5, "multiply"), (10, 20, "subtract")]:
+        settings = _settings(min_value, max_value, [operator])
+        for _ in range(200):
+            q = svc._build_math_question("s", settings, 1, "t")
+            assert q["content_snapshot"]["operator"] == operator
+
+
+def test_infeasible_range_produces_no_out_of_range_question() -> None:
+    """所选运算完全无解时才回退；回退后除法的除数与商仍落在范围内。"""
+    svc = LearningService.__new__(LearningService)
+    for min_value, max_value in [(5, 7), (7, 7), (2, 3), (5, 9), (8, 15), (10, 15)]:
+        settings = _settings(min_value, max_value, ["add", "subtract", "multiply"])
+        for _ in range(100):
+            q = svc._build_math_question("s", settings, 1, "t")
+            operator = q["content_snapshot"]["operator"]
+            b = q["content_snapshot"]["operand_b"]
+            result = int(q["correct_answer"])
+            if operator == "divide":
+                assert min_value <= b <= max_value
+                assert min_value <= result <= max_value
+            else:
+                a = q["content_snapshot"]["operand_a"]
+                assert min_value <= a <= max_value
+                assert min_value <= b <= max_value
+                assert min_value <= result <= max_value
+
+
+def test_distinct_stem_count_matches_chosen_operators() -> None:
+    """用于保存校验的题面数量估算应与实际生成能力一致。"""
+    # 宽度足够的区间，加减各取非平凡档
+    assert math_distinct_stem_count(["add", "subtract"], 0, 20) > 200
+    # 加法在 [5, 10] 上只有 5 + 5 一种组合，属于真正的「题目单一」
+    assert math_distinct_stem_count(["add"], 5, 10) == 1
+    # 所选运算无解时按回退顺序统计，不能算成 0（否则会误判为不可用）
+    assert math_distinct_stem_count(["add", "subtract"], 5, 7) > 1
+    assert math_distinct_stem_count(["multiply"], 2, 3) > 1
+    # 同一运算符重复出现不重复计数
+    assert math_distinct_stem_count(["add", "add"], 0, 20) == math_distinct_stem_count(["add"], 0, 20)

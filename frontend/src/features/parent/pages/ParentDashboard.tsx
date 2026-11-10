@@ -313,13 +313,17 @@ export default function ParentDashboard() {
       return;
     }
     const values = await mathForm.validateFields();
-    await updateMathSettings(token, selectedChildId, {
-      min_value: values.min_value,
-      max_value: values.max_value,
-      operators: values.operators,
-      status: values.status ? 1 : 0,
-    });
-    messageApi.success("算术设置已保存");
+    try {
+      await updateMathSettings(token, selectedChildId, {
+        min_value: values.min_value,
+        max_value: values.max_value,
+        operators: values.operators,
+        status: values.status ? 1 : 0,
+      });
+      messageApi.success("算术设置已保存");
+    } catch (err) {
+      messageApi.error(err instanceof Error ? err.message : "算术设置保存失败");
+    }
   }
 
   async function loadPinyinSettings(activeToken: string, childId: string) {

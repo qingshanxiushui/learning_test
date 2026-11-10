@@ -856,6 +856,15 @@ class ParentService:
             raise ValueError("min_value must be less than max_value")
         if not payload.operators:
             raise ValueError("operators must not be empty")
+        # 延迟导入：learning_service 在模块级导入本模块，顶层互相导入会形成循环依赖
+        from app.services.learning_service import math_distinct_stem_count
+
+        if math_distinct_stem_count(
+            payload.operators, payload.min_value, payload.max_value
+        ) < 2:
+            raise ValueError(
+                "当前最小值/最大值最多只能生成 1 道算术题，请扩大取值范围或增加运算符"
+            )
         rows = self.store.read_list("math_settings.json")
         for r in rows:
             if r.get("child_id") == child_id and r.get("is_deleted", 0) == 0:

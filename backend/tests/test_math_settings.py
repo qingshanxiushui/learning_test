@@ -91,3 +91,27 @@ def test_math_settings_invalid() -> None:
     )
     assert empty_operators.status_code == 422
     assert empty_operators.json()["code"] == 42207
+
+
+def test_math_settings_rejects_range_with_single_question() -> None:
+    """取值范围只能生成一道题时（如 5~10 的加法只有 5+5）保存应被拒绝。"""
+    client, headers, child_id = _setup()
+
+    too_narrow = client.put(
+        f"/api/v1/children/{child_id}/math-settings",
+        headers=headers,
+        json={"min_value": 5, "max_value": 10, "operators": ["add"], "status": 1},
+    )
+    assert too_narrow.status_code == 422
+    assert too_narrow.json()["code"] == 42207
+
+    assert "取值范围" in too_narrow.json()["message"]
+
+    # 加一个运算符后题目数量足够，可以保存
+    widened = client.put(
+        f"/api/v1/children/{child_id}/math-settings",
+        headers=headers,
+        json={"min_value": 5, "max_value": 20, "operators": ["add"], "status": 1},
+    )
+    assert widened.status_code == 200
+    assert widened.json()["data"]["min_value"] == 5

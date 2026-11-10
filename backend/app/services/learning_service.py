@@ -168,18 +168,61 @@ def _pick_math_triple(operator: str, windows: list[tuple[int, int, int]]) -> tup
 def _sample_math_triple(
     operator: str, min_value: int, max_value: int
 ) -> tuple[str, int, int, int]:
-    """选出 (运算符, a, b, 结果)：先按非平凡组合采样，无解时放宽到含 0/1 的组合。
+    """选出 (运算符, a, b, 结果)。
+
+    优先级：家长所选运算的非平凡组合 → 所选运算的全量组合（含 0/1）
+    → 按 _MATH_FALLBACK_ORDER 换运算（同样先非平凡、再全量）。
+
+    「先在同一种运算内放宽」很关键：若把宽松档放在外层，像 [0, 3] 这种区间会出现
+    「加法本来有解（如 2 + 1），却因为加法没有非平凡组合而直接跳到除法、
+    生成超出范围的被除数」的题目。
 
     返回值第一个元素可能是回退后的运算符（家长启用的运算在当前范围内无解时）。
     """
-    for strict in (True, False):
-        for candidate in (operator, *_MATH_FALLBACK_ORDER):
+    for candidate in (operator, *_MATH_FALLBACK_ORDER):
+        for strict in (True, False):
             windows = _math_windows(candidate, min_value, max_value, strict)
             if windows:
                 a, b, result = _pick_math_triple(candidate, windows)
                 return candidate, a, b, result
     # 取值范围内构造不出任何合法算式（max_value 已被校验为 ≥ 1，正常不会走到）
     return operator, min_value, min_value, min_value
+
+
+def _effective_math_operator(operator: str, min_value: int, max_value: int) -> str:
+    """按 _sample_math_triple 的优先级，算出实际会被采用的运算符。"""
+    for candidate in (operator, *_MATH_FALLBACK_ORDER):
+        for strict in (True, False):
+            if _math_windows(candidate, min_value, max_value, strict):
+                return candidate
+    return operator
+
+
+def _operator_stem_count(operator: str, min_value: int, max_value: int) -> int:
+    """单一运算符在当前取值范围内能产生的不同题面数量（取采样实际使用的那一档）。"""
+    if operator not in MATH_SYMBOLS:
+        return 0
+    for strict in (True, False):
+        windows = _math_windows(operator, min_value, max_value, strict)
+        if windows:
+            return sum(inner_hi - inner_lo + 1 for _, inner_lo, inner_hi in windows)
+    return 0
+
+
+def math_distinct_stem_count(
+    operators: list[str] | tuple[str, ...], min_value: int, max_value: int
+) -> int:
+    """估算一组算术设置总共能产生多少道不同的题面，用于保存时校验取值范围是否过于狭窄。
+
+    对每个启用的运算符先解析出实际采用的运算符（可能回退为除法），再统计组合数；
+    相同运算符只计一次，避免把回退到同一种运算的多个选项重复累加。
+    """
+    effective = {
+        _effective_math_operator(operator, min_value, max_value) for operator in operators
+    }
+    return sum(
+        _operator_stem_count(operator, min_value, max_value) for operator in effective
+    )
 
 
 class LearningError(Exception):
