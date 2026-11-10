@@ -451,23 +451,54 @@ class LearningService:
         max_value = settings.max_value
         symbols = {"add": "+", "subtract": "-", "multiply": "×", "divide": "÷"}
 
+        # 最小值/最大值同时约束操作数与结果：
+        # 加法/减法先在可行结果范围内取值，再反推操作数，保证操作数与结果都落在范围内；
+        #   加法可行条件：result ≥ 2*min（否则 b = result - a < min）；
+        #   减法可行条件：result ≤ max - min（否则 b = a - result < min）；
+        #   因此二者都要求 max ≥ 2*min，范围过窄时回退为除法（恒可行）。
+        # 乘法在可整除组合中选取，操作数与结果都落在范围内（要求 min² ≤ max）；
+        #   无合法整除组合时同样回退为除法。
+        # 除法先定商与除数，被除数由二者相乘得到（被除数是「已知数」，
+        # 不受范围约束，否则除法只能出 b=1 或商=1 的平凡题）。
+        if operator == "add" and max_value < 2 * min_value:
+            # 范围过窄（max < 2*min），加法无法同时满足操作数与结果约束，回退为除法
+            operator = "divide"
+        if operator == "subtract" and max_value < 2 * min_value:
+            # 范围过窄（max < 2*min），减法无法同时满足操作数与结果约束，回退为除法
+            operator = "divide"
         if operator == "add":
-            a = random.randint(min_value, max_value)
-            b = random.randint(min_value, max_value)
-            result = a + b
+            # a + b = result，result ∈ [2*min, max]，a、b ∈ [min, max]
+            result = random.randint(2 * min_value, max_value)
+            a = random.randint(
+                max(min_value, result - max_value), min(max_value, result - min_value)
+            )
+            b = result - a
         elif operator == "subtract":
-            a = random.randint(min_value, max_value)
-            b = random.randint(min_value, max_value)
-            if a < b:
-                a, b = b, a
-            result = a - b
+            # a - b = result，result ∈ [min, max-min]，a、b ∈ [min, max]
+            result = random.randint(min_value, max_value - min_value)
+            a = random.randint(result + min_value, max_value)
+            b = a - result
         elif operator == "multiply":
-            a = random.randint(min_value, max_value)
-            b = random.randint(min_value, max_value)
-            result = a * b
-        else:
-            b = random.randint(max(1, min_value), max_value)
+            # a × b = result，result ∈ [min, max]，a、b ∈ [min, max]
+            result = random.randint(min_value, max_value)
+            divisors = [
+                d
+                for d in range(max(1, min_value), max_value + 1)
+                if result % d == 0 and min_value <= result // d <= max_value
+            ]
+            if not divisors:
+                # 无合法整除组合（min² > max），回退为除法（恒可行）
+                operator = "divide"
+            else:
+                b = random.choice(divisors)
+                a = result // b
+        if operator == "divide":
+            # a ÷ b = quotient，quotient ∈ [min, max]，b ∈ [max(1, min), max]，
+            # 被除数 a = b × quotient 由二者相乘得到，可能超出 [min, max]。
+            # 若要求被除数也落在范围内，则除法退化为 b=1 或 quotient=1 的平凡题，
+            # 因此除法仅约束商与除数，被除数不设上限。
             quotient = random.randint(min_value, max_value)
+            b = random.randint(max(1, min_value), max_value)
             a = b * quotient
             result = quotient
 
