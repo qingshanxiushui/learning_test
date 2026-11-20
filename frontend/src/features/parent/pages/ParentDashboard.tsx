@@ -54,6 +54,7 @@ import { getPinyinSettings, updatePinyinSettings } from "@/api/pinyin";
 import { createRule, getRule, updateRule } from "@/api/rules";
 import { getMathSettings, updateMathSettings } from "@/api/math";
 import { getReadingSettings, updateReadingSettings } from "@/api/reading";
+import { getRecordingSettings, updateRecordingSettings } from "@/api/recording";
 import { login } from "@/api/auth";
 import type {
   Child,
@@ -64,6 +65,7 @@ import type {
   OverviewStats,
   PinyinCategory,
   ReadingSettings,
+  RecordingSettings,
   RulePayload,
 } from "@/types/api";
 
@@ -96,6 +98,30 @@ const PINYIN_CATEGORY_OPTIONS: { label: string; value: PinyinCategory }[] = [
   { label: "韵母", value: "final" },
   { label: "整体认读音节", value: "whole_syllable" },
 ];
+
+const DEFAULT_RECORDING_VALUES = {
+  character_enabled: true,
+  character_auto_stop: false,
+  character_auto_stop_seconds: 5,
+  english_enabled: true,
+  english_auto_stop: false,
+  english_auto_stop_seconds: 5,
+  idiom_enabled: true,
+  idiom_auto_stop: false,
+  idiom_auto_stop_seconds: 5,
+  pinyin_enabled: true,
+  pinyin_auto_stop: false,
+  pinyin_auto_stop_seconds: 5,
+  status: true,
+};
+
+const RECORDING_TYPES: { value: ContentType; label: string; prefix: string }[] =
+  [
+    { value: "character", label: "汉字", prefix: "character" },
+    { value: "englishWord", label: "英语", prefix: "english" },
+    { value: "idiom", label: "成语", prefix: "idiom" },
+    { value: "pinyin", label: "拼音", prefix: "pinyin" },
+  ];
 
 const CONTENT_PAGE_SIZE_OPTIONS = [10, 20, 50];
 
@@ -203,6 +229,7 @@ export default function ParentDashboard() {
   const [mathForm] = Form.useForm();
   const [pinyinForm] = Form.useForm();
   const [readingForm] = Form.useForm();
+  const [recordingForm] = Form.useForm();
   const [loginForm] = Form.useForm();
   const selectedContentType = Form.useWatch("content_type", contentForm);
   const isBatchCreate =
@@ -414,6 +441,56 @@ export default function ParentDashboard() {
     messageApi.success("朗读设置已保存");
   }
 
+  async function loadRecordingSettings(activeToken: string, childId: string) {
+    try {
+      const settings = await getRecordingSettings(activeToken, childId);
+      recordingForm.setFieldsValue(
+        settings
+          ? {
+              character_enabled: settings.character_enabled,
+              character_auto_stop: settings.character_auto_stop,
+              character_auto_stop_seconds: settings.character_auto_stop_seconds,
+              english_enabled: settings.english_enabled,
+              english_auto_stop: settings.english_auto_stop,
+              english_auto_stop_seconds: settings.english_auto_stop_seconds,
+              idiom_enabled: settings.idiom_enabled,
+              idiom_auto_stop: settings.idiom_auto_stop,
+              idiom_auto_stop_seconds: settings.idiom_auto_stop_seconds,
+              pinyin_enabled: settings.pinyin_enabled,
+              pinyin_auto_stop: settings.pinyin_auto_stop,
+              pinyin_auto_stop_seconds: settings.pinyin_auto_stop_seconds,
+              status: settings.status === 1,
+            }
+          : DEFAULT_RECORDING_VALUES,
+      );
+    } catch {
+      recordingForm.setFieldsValue(DEFAULT_RECORDING_VALUES);
+    }
+  }
+
+  async function submitRecordingSettings() {
+    if (!token || !selectedChildId) {
+      return;
+    }
+    const values = await recordingForm.validateFields();
+    await updateRecordingSettings(token, selectedChildId, {
+      character_enabled: values.character_enabled,
+      character_auto_stop: values.character_auto_stop,
+      character_auto_stop_seconds: values.character_auto_stop_seconds,
+      english_enabled: values.english_enabled,
+      english_auto_stop: values.english_auto_stop,
+      english_auto_stop_seconds: values.english_auto_stop_seconds,
+      idiom_enabled: values.idiom_enabled,
+      idiom_auto_stop: values.idiom_auto_stop,
+      idiom_auto_stop_seconds: values.idiom_auto_stop_seconds,
+      pinyin_enabled: values.pinyin_enabled,
+      pinyin_auto_stop: values.pinyin_auto_stop,
+      pinyin_auto_stop_seconds: values.pinyin_auto_stop_seconds,
+      status: values.status ? 1 : 0,
+    });
+    messageApi.success("录音设置已保存");
+  }
+
   useEffect(() => {
     let mounted = true;
     async function fetchData() {
@@ -440,6 +517,7 @@ export default function ParentDashboard() {
             loadMathSettings(token, selectedChildId),
             loadPinyinSettings(token, selectedChildId),
             loadReadingSettings(token, selectedChildId),
+            loadRecordingSettings(token, selectedChildId),
           ]);
         }
       } catch {
@@ -805,6 +883,7 @@ export default function ParentDashboard() {
       loadMathSettings(token, nextChildId),
       loadPinyinSettings(token, nextChildId),
       loadReadingSettings(token, nextChildId),
+      loadRecordingSettings(token, nextChildId),
       loadChildrenAndStats(token, nextChildId),
     ]);
   }
@@ -1520,6 +1599,97 @@ export default function ParentDashboard() {
 
                       <Button htmlType="submit" type="primary">
                         保存朗读设置
+                      </Button>
+                    </Form>
+                  )}
+                </Card>
+              ),
+            },
+            {
+              key: "recording",
+              label: "录音设置",
+              children: (
+                <Card
+                  title="录音设置"
+                  extra={
+                    <ChildScopeSelect
+                      label="选择录音设置所属孩子"
+                      childId={selectedChildId}
+                      children={children}
+                      onSwitch={onChildSwitch}
+                    />
+                  }
+                >
+                  {!selectedChild ? (
+                    <Empty description={buildEmptyChildHint(children)} />
+                  ) : (
+                    <Form
+                      form={recordingForm}
+                      layout="vertical"
+                      onFinish={submitRecordingSettings}
+                    >
+                      <Typography.Paragraph type="secondary">
+                        为每类答题分别设置录音：是否开启、是否自动结束、自动结束时长。
+                      </Typography.Paragraph>
+                      <Row gutter={16}>
+                        {RECORDING_TYPES.map((item) => (
+                          <Col key={item.value} xs={24} md={12}>
+                            <Typography.Text strong>
+                              {item.label}
+                            </Typography.Text>
+                            <Form.Item
+                              label="开启录音"
+                              name={`${item.prefix}_enabled`}
+                              valuePropName="checked"
+                            >
+                              <Switch />
+                            </Form.Item>
+                            <Form.Item
+                              label="自动结束"
+                              name={`${item.prefix}_auto_stop`}
+                              valuePropName="checked"
+                            >
+                              <Switch />
+                            </Form.Item>
+                            <Form.Item
+                              label="自动结束时长（秒）"
+                              name={`${item.prefix}_auto_stop_seconds`}
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "请设置自动结束时长",
+                                },
+                              ]}
+                            >
+                              <InputNumber
+                                min={1}
+                                max={30}
+                                className="w-full"
+                              />
+                            </Form.Item>
+                          </Col>
+                        ))}
+                      </Row>
+
+                      <Form.Item
+                        label="启用录音（一键开关所有类型）"
+                        name="status"
+                        valuePropName="checked"
+                      >
+                        <Switch
+                          onChange={(checked) => {
+                            recordingForm.setFieldsValue({
+                              character_enabled: checked,
+                              english_enabled: checked,
+                              idiom_enabled: checked,
+                              pinyin_enabled: checked,
+                            });
+                          }}
+                        />
+                      </Form.Item>
+
+                      <Button htmlType="submit" type="primary">
+                        保存录音设置
                       </Button>
                     </Form>
                   )}

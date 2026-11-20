@@ -5,7 +5,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Query
 
 from app.api.deps import get_current_parent
-from app.models import AnswerSubmit, ApiResponse, CardViewSubmit, SessionStart
+from app.models import AnswerSubmit, ApiResponse, CardViewSubmit, SessionStart, SpeechJudgeRequest
 from app.services.learning_service import LearningError, learning_service
 from app.services.parent_service import service
 
@@ -84,6 +84,23 @@ def mark_card_viewed(
     try:
         result = learning_service.mark_card_viewed(
             current["user_id"], child_id, session_id, question_id, payload.view_duration_ms
+        )
+    except LearningError as exc:
+        _raise_learning_error(exc)
+    return ApiResponse(data=result)
+
+
+@router.post("/{session_id}/questions/{question_id}/speech", response_model=ApiResponse)
+def judge_speech(
+    child_id: str,
+    session_id: str,
+    question_id: str,
+    payload: SpeechJudgeRequest,
+    current: CurrentParent,
+) -> ApiResponse:
+    try:
+        result = learning_service.judge_speech(
+            current["user_id"], child_id, session_id, question_id, payload.transcript
         )
     except LearningError as exc:
         _raise_learning_error(exc)

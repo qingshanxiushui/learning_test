@@ -1,15 +1,19 @@
 import { describe, expect, it } from "vitest";
 import {
+  DEFAULT_AUTO_STOP_SECONDS,
   DEFAULT_READ_RATE,
   getReadRate,
+  getRecordConfig,
   getSpeechLanguage,
+  normalizeTranscript,
   pickVoice,
   READABLE_CARD_QUESTION_TYPES,
+  speechRecognitionSupported,
   speechSynthesisSupported,
   toReadText,
   voiceMatchesLang,
 } from "@/features/child/speech";
-import type { ReadingSettings } from "@/types/api";
+import type { ReadingSettings, RecordingSettings } from "@/types/api";
 
 function stubVoice(lang: string): SpeechSynthesisVoice {
   return { lang, name: lang } as unknown as SpeechSynthesisVoice;
@@ -105,5 +109,72 @@ describe("speech helpers", () => {
     // 无设置时回退默认语速；非朗读类型（如 math/pinyin）也回退默认。
     expect(getReadRate("poem", null)).toBe(DEFAULT_READ_RATE);
     expect(getReadRate("math", settings)).toBe(DEFAULT_READ_RATE);
+  });
+
+  it("normalizes the transcript for idiom matching", () => {
+    expect(normalizeTranscript("地大物博")).toBe("地大物博");
+    expect(normalizeTranscript(" 地大物博 ")).toBe("地大物博");
+    expect(normalizeTranscript("地大，物博")).toBe("地大物博");
+    expect(normalizeTranscript("地 大 物 博")).toBe("地大物博");
+  });
+
+  it("detects speech recognition support", () => {
+    Reflect.deleteProperty(window, "SpeechRecognition");
+    Reflect.deleteProperty(window, "webkitSpeechRecognition");
+    expect(speechRecognitionSupported()).toBe(false);
+
+    Object.assign(window, { SpeechRecognition: class {} });
+    expect(speechRecognitionSupported()).toBe(true);
+
+    Reflect.deleteProperty(window, "SpeechRecognition");
+    Reflect.deleteProperty(window, "webkitSpeechRecognition");
+  });
+
+  it("reads per-type recording config with defaults", () => {
+    const settings: RecordingSettings = {
+      id: "rec-1",
+      child_id: "child-1",
+      character_enabled: false,
+      character_auto_stop: true,
+      character_auto_stop_seconds: 8,
+      english_enabled: true,
+      english_auto_stop: false,
+      english_auto_stop_seconds: 5,
+      idiom_enabled: true,
+      idiom_auto_stop: true,
+      idiom_auto_stop_seconds: 3,
+      pinyin_enabled: true,
+      pinyin_auto_stop: false,
+      pinyin_auto_stop_seconds: 5,
+      status: 1,
+      created_at: "2026-11-19T10:00:00Z",
+      updated_at: "2026-11-19T10:00:00Z",
+    };
+    expect(getRecordConfig("character", settings)).toEqual({
+      enabled: false,
+      autoStop: true,
+      seconds: 8,
+    });
+    expect(getRecordConfig("englishWord", settings)).toEqual({
+      enabled: true,
+      autoStop: false,
+      seconds: 5,
+    });
+    expect(getRecordConfig("idiom", settings)).toEqual({
+      enabled: true,
+      autoStop: true,
+      seconds: 3,
+    });
+    expect(getRecordConfig("pinyin", settings)).toEqual({
+      enabled: true,
+      autoStop: false,
+      seconds: 5,
+    });
+    // 无设置时回退默认（开启、手动结束、默认时长）
+    expect(getRecordConfig("character", null)).toEqual({
+      enabled: true,
+      autoStop: false,
+      seconds: DEFAULT_AUTO_STOP_SECONDS,
+    });
   });
 });

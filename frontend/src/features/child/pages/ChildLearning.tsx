@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Alert,
   Button,
@@ -12,25 +12,33 @@ import {
   Spin,
   Typography,
 } from "antd";
-import { SoundOutlined } from "@ant-design/icons";
+import { AudioOutlined, SoundOutlined } from "@ant-design/icons";
 import { login } from "@/api/auth";
 import { ApiError } from "@/api/client";
 import { listChildren } from "@/api/children";
 import {
   completeSession,
+  judgeSpeech,
   markCardViewed,
   startSession,
   submitAnswer,
 } from "@/api/learning";
 import { getReadingSettings } from "@/api/reading";
+import { getRecordingSettings } from "@/api/recording";
 import { getRule } from "@/api/rules";
 import {
   getReadRate,
+  getRecordConfig,
   getSpeechLanguage,
+  getSpeechRecognition,
+  normalizeTranscript,
   pickVoice,
   READABLE_CARD_QUESTION_TYPES,
+  RECORDABLE_CARD_QUESTION_TYPES,
+  speechRecognitionSupported,
   speechSynthesisSupported,
   toReadText,
+  type SpeechRecognitionLike,
 } from "@/features/child/speech";
 import type {
   AnswerFeedback,
@@ -38,6 +46,7 @@ import type {
   ContentType,
   LearningSession,
   ReadingSettings,
+  RecordingSettings,
   SessionQuestion,
   SessionResult,
 } from "@/types/api";
@@ -120,10 +129,19 @@ export default function ChildLearning() {
   const [questionStartedAt, setQuestionStartedAt] = useState(Date.now());
   const [loginForm] = Form.useForm();
   const [isReading, setIsReading] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [readSettings, setReadSettings] = useState<ReadingSettings | null>(
     null,
   );
+  const [speechResult, setSpeechResult] = useState<{
+    transcript: string;
+    isCorrect: boolean;
+  } | null>(null);
+  const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
+  const autoStopTimerRef = useRef<number | null>(null);
+  const [recordingSettings, setRecordingSettings] =
+    useState<RecordingSettings | null>(null);
   const [messageApi, contextHolder] = message.useMessage();
 
   function handleRequestError(reason: unknown, fallback: string) {
@@ -193,6 +211,14 @@ export default function ChildLearning() {
       .catch(() => setReadSettings(null));
   }, [childId, token]);
 
+  // 加载录音设置（每类型是否开启/自动结束/时长）。
+  useEffect(() => {
+    if (!token || !childId) return;
+    getRecordingSettings(token, childId)
+      .then((settings) => setRecordingSettings(settings))
+      .catch(() => setRecordingSettings(null));
+  }, [childId, token]);
+
   // 加载浏览器可用语音；Chrome 首次 getVoices 可能为空，需在 voiceschanged 后刷新。
   useEffect(() => {
     if (!speechSynthesisSupported()) return;
@@ -203,16 +229,19 @@ export default function ChildLearning() {
     return () => synth.removeEventListener("voiceschanged", update);
   }, []);
 
-  // 切换题目时停止朗读。
+  // 切换题目时停止朗读与录音。
   useEffect(() => {
     stopReading();
+    stopRecording();
+    setSpeechResult(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questionIndex]);
 
-  // 卸载组件时停止朗读。
+  // 卸载组件时停止朗读与录音。
   useEffect(() => {
     return () => {
       if (speechSynthesisSupported()) window.speechSynthesis.cancel();
+      recognitionRef.current?.abort();
     };
   }, []);
 
@@ -270,6 +299,93 @@ export default function ChildLearning() {
     };
     synth.speak(utterance);
     setIsReading(true);
+  }
+
+  function clearAutoStopTimer() {
+    if (autoStopTimerRef.current !== null) {
+      window.clearTimeout(autoStopTimerRef.current);
+      autoStopTimerRef.current = null;
+    }
+  }
+
+  function stopRecording() {
+    recognitionRef.current?.abort();
+    recognitionRef.current = null;
+    clearAutoStopTimer();
+    setIsRecording(false);
+  }
+
+  function handleToggleRecord() {
+    const question = questions[questionIndex];
+    const currentSession = session;
+    if (!question || !currentSession) return;
+
+    const config = getRecordConfig(question.content_type, recordingSettings);
+    if (!config.enabled) return;
+
+    if (isRecording) {
+      recognitionRef.current?.stop();
+      clearAutoStopTimer();
+      return;
+    }
+
+    const SpeechRecognition = getSpeechRecognition();
+    if (!SpeechRecognition) {
+      messageApi.error("当前浏览器不支持语音识别，请使用 Chrome 或 Edge。");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = getSpeechLanguage(question.content_type);
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setIsRecording(false);
+      recognitionRef.current = null;
+      clearAutoStopTimer();
+      if (question.question_type === "pinyin_card") {
+        judgeSpeech(token, childId, currentSession.id, question.id, transcript)
+          .then((result) => {
+            setSpeechResult({ transcript, isCorrect: result.is_correct });
+          })
+          .catch(() => {
+            setSpeechResult(null);
+            messageApi.error("语音判分失败，请再试一次。");
+          });
+        return;
+      }
+      const isCorrect =
+        normalizeTranscript(transcript) ===
+        normalizeTranscript(question.question_stem);
+      setSpeechResult({ transcript, isCorrect });
+    };
+    recognition.onend = () => {
+      setIsRecording(false);
+      recognitionRef.current = null;
+      clearAutoStopTimer();
+    };
+    recognition.onerror = (event) => {
+      setIsRecording(false);
+      recognitionRef.current = null;
+      clearAutoStopTimer();
+      setSpeechResult(null);
+      const hints: Record<string, string> = {
+        "not-allowed": "麦克风权限被拒绝，请在浏览器设置中允许使用麦克风。",
+        "no-speech": "没有检测到声音，请再试一次。",
+        network: "语音识别需要联网，请检查网络。",
+      };
+      messageApi.error(hints[event.error] ?? "语音识别失败，请再试一次。");
+    };
+    recognitionRef.current = recognition;
+    setSpeechResult(null);
+    recognition.start();
+    setIsRecording(true);
+    if (config.autoStop) {
+      autoStopTimerRef.current = window.setTimeout(() => {
+        recognitionRef.current?.stop();
+      }, config.seconds * 1000);
+    }
   }
 
   async function handleStart() {
@@ -434,6 +550,14 @@ export default function ChildLearning() {
   // 只要浏览器支持 Web Speech API 就允许点击；
   // 找不到匹配语音时仍以 utterance.lang 兜底（如 Chrome 云语音），不再禁用按钮。
   const canRead = speechSynthesisSupported();
+  const canRecord = speechRecognitionSupported();
+  const recordConfig = currentQuestion
+    ? getRecordConfig(currentQuestion.content_type, recordingSettings)
+    : null;
+  const showRecordButton =
+    Boolean(currentQuestion) &&
+    RECORDABLE_CARD_QUESTION_TYPES.has(currentQuestion.question_type) &&
+    Boolean(recordConfig?.enabled);
 
   return (
     <section className="child-experience">
@@ -579,6 +703,17 @@ export default function ChildLearning() {
                   {isReading ? "停止朗读" : "朗读"}
                 </Button>
               )}
+              {showRecordButton && (
+                <Button
+                  className="record-aloud"
+                  type="text"
+                  icon={<AudioOutlined />}
+                  onClick={handleToggleRecord}
+                  disabled={!canRecord}
+                >
+                  {isRecording ? "停止录音" : "录音"}
+                </Button>
+              )}
             </div>
             <Typography.Title level={2}>
               {currentQuestion.question_pinyin &&
@@ -591,6 +726,21 @@ export default function ChildLearning() {
                 currentQuestion.question_stem
               )}
             </Typography.Title>
+            {showRecordButton && speechResult && (
+              <div
+                className={`speech-feedback ${
+                  speechResult.isCorrect ? "is-correct" : "is-wrong"
+                }`}
+              >
+                <strong>
+                  {speechResult.isCorrect ? "读对了！" : "再试一次"}
+                </strong>
+                <span>识别内容：{speechResult.transcript}</span>
+                {!speechResult.isCorrect && (
+                  <span>正确答案：{currentQuestion.question_stem}</span>
+                )}
+              </div>
+            )}
             {currentQuestion.question_type === "math_arithmetic" ? (
               <div className="math-input">
                 <InputNumber

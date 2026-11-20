@@ -32,6 +32,8 @@ from app.models import (
     PoemBatchCreate,
     ReadingSettings,
     ReadingSettingsUpsert,
+    RecordingSettings,
+    RecordingSettingsUpsert,
     Rule,
     RuleCreate,
     Session,
@@ -49,6 +51,7 @@ DEFAULT_MATH_OPERATORS: tuple[MathOperator, ...] = ("add", "subtract")
 DEFAULT_PINYIN_CATEGORIES: tuple[PinyinCategory, ...] = ("initial",)
 DEFAULT_PINYIN_WITH_TONE = False
 DEFAULT_READ_RATE = 0.8
+DEFAULT_AUTO_STOP_SECONDS = 5
 
 
 class ParentService:
@@ -180,6 +183,25 @@ class ParentService:
                 poem_rate=DEFAULT_READ_RATE,
                 idiom_rate=DEFAULT_READ_RATE,
                 english_rate=DEFAULT_READ_RATE,
+                status=1,
+            ),
+        )
+        self.upsert_recording_settings(
+            parent_id,
+            child_id,
+            RecordingSettingsUpsert(
+                character_enabled=True,
+                character_auto_stop=False,
+                character_auto_stop_seconds=DEFAULT_AUTO_STOP_SECONDS,
+                english_enabled=True,
+                english_auto_stop=False,
+                english_auto_stop_seconds=DEFAULT_AUTO_STOP_SECONDS,
+                idiom_enabled=True,
+                idiom_auto_stop=False,
+                idiom_auto_stop_seconds=DEFAULT_AUTO_STOP_SECONDS,
+                pinyin_enabled=True,
+                pinyin_auto_stop=False,
+                pinyin_auto_stop_seconds=DEFAULT_AUTO_STOP_SECONDS,
                 status=1,
             ),
         )
@@ -957,6 +979,49 @@ class ParentService:
         rows.append(item)
         self.store.write_list("read_settings.json", rows)
         return ReadingSettings(**item)
+
+    def get_recording_settings(self, parent_id: str, child_id: str) -> RecordingSettings | None:
+        self.assert_child_owned(parent_id, child_id)
+        rows = self._active(self.store.read_list("recording_settings.json"))
+        for r in rows:
+            if r.get("child_id") == child_id:
+                return RecordingSettings(**r)
+        return None
+
+    def upsert_recording_settings(
+        self, parent_id: str, child_id: str, payload: RecordingSettingsUpsert
+    ) -> RecordingSettings:
+        self.assert_child_owned(parent_id, child_id)
+        rows = self.store.read_list("recording_settings.json")
+        for r in rows:
+            if r.get("child_id") == child_id and r.get("is_deleted", 0) == 0:
+                r.update(payload.model_dump())
+                r["updated_at"] = now_iso()
+                self.store.write_list("recording_settings.json", rows)
+                return RecordingSettings(**r)
+        now = now_iso()
+        item = RecordingSettings(
+            id=new_id(),
+            child_id=child_id,
+            character_enabled=payload.character_enabled,
+            character_auto_stop=payload.character_auto_stop,
+            character_auto_stop_seconds=payload.character_auto_stop_seconds,
+            english_enabled=payload.english_enabled,
+            english_auto_stop=payload.english_auto_stop,
+            english_auto_stop_seconds=payload.english_auto_stop_seconds,
+            idiom_enabled=payload.idiom_enabled,
+            idiom_auto_stop=payload.idiom_auto_stop,
+            idiom_auto_stop_seconds=payload.idiom_auto_stop_seconds,
+            pinyin_enabled=payload.pinyin_enabled,
+            pinyin_auto_stop=payload.pinyin_auto_stop,
+            pinyin_auto_stop_seconds=payload.pinyin_auto_stop_seconds,
+            status=payload.status,
+            created_at=now,
+            updated_at=now,
+        ).model_dump()
+        rows.append(item)
+        self.store.write_list("recording_settings.json", rows)
+        return RecordingSettings(**item)
 
     def list_sessions(
         self, parent_id: str, child_id: str, page: int, page_size: int, session_status: str | None

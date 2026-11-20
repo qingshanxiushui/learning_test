@@ -57,6 +57,28 @@ export function markCardViewed(
   );
 }
 
+export function judgeSpeech(
+  token: string,
+  childId: string,
+  sessionId: string,
+  questionId: string,
+  transcript: string,
+): Promise<{
+  session_question_id: string;
+  transcript: string;
+  read_pinyin: string;
+  is_correct: boolean;
+}> {
+  return request(
+    `/children/${childId}/sessions/${sessionId}/questions/${questionId}/speech`,
+    {
+      method: "POST",
+      token,
+      body: { transcript },
+    },
+  );
+}
+
 export function completeSession(
   token: string,
   childId: string,

@@ -563,6 +563,20 @@ input,
   background: #e4efec !important;
 }
 
+.record-aloud.ant-btn {
+  height: 38px;
+  padding-inline: 16px;
+  color: #c64e32;
+  background: #ffe4dc;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.record-aloud.ant-btn:not(:disabled):hover {
+  color: #963a27 !important;
+  background: #ffd4c8 !important;
+}
+
 .question-panel h2.ant-typography {
   margin: 18px 0 30px;
   color: var(--ink);
@@ -735,6 +749,34 @@ input,
 }
 
 .feedback-wrong {
+  color: #963a27;
+  background: #fdeee8;
+  border-color: #f0c3b4;
+}
+
+.speech-feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin: 18px 0;
+  padding: 14px 18px;
+  border: 1.5px solid;
+  border-radius: 16px;
+  font-size: 16px;
+}
+
+.speech-feedback strong {
+  font-size: 22px;
+}
+
+.speech-feedback.is-correct {
+  color: #235e3a;
+  background: #e8f6ec;
+  border-color: #a8d8b9;
+}
+
+.speech-feedback.is-wrong {
   color: #963a27;
   background: #fdeee8;
   border-color: #f0c3b4;

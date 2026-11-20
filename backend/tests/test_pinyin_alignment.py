@@ -16,7 +16,7 @@ from fastapi.testclient import TestClient
 
 from app.main import app
 from app.models import Content
-from app.services.learning_service import LearningService, _pinyin_annotation
+from app.services.learning_service import LearningService, _pinyin_annotation, _read_pinyin, _strip_tone
 
 SPACED_CLASSIC = "曰春夏，曰秋冬。此四时， 运不穷。"
 LEGACY_POEM_HEADER = "《画鸡》明・唐寅 唐伯虎\n头上红冠不用裁\n满身雪白走将来"
@@ -278,3 +278,23 @@ def test_shipped_poem_and_classic_data_is_renderable() -> None:
             assert stem not in seen_stems, f"{file_name} {content.title} 卡片正文重复"
             seen_stems.add(stem)
             assert len(_pinyin_annotation(stem)) == len(stem), f"{file_name} {content.title} 注音错位"
+
+
+def test_strip_tone_removes_tone_marks() -> None:
+    assert _strip_tone("bā") == "ba"
+    assert _strip_tone("zhī") == "zhi"
+    assert _strip_tone("ān") == "an"
+    assert _strip_tone("b") == "b"
+    assert _strip_tone("ü") == "ü"
+
+
+def test_read_pinyin_maps_initials_and_finals() -> None:
+    # 声母用呼读音
+    assert _read_pinyin("b", "initial") == "bo"
+    assert _read_pinyin("zh", "initial") == "zhi"
+    assert _read_pinyin("y", "initial") == "yi"
+    assert _read_pinyin("w", "initial") == "wu"
+    # 单韵母/韵母/整体认读音节读音即拼音本身（去声调）
+    assert _read_pinyin("a", "single_final") == "a"
+    assert _read_pinyin("an", "final") == "an"
+    assert _read_pinyin("zhi", "whole_syllable") == "zhi"

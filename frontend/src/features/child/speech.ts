@@ -1,4 +1,8 @@
-import type { ContentType, ReadingSettings } from "@/types/api";
+import type {
+  ContentType,
+  ReadingSettings,
+  RecordingSettings,
+} from "@/types/api";
 
 /** 需要展示「朗读」按钮的卡片题型（拼音、算术题型除外）。 */
 export const READABLE_CARD_QUESTION_TYPES: ReadonlySet<string> = new Set([
@@ -7,6 +11,14 @@ export const READABLE_CARD_QUESTION_TYPES: ReadonlySet<string> = new Set([
   "poem_card",
   "idiom_card",
   "english_word_card",
+]);
+
+/** 需要展示「录音」按钮的卡片题型（汉字/英语/成语/拼音；古诗、国学仅朗读不录音）。 */
+export const RECORDABLE_CARD_QUESTION_TYPES: ReadonlySet<string> = new Set([
+  "character_card",
+  "english_word_card",
+  "idiom_card",
+  "pinyin_card",
 ]);
 
 /** 浏览器是否支持 Web Speech API（含构造器）。 */
@@ -81,5 +93,112 @@ export function getReadRate(
       return settings.english_rate;
     default:
       return DEFAULT_READ_RATE;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 语音识别（成语录音答题）
+// ---------------------------------------------------------------------------
+
+/** SpeechRecognition 的最小类型声明（兼容 webkit 前缀与 TS 类型缺失）。 */
+export interface SpeechRecognitionLike {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  onresult: ((event: SpeechRecognitionEventLike) => void) | null;
+  onend: (() => void) | null;
+  onerror: ((event: SpeechRecognitionErrorLike) => void) | null;
+  start(): void;
+  stop(): void;
+  abort(): void;
+}
+
+export interface SpeechRecognitionEventLike {
+  results: ArrayLike<ArrayLike<{ transcript: string }>>;
+}
+
+export interface SpeechRecognitionErrorLike {
+  error: string;
+}
+
+type SpeechRecognitionConstructor = new () => SpeechRecognitionLike;
+
+/** 获取语音识别构造器，兼容 Chrome 的 SpeechRecognition 与 Safari 的 webkitSpeechRecognition。 */
+export function getSpeechRecognition(): SpeechRecognitionConstructor | null {
+  if (typeof window === "undefined") return null;
+  const win = window as unknown as {
+    SpeechRecognition?: SpeechRecognitionConstructor;
+    webkitSpeechRecognition?: SpeechRecognitionConstructor;
+  };
+  return win.SpeechRecognition ?? win.webkitSpeechRecognition ?? null;
+}
+
+/** 浏览器是否支持语音识别（Web Speech API 识别部分）。 */
+export function speechRecognitionSupported(): boolean {
+  return getSpeechRecognition() !== null;
+}
+
+/** 归一化识别文本，去除空白、标点、书名号/引号，用于与题目成语判分比对。 */
+export function normalizeTranscript(text: string): string {
+  return text.replace(/[\s，。！？、,.!?·・《》"'“”]/g, "").trim();
+}
+
+// ---------------------------------------------------------------------------
+// 录音设置
+// ---------------------------------------------------------------------------
+
+/** 录音配置（按内容类型）。 */
+export interface RecordConfig {
+  enabled: boolean;
+  autoStop: boolean;
+  seconds: number;
+}
+
+/** 默认自动结束时长（秒）。 */
+export const DEFAULT_AUTO_STOP_SECONDS = 5;
+
+/** 按内容类型取录音配置；设置缺失时回退默认（开启、手动结束、5 秒）。 */
+export function getRecordConfig(
+  contentType: ContentType,
+  settings: RecordingSettings | null,
+): RecordConfig {
+  if (!settings) {
+    return {
+      enabled: true,
+      autoStop: false,
+      seconds: DEFAULT_AUTO_STOP_SECONDS,
+    };
+  }
+  switch (contentType) {
+    case "character":
+      return {
+        enabled: settings.character_enabled,
+        autoStop: settings.character_auto_stop,
+        seconds: settings.character_auto_stop_seconds,
+      };
+    case "englishWord":
+      return {
+        enabled: settings.english_enabled,
+        autoStop: settings.english_auto_stop,
+        seconds: settings.english_auto_stop_seconds,
+      };
+    case "idiom":
+      return {
+        enabled: settings.idiom_enabled,
+        autoStop: settings.idiom_auto_stop,
+        seconds: settings.idiom_auto_stop_seconds,
+      };
+    case "pinyin":
+      return {
+        enabled: settings.pinyin_enabled,
+        autoStop: settings.pinyin_auto_stop,
+        seconds: settings.pinyin_auto_stop_seconds,
+      };
+    default:
+      return {
+        enabled: false,
+        autoStop: false,
+        seconds: DEFAULT_AUTO_STOP_SECONDS,
+      };
   }
 }

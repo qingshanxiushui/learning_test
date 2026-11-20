@@ -246,6 +246,44 @@ class ReadingSettings(BaseModel):
     is_deleted: int = 0
 
 
+class RecordingSettingsUpsert(BaseModel):
+    character_enabled: bool = True
+    character_auto_stop: bool = False
+    character_auto_stop_seconds: int = Field(default=5, ge=1, le=30)
+    english_enabled: bool = True
+    english_auto_stop: bool = False
+    english_auto_stop_seconds: int = Field(default=5, ge=1, le=30)
+    idiom_enabled: bool = True
+    idiom_auto_stop: bool = False
+    idiom_auto_stop_seconds: int = Field(default=5, ge=1, le=30)
+    pinyin_enabled: bool = True
+    pinyin_auto_stop: bool = False
+    pinyin_auto_stop_seconds: int = Field(default=5, ge=1, le=30)
+    status: int = Field(default=1, ge=0, le=1)
+
+
+class RecordingSettings(BaseModel):
+    id: str
+    child_id: str
+    character_enabled: bool
+    character_auto_stop: bool
+    character_auto_stop_seconds: int
+    english_enabled: bool
+    english_auto_stop: bool
+    english_auto_stop_seconds: int
+    idiom_enabled: bool
+    idiom_auto_stop: bool
+    idiom_auto_stop_seconds: int
+    pinyin_enabled: bool
+    pinyin_auto_stop: bool
+    pinyin_auto_stop_seconds: int
+    status: int
+    created_at: str
+    updated_at: str
+    deleted_at: str | None = None
+    is_deleted: int = 0
+
+
 class ContentUpdate(ContentCreate):
     pass
 
@@ -303,3 +341,7 @@ class AnswerSubmit(BaseModel):
 
 class CardViewSubmit(BaseModel):
     view_duration_ms: int | None = Field(default=None, ge=0)
+
+
+class SpeechJudgeRequest(BaseModel):
+    transcript: str = Field(min_length=1)

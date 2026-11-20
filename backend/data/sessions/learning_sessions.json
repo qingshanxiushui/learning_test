@@ -1234,5 +1234,62 @@
     "updated_at": "2026-11-09T01:31:46Z",
     "deleted_at": null,
     "is_deleted": 0
+  },
+  {
+    "id": "bf371a3d-b9b2-430d-9635-80126b6b702a",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "idiom"
+    ],
+    "total_questions": 5,
+    "completed_questions": 1,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "in_progress",
+    "started_at": "2026-11-19T11:42:41Z",
+    "finished_at": null,
+    "created_at": "2026-11-19T11:42:41Z",
+    "updated_at": "2026-11-19T11:43:17Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "2721282a-10b3-4b80-8006-73a3682786f5",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "character"
+    ],
+    "total_questions": 5,
+    "completed_questions": 1,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "in_progress",
+    "started_at": "2026-11-19T12:17:57Z",
+    "finished_at": null,
+    "created_at": "2026-11-19T12:17:57Z",
+    "updated_at": "2026-11-19T12:18:49Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  },
+  {
+    "id": "c2add72c-0a5e-4f06-b007-34c0cd695c56",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "selected_content_types": [
+      "englishWord"
+    ],
+    "total_questions": 5,
+    "completed_questions": 0,
+    "answered_questions": 0,
+    "correct_questions": 0,
+    "accuracy_rate": 0.0,
+    "session_status": "in_progress",
+    "started_at": "2026-11-19T12:22:58Z",
+    "finished_at": null,
+    "created_at": "2026-11-19T12:22:58Z",
+    "updated_at": "2026-11-19T12:22:58Z",
+    "deleted_at": null,
+    "is_deleted": 0
   }
 ]

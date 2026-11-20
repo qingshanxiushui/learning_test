@@ -78,6 +78,42 @@ export type ReadingSettingsPayload = {
   status: number;
 };
 
+export type RecordingSettings = {
+  id: string;
+  child_id: string;
+  character_enabled: boolean;
+  character_auto_stop: boolean;
+  character_auto_stop_seconds: number;
+  english_enabled: boolean;
+  english_auto_stop: boolean;
+  english_auto_stop_seconds: number;
+  idiom_enabled: boolean;
+  idiom_auto_stop: boolean;
+  idiom_auto_stop_seconds: number;
+  pinyin_enabled: boolean;
+  pinyin_auto_stop: boolean;
+  pinyin_auto_stop_seconds: number;
+  status: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type RecordingSettingsPayload = {
+  character_enabled: boolean;
+  character_auto_stop: boolean;
+  character_auto_stop_seconds: number;
+  english_enabled: boolean;
+  english_auto_stop: boolean;
+  english_auto_stop_seconds: number;
+  idiom_enabled: boolean;
+  idiom_auto_stop: boolean;
+  idiom_auto_stop_seconds: number;
+  pinyin_enabled: boolean;
+  pinyin_auto_stop: boolean;
+  pinyin_auto_stop_seconds: number;
+  status: number;
+};
+
 export type Child = {
   id: string;
   name: string;

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "dad73731-50d1-43d6-84b7-db39307135fd",
+    "child_id": "702b9b07-fd29-498c-b8bc-fed92bb09002",
+    "character_enabled": false,
+    "character_auto_stop": true,
+    "character_auto_stop_seconds": 5,
+    "english_enabled": false,
+    "english_auto_stop": true,
+    "english_auto_stop_seconds": 5,
+    "idiom_enabled": false,
+    "idiom_auto_stop": true,
+    "idiom_auto_stop_seconds": 5,
+    "pinyin_enabled": false,
+    "pinyin_auto_stop": true,
+    "pinyin_auto_stop_seconds": 5,
+    "status": 0,
+    "created_at": "2026-11-20T00:30:37Z",
+    "updated_at": "2026-11-20T00:46:40Z",
+    "deleted_at": null,
+    "is_deleted": 0
+  }
+]

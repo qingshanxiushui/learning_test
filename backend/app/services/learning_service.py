@@ -6,7 +6,7 @@ from typing import Any
 
 from pypinyin import Style, pinyin
 
-from app.models import CARD_QUESTION_TYPES, AnswerSubmit, Content, MathSettings, PinyinSettings, Session, SessionStart, new_id, now_iso
+from app.models import CARD_QUESTION_TYPES, AnswerSubmit, Content, MathSettings, PinyinSettings, Session, SessionStart, SpeechJudgeRequest, new_id, now_iso
 from app.services.parent_service import ParentService
 from app.services.parent_service import service as parent_service
 
@@ -26,6 +26,37 @@ _TONE_MARKS: dict[str, str] = {
     "u": "ūúǔù",
     "ü": "ǖǘǚǜ",
 }
+
+# 声母的「呼读音」（用于拼音录音判分：b 读作 bo，zh 读作 zhi 等）
+INITIAL_READING: dict[str, str] = {
+    "b": "bo", "p": "po", "m": "mo", "f": "fo",
+    "d": "de", "t": "te", "n": "ne", "l": "le",
+    "g": "ge", "k": "ke", "h": "he",
+    "j": "ji", "q": "qi", "x": "xi",
+    "zh": "zhi", "ch": "chi", "sh": "shi", "r": "ri",
+    "z": "zi", "c": "ci", "s": "si", "y": "yi", "w": "wu",
+}
+
+
+def _strip_tone(pinyin_str: str) -> str:
+    """去掉拼音声调（bā -> ba）。"""
+    result: list[str] = []
+    for ch in pinyin_str:
+        replaced = ch
+        for plain, toned in _TONE_MARKS.items():
+            if ch in toned:
+                replaced = plain
+                break
+        result.append(replaced)
+    return "".join(result)
+
+
+def _read_pinyin(pinyin_str: str, category: str) -> str:
+    """拼音题目的标准读音（去声调）：声母用呼读音，其余用拼音本身。"""
+    base = _strip_tone(pinyin_str)
+    if category == "initial":
+        return INITIAL_READING.get(base, base)
+    return base
 
 
 def _apply_tone(pinyin: str, tone: int) -> str:
@@ -491,6 +522,51 @@ class LearningService:
                 "completed_questions": int(session_row.get("completed_questions", 0)),
                 "total_questions": session.total_questions,
             },
+        }
+
+    def judge_speech(
+        self,
+        parent_id: str,
+        child_id: str,
+        session_id: str,
+        question_id: str,
+        transcript: str,
+    ) -> dict[str, Any]:
+        """拼音录音判分：识别文本转拼音（去声调）后与题目标准读音比对。"""
+        self._active_session(parent_id, child_id, session_id)
+        questions = self.store.read_list("sessions/session_questions.json")
+        question = next(
+            (
+                row
+                for row in questions
+                if row.get("id") == question_id
+                and row.get("session_id") == session_id
+                and row.get("is_deleted", 0) == 0
+            ),
+            None,
+        )
+        if not question:
+            raise LearningError(404, 40406, "session question not found")
+        if question.get("question_type") != "pinyin_card":
+            raise LearningError(422, 42210, "question is not a pinyin card")
+
+        snapshot = question.get("content_snapshot") or {}
+        pinyin_str = str(snapshot.get("pinyin") or question.get("question_stem") or "").strip()
+        category = str(snapshot.get("pinyin_category") or "")
+        read_pinyin = _read_pinyin(pinyin_str, category)
+
+        cleaned = re.sub(r"[\s，。！？、,.!?·・《》\"'“”]", "", transcript)
+        recognized = _strip_tone(
+            "".join(item[0] for item in pinyin(cleaned, style=Style.NORMAL))
+        ).lower()
+        base_pinyin = _strip_tone(pinyin_str)
+        is_correct = recognized == read_pinyin or recognized == base_pinyin
+
+        return {
+            "session_question_id": question_id,
+            "transcript": transcript,
+            "read_pinyin": read_pinyin,
+            "is_correct": is_correct,
         }
 
     def complete_session(self, parent_id: str, child_id: str, session_id: str) -> dict[str, Any]:
