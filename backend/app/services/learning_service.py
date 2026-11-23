@@ -59,6 +59,28 @@ def _read_pinyin(pinyin_str: str, category: str) -> str:
     return base
 
 
+def _pinyin_flat(text: str) -> str:
+    """文本转拼音（去声调）拼接，用于汉字/成语的发音比对。"""
+    if not text:
+        return ""
+    return "".join(item[0] for item in pinyin(text, style=Style.NORMAL)).lower()
+
+
+def _levenshtein(a: str, b: str) -> int:
+    """编辑距离（Levenshtein），用于识别结果的插入/删除/替换容错。"""
+    if not a:
+        return len(b)
+    if not b:
+        return len(a)
+    prev = list(range(len(b) + 1))
+    for i, ca in enumerate(a, 1):
+        cur = [i]
+        for j, cb in enumerate(b, 1):
+            cur.append(min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (ca != cb)))
+        prev = cur
+    return prev[-1]
+
+
 def _apply_tone(pinyin: str, tone: int) -> str:
     if "a" in pinyin:
         target = "a"
@@ -532,7 +554,7 @@ class LearningService:
         question_id: str,
         transcript: str,
     ) -> dict[str, Any]:
-        """拼音录音判分：识别文本转拼音（去声调）后与题目标准读音比对。"""
+        """录音判分：拼音走呼读音比对，汉字/成语走拼音比对，英语走编辑距离容错。"""
         self._active_session(parent_id, child_id, session_id)
         questions = self.store.read_list("sessions/session_questions.json")
         question = next(
@@ -547,25 +569,36 @@ class LearningService:
         )
         if not question:
             raise LearningError(404, 40406, "session question not found")
-        if question.get("question_type") != "pinyin_card":
-            raise LearningError(422, 42210, "question is not a pinyin card")
 
-        snapshot = question.get("content_snapshot") or {}
-        pinyin_str = str(snapshot.get("pinyin") or question.get("question_stem") or "").strip()
-        category = str(snapshot.get("pinyin_category") or "")
-        read_pinyin = _read_pinyin(pinyin_str, category)
+        qtype = question.get("question_type")
+        if qtype not in ("character_card", "english_word_card", "idiom_card", "pinyin_card"):
+            raise LearningError(422, 42210, "question is not a recordable card")
 
+        stem = str(question.get("question_stem") or "").strip()
         cleaned = re.sub(r"[\s，。！？、,.!?·・《》\"'“”]", "", transcript)
-        recognized = _strip_tone(
-            "".join(item[0] for item in pinyin(cleaned, style=Style.NORMAL))
-        ).lower()
-        base_pinyin = _strip_tone(pinyin_str)
-        is_correct = recognized == read_pinyin or recognized == base_pinyin
+
+        if qtype == "pinyin_card":
+            snapshot = question.get("content_snapshot") or {}
+            pinyin_str = str(snapshot.get("pinyin") or stem or "").strip()
+            category = str(snapshot.get("pinyin_category") or "")
+            read_pinyin = _read_pinyin(pinyin_str, category)
+            recognized = _strip_tone(_pinyin_flat(cleaned))
+            base_pinyin = _strip_tone(pinyin_str)
+            is_correct = recognized == read_pinyin or recognized == base_pinyin
+        elif qtype == "english_word_card":
+            target = re.sub(r"[^a-z0-9]", "", stem.lower())
+            got = re.sub(r"[^a-z0-9]", "", cleaned.lower())
+            is_correct = got == target or _levenshtein(got, target) <= 1
+        else:  # character_card / idiom_card
+            target_py = _pinyin_flat(stem)
+            got_py = _pinyin_flat(cleaned)
+            is_correct = got_py == target_py
+            if not is_correct and qtype == "idiom_card":
+                is_correct = _levenshtein(got_py, target_py) <= 1
 
         return {
             "session_question_id": question_id,
             "transcript": transcript,
-            "read_pinyin": read_pinyin,
             "is_correct": is_correct,
         }
 

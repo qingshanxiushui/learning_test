@@ -66,7 +66,6 @@ export function judgeSpeech(
 ): Promise<{
   session_question_id: string;
   transcript: string;
-  read_pinyin: string;
   is_correct: boolean;
 }> {
   return request(

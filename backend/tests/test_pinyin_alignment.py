@@ -16,7 +16,7 @@ from fastapi.testclient import TestClient
 
 from app.main import app
 from app.models import Content
-from app.services.learning_service import LearningService, _pinyin_annotation, _read_pinyin, _strip_tone
+from app.services.learning_service import LearningService, _levenshtein, _pinyin_annotation, _pinyin_flat, _read_pinyin, _strip_tone
 
 SPACED_CLASSIC = "曰春夏，曰秋冬。此四时， 运不穷。"
 LEGACY_POEM_HEADER = "《画鸡》明・唐寅 唐伯虎\n头上红冠不用裁\n满身雪白走将来"
@@ -298,3 +298,17 @@ def test_read_pinyin_maps_initials_and_finals() -> None:
     assert _read_pinyin("a", "single_final") == "a"
     assert _read_pinyin("an", "final") == "an"
     assert _read_pinyin("zhi", "whole_syllable") == "zhi"
+
+
+def test_pinyin_flat_transcribes_chinese_to_pinyin() -> None:
+    assert _pinyin_flat("地大物博") == "didawubo"
+    assert _pinyin_flat("根") == "gen"
+    assert _pinyin_flat("") == ""
+
+
+def test_levenshtein_edit_distance() -> None:
+    assert _levenshtein("apple", "apple") == 0
+    assert _levenshtein("apple", "appl") == 1
+    assert _levenshtein("appl", "apple") == 1
+    assert _levenshtein("", "abc") == 3
+    assert _levenshtein("abc", "") == 3

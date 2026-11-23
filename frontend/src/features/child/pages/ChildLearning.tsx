@@ -31,7 +31,6 @@ import {
   getRecordConfig,
   getSpeechLanguage,
   getSpeechRecognition,
-  normalizeTranscript,
   pickVoice,
   READABLE_CARD_QUESTION_TYPES,
   RECORDABLE_CARD_QUESTION_TYPES,
@@ -315,6 +314,31 @@ export default function ChildLearning() {
     setIsRecording(false);
   }
 
+  async function judgeTranscripts(
+    question: SessionQuestion,
+    currentSession: LearningSession,
+    transcripts: string[],
+  ) {
+    const candidates = transcripts.filter((item) => item.trim().length > 0);
+    if (candidates.length === 0) return;
+    const results = await Promise.all(
+      candidates.map((item) =>
+        judgeSpeech(token, childId, currentSession.id, question.id, item)
+          .then((result) => ({
+            transcript: item,
+            isCorrect: result.is_correct,
+          }))
+          .catch(() => null),
+      ),
+    );
+    const hit = results.find((item) => item?.isCorrect);
+    if (hit) {
+      setSpeechResult({ transcript: hit.transcript, isCorrect: true });
+    } else {
+      setSpeechResult({ transcript: candidates[0], isCorrect: false });
+    }
+  }
+
   function handleToggleRecord() {
     const question = questions[questionIndex];
     const currentSession = session;
@@ -340,25 +364,13 @@ export default function ChildLearning() {
     recognition.continuous = false;
     recognition.interimResults = false;
     recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
+      const alternatives = Array.from(event.results[0]).map(
+        (item) => item.transcript,
+      );
       setIsRecording(false);
       recognitionRef.current = null;
       clearAutoStopTimer();
-      if (question.question_type === "pinyin_card") {
-        judgeSpeech(token, childId, currentSession.id, question.id, transcript)
-          .then((result) => {
-            setSpeechResult({ transcript, isCorrect: result.is_correct });
-          })
-          .catch(() => {
-            setSpeechResult(null);
-            messageApi.error("语音判分失败，请再试一次。");
-          });
-        return;
-      }
-      const isCorrect =
-        normalizeTranscript(transcript) ===
-        normalizeTranscript(question.question_stem);
-      setSpeechResult({ transcript, isCorrect });
+      judgeTranscripts(question, currentSession, alternatives);
     };
     recognition.onend = () => {
       setIsRecording(false);
